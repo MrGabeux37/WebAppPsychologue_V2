@@ -1,0 +1,22 @@
+{
+  "name": "webapppsychologue_v2",
+  "version": "1.0.0",
+  "description": "redo de WebApp Psychologue avec Expressjs a la place de hapijs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrGabeux37/WebAppPsychologue_V2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MrGabeux37/WebAppPsychologue_V2/issues"
+  },
+  "homepage": "https://github.com/MrGabeux37/WebAppPsychologue_V2#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
