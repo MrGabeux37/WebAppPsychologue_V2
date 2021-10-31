@@ -1,0 +1,53 @@
+#calendrierPsycho {
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  grid-template-rows: repeat(5,1fr);
+  height: 100%;
+  padding: 0px;
+  border: 1px solid black;
+}
+
+button {
+  border: none;
+  text-align: center;
+  margin: 2px 2px;
+  display: inline-block;
+  background-color: white;
+
+}
+
+.day {
+  border : 1px solid black;
+  text-align: left;
+  vertical-align: top;
+}
+
+.weekend {
+  border : 1px solid black;
+  color: blue;
+}
+
+.name {
+  border : 1px solid black;
+  text-align: center;
+}
+
+.selected {
+  background-color: red;
+  color : white;
+}
+
+.month {
+  display: grid;
+  text-align: center;
+  height: 100%;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px 2px 0px 2px;
+  grid-template-columns: 1fr 20fr 1fr;
+}
+
+.rendezvous {
+  text-align: center;
+  vertical-align: middle;
+}
