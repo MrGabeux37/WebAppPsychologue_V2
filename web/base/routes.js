@@ -1,14 +1,14 @@
-var express = require('express');
-var router = express.Router();
+'use strict';
+module.exports = function(app) {
+  var todoList = require('../controllers/todoListController');
 
-router.get('/', function(req, res){
-  res.send('GET default route');
-});
+  // todoList Routes
+  app.route('/tasks')
+    .get(todoList.list_all_tasks)
+    .post(todoList.create_a_task);
 
-router.post('/', function(req, res){
-  res.send('POST default route');
-});
-
-
-//export this router to use in index.js
-module.exports = router;
+   app.route('/tasks/:taskId')
+    .get(todoList.read_a_task)
+    .put(todoList.update_a_task)
+    .delete(todoList.delete_a_task);
+    };
