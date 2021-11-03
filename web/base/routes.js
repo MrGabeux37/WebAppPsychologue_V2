@@ -1,10 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
+//basic GET route
 router.get('/', function(req, res){
-  res.send('GET default route');
+  res.render('login')
 });
 
+//basic POST route
 router.post('/', function(req, res){
   res.send('POST default route');
 });
