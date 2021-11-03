@@ -14,7 +14,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
 app.engine('hbs', exphbs({
-  extname:'.hbs'
+  extname:'.hbs',
+  layoutsDir: './public/views/layouts'
 }));
 
 app.set('view engine' , 'hbs');
