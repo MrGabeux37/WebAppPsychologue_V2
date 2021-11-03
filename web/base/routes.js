@@ -3,7 +3,7 @@ var router = express.Router();
 
 //basic GET route
 router.get('/', function(req, res){
-  res.render('login')
+  res.render('client/disponnibilite', {layout:'clientOui'})
 });
 
 //basic POST route
