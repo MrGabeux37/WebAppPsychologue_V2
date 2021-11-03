@@ -1,29 +1,10 @@
-var express = require('express');
-var router = express.Router();
+'use stict'
 
-//testing Route
-router.get('/test', function(req, res){
-  res.render('../public/views/psychologue/reservations', {layout: 'psychologue'})
-})
-//first route
-router.get('/', function(req, res){
-  res.redirect('/login');
-})
+var routeBase = require('./routing/base.js');
+var routePsycho = require('./routing/psychologue/routePsycho.js');
+var routeClient = require('./routing/routeClient.js');
+var routeCreation = require('./routing/routeCreation.js');
+var routeCalendrierPsycho = require('./routing/psychologue/calendrierPsycho.js');
 
-//login page
-router.get('/login', function(req, res){
-  res.render('../public/views/main/login', {layout:'main'})
-});
 
-//register page
-router.get('/register', function(req, res){
-  res.render('../public/views/main/register', {layout: 'main'})
-})
-
-//basic POST route
-router.post('/', function(req, res){
-  res.send('POST default route');
-});
-
-//export this router to use in index.js
-module.exports = router;
+module.exports = [].concat(routeBase,routePsycho,routeClient,routeCreation,routeCalendrierPsycho);
