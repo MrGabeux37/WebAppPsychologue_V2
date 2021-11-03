@@ -15,7 +15,8 @@ app.use(cookieParser());
 
 app.engine('hbs', exphbs({
   extname:'.hbs',
-  layoutsDir: './public/views/layouts'
+  layoutsDir: './public/views/layouts',
+  partialsDir: './public/views/partials'
 }));
 
 app.set('view engine' , 'hbs');
