@@ -1,5 +1,13 @@
 var express = require('express');
 var router = express.Router();
+const crypto = require('crypto');
+
+//hash password method
+const getHashedPassword = (password) => {
+  const sha256 = crypto.createHash('sha256');
+  const hash = sha256.update(password).digest('base64');
+  return hash;
+}
 
 //testing Route
 router.get('/test', function(req, res){
