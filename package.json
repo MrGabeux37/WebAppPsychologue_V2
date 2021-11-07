@@ -22,7 +22,7 @@
     "crypto-js": "^4.1.1",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.4",
-    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3-rc.0",
     "sequelize": "^6.9.0"
   }
 }
