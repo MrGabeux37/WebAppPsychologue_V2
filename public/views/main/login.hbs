@@ -5,6 +5,12 @@
 
         <h5 class="card-title text-center">Connection</h5>
 
+        {{#if message}}
+          <div class="alert {{messageClass}}" role='alert'>
+            {{message}}
+          </div>
+        {{/if}}
+
         <form class="form-signin" action="/login" method="post">
           <div class="form-label-group">
             <label for="inputCourriel">Adresse Courriel</label>
