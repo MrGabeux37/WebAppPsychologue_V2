@@ -17,7 +17,9 @@ const getHashedPassword = (password) => {
 
 //testing Route
 Router.get('/test',async function(req, res){
-  res.render('../public/views/psychologue/reservations', {layout: 'psychologue'})
+  console.log('Cookies', req.cookies);
+  res.redirect('/login');
+  //res.render('../public/views/psychologue/reservations', {layout: 'psychologue'})
 })
 //first route
 Router.get('/',async function(req, res){
@@ -32,9 +34,9 @@ Router.get('/login',async function(req, res){
 //Post login
 Router.post('/login', async function(req, res){
   console.log(req.body.inputCourriel);
-  var scope="";
   var inputCourriel = req.body.inputCourriel;
-  var inputPassword = req.body.inputPassword;
+  var inputPassword = getHashedPassword(req.body.inputPassword);
+  console.log(inputPassword)
 
   //cherche un utilisateur dans la table client avec le courriel entré
   var user=await Client.findOne({
@@ -55,22 +57,45 @@ Router.post('/login', async function(req, res){
         messageClass: 'alert-danger'
       });
     }
+    //si compte psy est vrai
+    else{
+      //si mot de passe est correct
+      if(inputPassword==user.mot_de_passe){
+        res.cookie('userID',user.id_psychologue);
+        res.cookie('scope','psychologue');
+        res.redirect('/profil_psychologue');
+
+      }
+      //si mot de passe est pas bon pour psy
+      else{
+        res.render('../public/views/main/login', {
+          layout:'main',
+          message: 'Mauvais mot de passe',
+          messageClass: 'alert-danger'
+        });
+      }
+    }
+  }
+  //si compte client est vrai
+  else{
+    //si mot de passe est correct pour client
+    if(inputPassword==user.mot_de_passe){
+      var scope = (user.permission) ? 'clientOui' : 'clientNon';
+      res.cookie('userID',user.id_client);
+      res.cookie('scope',scope);
+      //change to redirect
+      res.redirect('/profil_client');
+    }
+    //mot de passe pas bon
     else{
       res.render('../public/views/main/login', {
         layout:'main',
-        message: 'Compte psychologue',
-        messageClass: 'alert-success'
+        message: 'Mauvais mot de passe',
+        messageClass: 'alert-danger'
       });
     }
   }
-  else{
-    res.render('../public/views/main/login', {
-      layout:'main',
-      message: 'Compte client',
-      messageClass: 'alert-success'
-    });
-  }
-})
+});
 
 //register page
 Router.get('/register',async function(req, res){
