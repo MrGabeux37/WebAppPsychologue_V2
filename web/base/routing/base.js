@@ -114,7 +114,6 @@ Router.get('/register',async function(req, res){
 
 //POST register
 Router.post('/register',async function(req, res){
-  
   //initialisation des variables
   var payload = req.body;
   var parent1, parent2, enfant;
