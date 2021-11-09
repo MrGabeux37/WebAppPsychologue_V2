@@ -21,11 +21,18 @@ app.engine('hbs', exphbs({
 
 app.set('view engine' , 'hbs');
 
+//serves static files
+app.use(express.static('public'));
+
 //load routes
 app.use('/',routes);
 
-//serves static files
-app.use(express.static('public'));
+//respond to page not found
+app.use(function(req, res, next){
+  res.status(404);
+  res.render('../public/views/main/404',{layout:"main"})
+
+});
 
 //Puts app online
 app.listen(port, () => {
