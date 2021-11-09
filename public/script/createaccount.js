@@ -41,8 +41,10 @@ function onSelectMono(checkbox){
 function onSelectCourrielEnfant(checkbox){
   if(checkbox.checked == true){
     document.getElementById("courriel_enfant").disabled=true;
+    document.getElementById("btnemail3").disabled=true;
   }
   else{
     document.getElementById("courriel_enfant").disabled=false;
+    document.getElementById("btnemail3").disabled=false;
   }
 }
