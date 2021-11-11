@@ -9,13 +9,6 @@ const PlageHoraire = require('../models/plagehoraire.js');
 const RendezVous = require('../models/rendezvous.js');
 const authController = require('../controllers/authController.js');
 
-//hash password method
-const getHashedPassword = (password) => {
-  const sha256 = Crypto.createHash('sha256');
-  const hash = sha256.update(password).digest('base64');
-  return hash;
-}
-
 //testing Route
 Router.get('/test',async function(req, res){
   console.log('Cookies', req.cookies);
@@ -57,8 +50,7 @@ Router.post('/register',authController.register_post);
 //route de deconnection
 Router.get('/logout', async function(req, res){
   //clear Cookies
-  res.clearCookie('userID');
-  res.clearCookie('scope');
+  res.clearCookie('jwt');
 
   res.redirect('/');
 });

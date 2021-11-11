@@ -1,10 +1,19 @@
 const Client = require('../models/client.js');
 const Psychologue = require('../models/psychologue.js');
+const Crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const maxAge = 3 * 24 * 60 * 60;
 
-const createToken = (id) => {
-  return jwt.sign({ id }, 'Le Prince des Petits', {
+//hash password method
+const getHashedPassword = (password) => {
+  const sha256 = Crypto.createHash('sha256');
+  const hash = sha256.update(password).digest('base64');
+  return hash;
+}
+
+//create jwt
+const createToken = (item) => {
+  return jwt.sign({ id:item.id, scope:item.scope }, 'Le Prince des Petits', {
     expiresIn: maxAge
   });
 }
@@ -79,6 +88,7 @@ module.exports.register_post = async (req, res) => {
         });
       });
     }
+
     res.redirect('/');
   }catch (err){
     //check to create a error handler function for different errors
@@ -116,10 +126,10 @@ module.exports.login_post = async (req, res) => {
       else{
         //si mot de passe est correct
         if(inputPassword==user.mot_de_passe){
-          res.cookie('userID',user.id_psychologue);
-          res.cookie('scope','psychologue');
+          const item = {id:user.id_psychologue, scope:'psychologue'};
+          const token=createToken(item);
+          res.cookie('jwt',token, { httpOnly: true, maxAge: maxAge * 1000});
           res.redirect('/profil_psychologue');
-
         }
         //si mot de passe est pas bon pour psy
         else{
@@ -135,9 +145,10 @@ module.exports.login_post = async (req, res) => {
     else{
       //si mot de passe est correct pour client
       if(inputPassword==user.mot_de_passe){
-        var scope = (user.permission) ? 'clientOui' : 'clientNon';
-        res.cookie('userID',user.id_client);
-        res.cookie('scope',scope);
+        const scope = (user.permission) ? 'clientOui' : 'clientNon';
+        const item = {id:user.id_client, scope:scope};
+        const token=createToken(item);
+        res.cookie('jwt',token, { httpOnly: true, maxAge: maxAge * 1000});
         //change to redirect
         res.redirect('/profil_client');
       }
