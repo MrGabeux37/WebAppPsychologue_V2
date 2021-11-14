@@ -9,7 +9,8 @@ const sequelize= new Sequelize('manon_psychologie', 'root', 'password',{ //passw
     max:15,
     min:0,
     idle:10000
-  }
+  },
+  logging:false
 })
 
 //
