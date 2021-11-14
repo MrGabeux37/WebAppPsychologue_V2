@@ -20,7 +20,7 @@
       </div>
 
       <div class="card-body">
-        <form action="/register" method="post">
+        <form class="needs-validation" novalidate action="/register" method="post">
 
           <div class="form-group">
             <label for="nom_enfant">Nom de l'enfant<span>*</span>: </label>
@@ -54,9 +54,9 @@
           <div class="form-group">
             <label for="courriel_enfant">Courriel<span>*</span>: </label>
             <input type="email" class="form-control" id="courriel_enfant" name="courriel_enfant" placeholder="Entrer l'adresse courriel de l'enfant" required>
-            <input type="checkbox" class="ml-1" onchange="onSelectCourrielEnfant(this)" name="courrielcheckenfant" value="true"> Mon enfant n'a pas une adresse courriel <br>
             <div class="valid-feedback">Valide.</div>
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
+            <input type="checkbox" class="ml-1" onchange="onSelectCourrielEnfant(this)" name="courrielcheckenfant" value="true"> Mon enfant n'a pas une adresse courriel <br>
           </div>
 
           <div class="form-group">
@@ -158,7 +158,7 @@
 
           <div class="form-group">
             <label for="num_telephone_parent2">Numéro de téléphone (Format: 819-000-0000): </label>
-            <input type="tel" class="form-control" id="num_telephone_parent2" name="num_telephone_parent2" placeholder="Entrer le numéro de téléphone du parent" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+            <input type="tel" class="form-control" id="num_telephone_parent2" name="num_telephone_parent2" placeholder="Entrer le numéro de téléphone du parent" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
             <div class="valid-feedback">Valide.</div>
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
           </div>
@@ -203,3 +203,25 @@
     </div>
   </div>
 </div>
+
+<script>
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>
