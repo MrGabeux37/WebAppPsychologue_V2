@@ -11,6 +11,9 @@ const getHashedPassword = (password) => {
   return hash;
 }
 
+//handleErrors
+
+
 //create jwt
 const createToken = (item) => {
   return jwt.sign({ id:item.id, scope:item.scope }, 'Le Prince des Petits', {
@@ -62,6 +65,7 @@ module.exports.register_post = async (req, res) => {
       permission:false,
       mot_de_passe:password_parent1
     })
+
     //sauvegarde dans la bd et ajout de id_parent1 à l'enfant
     parent1.save().then(function(id1){
       enfant.update({
@@ -93,7 +97,7 @@ module.exports.register_post = async (req, res) => {
   }catch (err){
     //check to create a error handler function for different errors
     //const errors = handleErrors(err);
-    console.log(err);
+    console.log("erreur est:"+err);
   }
 };
 
