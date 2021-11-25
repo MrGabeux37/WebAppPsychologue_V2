@@ -23,21 +23,21 @@
         <form class="needs-validation" novalidate action="/register" method="post">
 
           <div class="form-group">
-            <label for="nom_enfant">Nom de l'enfant ou adolescent<span>*</span>: </label>
+            <label for="nom_enfant">Nom de l'enfant ou adolescent: </label>
             <input type="text" class="form-control" name="nom_enfant" placeholder="Entrer le nom de famille" required autofocus>
             <div class="valid-feedback">Valide.</div>
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
           </div>
 
           <div class="form-group">
-            <label for="prenom_enfant">Prénom de l'enfant ou adolescent<span>*</span>: </label>
+            <label for="prenom_enfant">Prénom de l'enfant ou adolescent: </label>
             <input type="text" class="form-control" name="prenom_enfant" placeholder="Entrer le prénom" required>
             <div class="valid-feedback">Valide.</div>
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
           </div>
 
           <div class="form-group">
-            <input type="checkbox" onchange="onSelectMono(this)" class="ml-1" id="famillecheck" name="famillecheck" value="true"> 1 seul Contacts? <br>
+            <input type="checkbox" onchange="onSelectMono(this)" class="ml-1" id="famillecheck" name="famillecheck" value="true"> 1 Seul Contacts? <br>
             <div class="valid-feedback">Valide.</div>
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
           </div>
@@ -45,61 +45,54 @@
           <hr class="my-3">
 
           <div>
-            <h6 class="text-center"> contact 1 </h6>
+            <h6 class="text-center"> Contact 1 </h6>
           </div>
 
           <div class="form-group">
-            <label for="nom_contact1">Nom du contact<span>*</span>: </label>
+            <label for="nom_contact1">Nom du Contact: </label>
             <input type="text" class="form-control" name="nom_contact1" placeholder="Entrer le nom du contact" required>
             <div class="valid-feedback">Valide.</div>
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
           </div>
 
           <div class="form-group">
-            <label for="prenom_contact1">Prénom du Contact<span>*</span>: </label>
+            <label for="prenom_contact1">Prénom du Contact: </label>
             <input type="text" class="form-control" name="prenom_contact1" placeholder="Entrer le prénom du contact" required>
             <div class="valid-feedback">Valide.</div>
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
           </div>
 
           <div class="form-group">
-            <label for="num_telephone_contact1">Numéro de téléphone (Format: 819-000-0000)<span>*</span>: </label>
+            <label for="num_telephone_contact1">Numéro de téléphone (Format: 819-000-0000): </label>
             <input type="tel" class="form-control" name="num_telephone_contact1" placeholder="Entrer le numéro de téléphone du contact" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
             <div class="valid-feedback">Valide.</div>
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
           </div>
 
-          <div class="form-group">
-            <label for="courriel_contact1">Courriel<span>*</span>: </label>
+          <div id=divEmail1 class="form-group">
+            <label for="courriel_contact1">Courriel: </label>
             <input type="email" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact" required>
             <div class="valid-feedback">Valide.</div>
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
+            <button type="button" id="email1" onclick="ajoutChampContact(1)" class="btn btn-outline-primary btn-sm mt-1">+</button>
           </div>
 
           <hr class="my-3">
 
           <div>
-            <h6 class="text-center"> contact 2 </h6>
+            <h6 class="text-center"> Contact 2 </h6>
           </div>
 
           <div class="form-group">
-            <label for="nom_contact2">Nom du contact: </label>
+            <label for="nom_contact2">Nom du Contact: </label>
             <input type="text" class="form-control" id="nom_contact2" name="nom_contact2" placeholder="Entrer le nom du contact" required>
             <div class="valid-feedback">Valide.</div>
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
           </div>
 
           <div class="form-group">
-            <label for="prenom_contact2">Prénom du Contact1: </label>
+            <label for="prenom_contact2">Prénom du Contact: </label>
             <input type="text" class="form-control" id="prenom_contact2" name="prenom_contact2" placeholder="Entrer le prénom du contact" required>
-            <div class="valid-feedback">Valide.</div>
-            <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
-          </div>
-
-
-          <div class="form-group">
-            <label for="courriel_contact2">Courriel: </label>
-            <input type="email" class="form-control" id="courriel_contact2" name="courriel_contact2" placeholder="Entrer l'adresse courriel du contact" required>
             <div class="valid-feedback">Valide.</div>
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
           </div>
@@ -111,22 +104,15 @@
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
           </div>
 
-          <hr class="my-3">
-
-          <div>
-            <h6 class="text-center"> Information du compte </h6>
-          </div>
-
-          <div class="form-group-inline">
-            <label for="mot_de_passe">Mot de passe<span>*</span>: </label>
-            <input type="password" id="firstPW" class="form-control" name="mot_de_passe" placeholder="Entrer le mot de passe" required>
-          </div>
-          <div class="form-group-inline">
-            <label class="mt-2" for="mot_de_passe">Confirmer le mot de passe<span>*</span>: </label>
-            <input type="password" id="confirmPW" oninput="CheckPW()" class="form-control" name="mot_de_passe" placeholder="Confirmer le mot de passe" required>
+          <div id=divEmail2 class="form-group">
+            <label for="courriel_contact2">Courriel: </label>
+            <input type="email" class="form-control" id="courriel_contact2" name="courriel_contact2" placeholder="Entrer l'adresse courriel du contact" required>
+            <div class="valid-feedback">Valide.</div>
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
-            <p id="alertPW"></p>
+            <button type="button" id="email2" onclick="ajoutChampContact(2)" class="btn btn-outline-primary btn-sm mt-1">+</button>
           </div>
+
+          <hr class="my-3">
 
           <div class="text-center">
             <button id="bouton" type="submit" class="btn btn-primary center-block mb-2 mt-3" >Submit</button>
