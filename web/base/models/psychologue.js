@@ -8,10 +8,6 @@ const Psychologue = sequelize.define('psychologue',{
     autoIncrement: true,
     unique: true
   },
-  prefix:{
-    type:Sequelize.STRING,
-    defaultValue: 'PS'
-  },
   nom:{type:Sequelize.STRING},
   prenom:{type:Sequelize.STRING},
   courriel:{

@@ -8,10 +8,6 @@ const PlageHoraire = sequelize.define('plagehoraire',{
     autoIncrement: true,
     unique: true
   },
-  prefixe:{
-    type:Sequelize.STRING,
-    defaultValue: 'PH'
-  },
   heure_debut:{
     type: Sequelize.TIME
   },
