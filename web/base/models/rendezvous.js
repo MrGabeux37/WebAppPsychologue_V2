@@ -5,19 +5,13 @@ const Client = require('./client.js');
 const PlageHoraire = require('./plagehoraire.js');
 
 const RendezVous = sequelize.define('rendezvous',{
-  id_rendez_vous:{
+  id_RV:{
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     unique: true
   },
-  prefix:{
-    type:Sequelize.STRING,
-    defaultValue: 'R'
-  },
   date:{type:Sequelize.DATEONLY},
-  adresse:{type:Sequelize.STRING},
-  ville:{type:Sequelize.STRING},
   disponibilite:{
     type:Sequelize.BOOLEAN,
     defaultValue: true
@@ -43,7 +37,7 @@ const RendezVous = sequelize.define('rendezvous',{
   },
   id_plage_horaire:{
     type:Sequelize.INTEGER,
-    allowNull:true,
+    allowNull:false,
     references:{
       model:PlageHoraire,
       key:'id_plage_horaire'
