@@ -5,12 +5,14 @@ function onSelectMono(checkbox){
     document.getElementById("prenom_contact2").disabled=true;
     document.getElementById("courriel_contact2").disabled=true;
     document.getElementById("num_telephone_contact2").disabled=true;
+    document.getElementById("email2").disabled=true;
   }
   else{
     document.getElementById("nom_contact2").disabled=false;
     document.getElementById("prenom_contact2").disabled=false;
     document.getElementById("courriel_contact2").disabled=false;
     document.getElementById("num_telephone_contact2").disabled=false;
+    document.getElementById("email2").disabled=false;
   }
 }
 var count1=0;
