@@ -51,9 +51,9 @@ module.exports.register_post = async (req, res) => {
       Num_Tel:payload.num_telephone_contact1,
       Email:payload.courriel_contact1,
       Mot_Passe:password_contact1,
-      Email_Extra1:(payload.caca11===undefined ? null : payload.Contact1_courriel_extra1),
-      Email_Extra2:(payload.caca12===undefined ? null : payload.Contact1_courriel_extra2),
-      Email_Extra3:(payload.caca13===undefined ? null : payload.Contact1_courriel_extra3),
+      Email_Extra1:(payload.Contact1_courriel_extra1===null ? null : payload.Contact1_courriel_extra1),
+      Email_Extra2:(payload.Contact1_courriel_extra2===null ? null : payload.Contact1_courriel_extra2),
+      Email_Extra3:(payload.Contact1_courriel_extra3===null ? null : payload.Contact1_courriel_extra3),
       Client:client0.id_client
     })
 
@@ -65,9 +65,9 @@ module.exports.register_post = async (req, res) => {
         Num_Tel:payload.num_telephone_contact2,
         Email:payload.courriel_contact2,
         Mot_Passe:password_contact2,
-        Email_Extra1:(payload.caca21===undefined ? null : payload.Contact2_courriel_extra1),
-        Email_Extra2:(payload.caca22===undefined ? null : payload.Contact2_courriel_extra2),
-        Email_Extra3:(payload.caca23===undefined ? null : payload.Contact2_courriel_extra3),
+        Email_Extra1:(payload.Contact2_courriel_extra1===null ? null : payload.Contact2_courriel_extra1),
+        Email_Extra2:(payload.Contact2_courriel_extra2===null ? null : payload.Contact2_courriel_extra2),
+        Email_Extra3:(payload.Contact2_courriel_extra3===null ? null : payload.Contact2_courriel_extra3),
         Client:client0.id_client
       });
     }

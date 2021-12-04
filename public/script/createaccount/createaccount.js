@@ -26,7 +26,7 @@ function ajoutChampContact1(num){
     var temp=count1+1;
     input.setAttribute("class","form-control mt-1");
     input.setAttribute("type","email");
-    input.setAttribute("name","Contact1_email_extra"+temp);
+    input.setAttribute("name","Contact1_courriel_extra"+temp);
     input.setAttribute("placeholder","Entrer l'adresse courriel du contact");
     div.insertBefore(input,button1);
     count1++;
