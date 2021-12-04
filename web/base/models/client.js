@@ -1,7 +1,7 @@
 const Sequelize =require('sequelize');
 const sequelize = require('../models.js')
 
-const Client = sequelize.define('client',{
+const Client = sequelize.define('Client',{
   id_client:{
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -13,10 +13,6 @@ const Client = sequelize.define('client',{
   permission:{
     type:Sequelize.BOOLEAN,
     defaultValue: false
-  },
-  mot_de_passe:{
-    type:Sequelize.STRING,
-    allowNull:true
   }
 },{
   tableName:'client',
