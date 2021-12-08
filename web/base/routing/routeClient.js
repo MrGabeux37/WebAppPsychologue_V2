@@ -1,11 +1,19 @@
 var express = require('express');
 var router = express.Router();
+const jwt = require('jsonwebtoken');
+
+//decode Cookie function
+function decodeCookie(token){
+  return jwt.verify(token, 'Le Prince des Petits');
+};
 
 router.get('/profil_client',async function(req, res){
-  if(req.cookies.scope=='clientOui'){
+  var decoded = decodeCookie(req.cookies.jwt);
+  console.log(decoded);
+  if(decoded.scope=='clientOui'){
     res.render('../public/views/client/profil', {layout:'clientOui'});
   }
-  else if(req.cookies.scope=='clientNon'){
+  else if(decoded.scope=='clientNon'){
     res.render('../public/views/client/profil', {layout:'clientNon'});
   }
   else{
