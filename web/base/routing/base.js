@@ -55,6 +55,11 @@ Router.get('/logout', async function(req, res){
   res.redirect('/');
 });
 
+//GET non access page
+Router.get('/errorAccess',async function(req, res){
+    res.render('../public/views/main/accessRefused', {layout: 'main'})
+});
+
 
 //export this Router to use in index.js
 module.exports = Router;
