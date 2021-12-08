@@ -18,18 +18,23 @@ Router.get('/test',async function(req, res){
 
 //first route
 Router.get('/',async function(req, res){
-  console.log(req.cookies);
+  //decode Cookie
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  console.log(decoded.scope);
   //check authentication
-  if(req.cookies.scope==('clientOui'||'clientNon')){res.redirect('/profil_client');}
-  else if(req.cookies.scope=='psychologue'){res.redirect('/profil_psychologue');}
+  if(decoded.scope=='clientOui'||decoded.scope=='clientNon'){res.redirect('/profil_client');}
+  else if(decoded.scope=='psychologue'){res.redirect('/profil_psychologue');}
   else{res.redirect('/login');}
 });
 
 //login page
 Router.get('/login',async function(req, res){
+  //decode Cookie
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  console.log(decoded);
   //check authentication
-  if(req.cookies.scope==('clientOui'||'clientNon')){res.redirect('/profil_client');}
-  else if(req.cookies.scope=='psychologue'){res.redirect('/profil_psychologue');}
+  if(decoded.scope=='clientOui'||decoded.scope=='clientNon'){res.redirect('/profil_client');}
+  else if(decoded.scope=='psychologue'){res.redirect('/profil_psychologue');}
   else{res.render('../public/views/main/login', {layout:'main'})}
 });
 
@@ -38,9 +43,12 @@ Router.post('/login', authController.login_post);
 
 //register page
 Router.get('/register',async function(req, res){
+  //decode Cookie
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  console.log(decoded);
   //check authentication
-  if(req.cookies.scope==('clientOui'||'clientNon')){res.redirect('/profil_client');}
-  else if(req.cookies.scope=='psychologue'){res.redirect('/profil_psychologue');}
+  if(decoded.scope=='clientOui'||decoded.scope=='clientNon'){res.redirect('/profil_client');}
+  else if(decoded.scope=='psychologue'){res.redirect('/profil_psychologue');}
   else{res.render('../public/views/main/register', {layout: 'main'})}
 });
 
