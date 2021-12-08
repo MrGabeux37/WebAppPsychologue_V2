@@ -16,6 +16,7 @@ router.get('/profil_client',async function(req, res){
   else if(decoded.scope=='clientNon'){
     res.render('../public/views/client/profil', {layout:'clientNon'});
   }
+  //change this to a special page with a button to go back to their profile page
   else{
     res.render('../public/views/main/login', {
       layout:'main',
