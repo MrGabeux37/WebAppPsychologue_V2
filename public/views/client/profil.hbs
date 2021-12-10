@@ -18,18 +18,18 @@
       <div class="card-body">
         <form class="needs-validation" novalidate action="/profil_update" method="post">
 
-          <h6 class="text-center mb-3">Contact 1</h6>
+          <h6 class="text-center mb-3">Contact</h6>
 
           <div class="row">
             <div class="col">
               <label for="nom_parent1">Nom:</label>
-              <input value="{{{nomContact1}}}" type="text" class="form-control" name="nom_contact1" placeholder="Entrer le nom du contact" required>
+              <input value="{{{nomContact}}}" type="text" class="form-control" name="nom_contact1" placeholder="Entrer le nom du contact" required>
               <div class="valid-feedback">Valide.</div>
               <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
             <div class="col">
               <label for="prenom_parent1">Prénom:</label>
-              <input value="{{{prenomContact1}}}" type="text" class="form-control" name="prenom_contact1" placeholder="Entrer le prénom du contact" required>
+              <input value="{{{prenomContact}}}" type="text" class="form-control" name="prenom_contact1" placeholder="Entrer le prénom du contact" required>
               <div class="valid-feedback">Valide.</div>
               <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
@@ -38,13 +38,13 @@
           <div class="row mt-2">
             <div class="col">
               <label for="courriel_parent1">Courriel:</label>
-              <input value="{{{courrielContact1}}}" type="email" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact" required>
+              <input value="{{{courrielContact}}}" type="email" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact" required>
               <div class="valid-feedback">Valide.</div>
               <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
             <div class="col">
               <label for="prenom_parent1">Téléphone:</label>
-              <input value="{{{numTelContact1}}}" type="tel" class="form-control" name="num_telephone_contact1" placeholder="Entrer le numéro de téléphone du contact" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+              <input value="{{{numTelContact}}}" type="tel" class="form-control" name="num_telephone_contact1" placeholder="Entrer le numéro de téléphone du contact" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
               <div class="valid-feedback">Valide.</div>
               <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
@@ -53,60 +53,13 @@
           <div id=divEmail1 class="row mt-2">
             <div class="col">
               <label for="courriel_contact1">Courriel d'Extra: </label>
-              <input {{#if Contact1_courriel_extra1}}value="{{{Contact1_courriel_extra1}}}"{{/if}} type="email" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
-              <input {{#if Contact1_courriel_extra2}}value="{{{Contact1_courriel_extra2}}}"{{/if}} type="email" class="form-control mt-2" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
-              <input {{#if Contact1_courriel_extra3}}value="{{{Contact1_courriel_extra3}}}"{{/if}} type="email" class="form-control mt-2" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
+              <input {{#if courriel_extra1}}value="{{{courriel_extra1}}}"{{/if}} type="email" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
+              <input {{#if courriel_extra2}}value="{{{courriel_extra2}}}"{{/if}} type="email" class="form-control mt-2" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
+              <input {{#if courriel_extra3}}value="{{{courriel_extra3}}}"{{/if}} type="email" class="form-control mt-2" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
             </div>
           </div>
 
           <hr class="mt-4">
-
-          <!-- Contact 2 -->
-
-          {{#if nomContact2}}
-
-          <h6 class="text-center mb-3">Contact 2</h6>
-
-          <div class="row">
-            <div class="col">
-              <label for="nom_parent1">Nom:</label>
-              <input value="{{{nomContact2}}}" type="text" class="form-control" name="nom_contact1" placeholder="Entrer le nom du contact" required>
-              <div class="valid-feedback">Valide.</div>
-              <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
-            </div>
-            <div class="col">
-              <label for="prenom_parent1">Prénom:</label>
-              <input value="{{{prenomContact2}}}" type="text" class="form-control" name="prenom_contact1" placeholder="Entrer le prénom du contact" required>
-              <div class="valid-feedback">Valide.</div>
-              <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
-            </div>
-          </div>
-
-          <div class="row mt-2">
-            <div class="col">
-              <label for="courriel_parent1">Courriel:</label>
-              <input value="{{{courrielContact2}}}" type="email" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact" required>
-              <div class="valid-feedback">Valide.</div>
-              <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
-            </div>
-            <div class="col">
-              <label for="prenom_parent1">Téléphone:</label>
-              <input value="{{{numTelContact2}}}" type="tel" class="form-control" name="num_telephone_contact1" placeholder="Entrer le numéro de téléphone du contact" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
-              <div class="valid-feedback">Valide.</div>
-              <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
-            </div>
-          </div>
-
-          <div id=divEmail2 class="row mt-2">
-            <div class="col">
-              <label for="courriel_contact2">Courriel d'Extra: </label>
-              <input {{#if Contact2_courriel_extra1}}value="{{{Contact2_courriel_extra1}}}"{{/if}} type="email" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
-              <input {{#if Contact2_courriel_extra2}}value="{{{Contact2_courriel_extra2}}}"{{/if}} type="email" class="form-control mt-2" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
-              <input {{#if Contact2_courriel_extra3}}value="{{{Contact2_courriel_extra3}}}"{{/if}} type="email" class="form-control mt-2" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
-            </div>
-          </div>
-          {{/if}}
-
 
           <h6 class="text-center mb-3"> Enfant / Adolescent </h6>
 
