@@ -67,3 +67,5 @@ function ajoutChampContact2(num){
     }
     else{}
 }
+
+//check mot de Mot de passe

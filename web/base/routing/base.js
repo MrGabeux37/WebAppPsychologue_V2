@@ -63,6 +63,11 @@ Router.get('/logout', async function(req, res){
   res.redirect('/');
 });
 
+//GET modification du mot de Mot_Passe
+Router.get('/changement_de_mot_de_passe',async function(req, res){
+    res.render('../public/views/main/PasswordChange', {layout: 'main'})
+});
+
 //GET non access page
 Router.get('/errorAccess',async function(req, res){
     res.render('../public/views/main/404', {
