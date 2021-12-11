@@ -1,3 +1,13 @@
+<head>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+
+</head>
+
 <div class="row">
   <div class="col-sm-12 sol-md-10 col-lg-8 mx-auto">
     <div class="card mt-5">
@@ -6,91 +16,104 @@
       </div>
 
       <div class="card-body">
-        <form action="/profil_update" method="post">
+        <form class="needs-validation" novalidate action="/profil_update" method="post">
 
-          <h6 class="text-center mb-3">Parent</h6>
+          <h6 class="text-center mb-3">Contact</h6>
 
           <div class="row">
             <div class="col">
               <label for="nom_parent1">Nom:</label>
-              {{{parent1Nom}}}
+              <input value="{{{nomContact}}}" type="text" class="form-control" name="nom_contact1" placeholder="Entrer le nom du contact" required>
+              <div class="valid-feedback">Valide.</div>
+              <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
             <div class="col">
               <label for="prenom_parent1">Prénom:</label>
-              {{{parent1Prenom}}}
-            </div>
-          </div>
-
-          <div class="row mt-2">
-            <div class="col">
-              <label for="date_de_naissance_parent1">Date de naissance: </label>
-              {{{dateParent1}}}
-            </div>
-            <div class="col">
-              <label for="sexe_parent1">Sexe: </label> <br>
-              <input type="radio" id="btnradio" class="form-check-input ml-2" name="sexe_parent1" value="M" {{sexeParent1M}}>
-              <label for="sexe_parent1" class="ml-4">Homme</label>
-              <input type="radio" id="btnradio" class="form-check-input ml-2" name="sexe_parent1" value="F" {{sexeParent1F}}>
-              <label for="sexe_parent1" class="ml-4">Femme</label>
+              <input value="{{{prenomContact}}}" type="text" class="form-control" name="prenom_contact1" placeholder="Entrer le prénom du contact" required>
+              <div class="valid-feedback">Valide.</div>
+              <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
           </div>
 
           <div class="row mt-2">
             <div class="col">
               <label for="courriel_parent1">Courriel:</label>
-              {{{courrielParent1}}}
+              <input value="{{{courrielContact}}}" type="email" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact" required>
+              <div class="valid-feedback">Valide.</div>
+              <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
             <div class="col">
               <label for="prenom_parent1">Téléphone:</label>
-              {{{numTelParent1}}}
+              <input value="{{{numTelContact}}}" type="tel" class="form-control" name="num_telephone_contact1" placeholder="Entrer le numéro de téléphone du contact" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+              <div class="valid-feedback">Valide.</div>
+              <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
+            </div>
+          </div>
+
+          <div id=divEmail1 class="row mt-2">
+            <div class="col">
+              <label for="courriel_contact1">Courriel d'Extra: </label>
+              <input {{#if courriel_extra1}}value="{{{courriel_extra1}}}"{{/if}} type="email" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
+              <input {{#if courriel_extra2}}value="{{{courriel_extra2}}}"{{/if}} type="email" class="form-control mt-2" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
+              <input {{#if courriel_extra3}}value="{{{courriel_extra3}}}"{{/if}} type="email" class="form-control mt-2" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
             </div>
           </div>
 
           <hr class="mt-4">
 
-          {{{htmlParent2}}}
-
-          <h6 class="text-center mb-1"> Enfant </h6>
+          <h6 class="text-center mb-3"> Enfant / Adolescent </h6>
 
           <div class="row">
             <div class="col">
               <label for="nom_enfant">Nom:</label>
-              {{{enfantNom}}}
+              <input value="{{{enfantNom}}}" type="text" class="form-control" name="nom_client" placeholder="Entrer le nom de famille" required>
+              <div class="valid-feedback">Valide.</div>
+              <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
             <div class="col">
               <label for="prenom_enfant">Prénom:</label>
-              {{{enfantPrenom}}}
-            </div>
-          </div>
-
-          <div class="row mt-2">
-            <div class="col">
-              <label for="date_de_naissance_enfant">Date de naissance: </label>
-              {{{dateEnfant}}}
-            </div>
-            <div class="col">
-              <label for="sexe_enfant">Sexe: </label><br>
-              <input type="radio" id="btnradio" class="form-check-input ml-2" name="sexe_enfant" value="M" {{sexeEnfantM}}>
-              <label for="sexe_enfant" class="ml-4">Garçon</label>
-              <input type="radio" id="btnradio" class="form-check-input ml-2" name="sexe_enfant" value="F" {{sexeEnfantF}}>
-              <label for="sexe_enfant" class="ml-4">Fille</label>
-            </div>
-          </div>
-
-          <div class="row mt-2">
-            <div class="col">
-              <label for="courriel_enfant">Courriel:</label>
-              {{{courrielEnfant}}}
+              <input value="{{{enfantPrenom}}}" type="text" class="form-control" name="prenom_client" placeholder="Entrer le prénom" required>
+              <div class="valid-feedback">Valide.</div>
+              <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
           </div>
 
           <div class="row mt-2">
             <div class="col text-center">
-              <button type="submit" class="btn btn-primary center-block mt-2">Modifier</button>
+              <button type="submit" class="btn btn-primary center-block mt-2">Modifier les informations du profil</button>
             </div>
           </div>
+
+          <div class="row mt-2">
+            <div class="col text-center">
+              <a type="button" class="btn btn-primary center-block mt-2" href="/changement_de_mot_de_passe">Modifier votre mot de passe</a>
+            </div>
+          </div>
+
         </form>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>

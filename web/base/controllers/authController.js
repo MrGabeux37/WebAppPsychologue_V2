@@ -3,7 +3,7 @@ const Contact = require('../models/contact.js');
 const Psychologue = require('../models/psychologue.js');
 const Crypto = require('crypto');
 const jwt = require('jsonwebtoken');
-const maxAge = 3 * 24 * 60 * 60;
+const maxAge = 3 * 24 * 60 * 60; //3 days
 
 //hash password method
 const getHashedPassword = (password) => {
@@ -12,12 +12,22 @@ const getHashedPassword = (password) => {
   return hash;
 }
 
+//decode Cookie function
+function decodeCookie(token){
+  try{
+    return jwt.verify(token, 'Le Prince des Petits');
+  }catch(error){
+    return 0;
+  }
+};
+exports.decodeCookie = decodeCookie;
+
 //handleErrors
 
 
 //create jwt
 const createToken = (item) => {
-  return jwt.sign({ id:item.id, scope:item.scope }, 'Le Prince des Petits', {
+  return jwt.sign({ id:item.id, scope:item.scope, enfant:item.enfant}, 'Le Prince des Petits', {
     expiresIn: maxAge
   });
 }
@@ -87,14 +97,14 @@ module.exports.login_post = async (req, res) => {
     console.log(inputPassword)
 
     //cherche un utilisateur dans la table client avec le courriel entré
-    var user=await Client.findOne({
-      where:{courriel: inputCourriel}
+    var user = await Contact.findOne({
+      where:{Email: inputCourriel}
     });
 
     //verifie s'il la requete précédente donne un résultat null
     if(!user){
       //cherche un utilisateur dans la table psychologue avec le courriel entré
-      user=await Psychologue.findOne({
+      user = await Psychologue.findOne({
         where:{courriel:inputCourriel}
       })
       //verifie s'il la requete précédente donne un résultat null
@@ -109,7 +119,7 @@ module.exports.login_post = async (req, res) => {
       else{
         //si mot de passe est correct
         if(inputPassword==user.mot_de_passe){
-          const item = {id:user.id_psychologue, scope:'psychologue'};
+          const item = {id:user.id_psychologue, scope:'psychologue', enfant:-1};
           const token=createToken(item);
           res.cookie('jwt',token, { httpOnly: true, maxAge: maxAge * 1000});
           res.redirect('/profil_psychologue');
@@ -126,11 +136,15 @@ module.exports.login_post = async (req, res) => {
     }
     //si compte client est vrai
     else{
+      //Get enfant (ou ado) du contact
+      var client = await Client.findOne({
+        where:{id_client : user.Client}
+      });
       //si mot de passe est correct pour client
-      if(inputPassword==user.mot_de_passe){
-        const scope = (user.permission) ? 'clientOui' : 'clientNon';
-        const item = {id:user.id_client, scope:scope};
-        const token=createToken(item);
+      if(inputPassword==user.Mot_Passe){
+        const scope = (client.permission) ? 'clientOui' : 'clientNon';
+        const item = {id:user.ID_Contact, scope:scope, enfant:client.id_client,};
+        const token = createToken(item);
         res.cookie('jwt',token, { httpOnly: true, maxAge: maxAge * 1000});
         //change to redirect
         res.redirect('/profil_client');
