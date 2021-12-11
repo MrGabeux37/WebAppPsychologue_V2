@@ -69,3 +69,17 @@ function ajoutChampContact2(num){
 }
 
 //check mot de Mot de passe
+function CheckPW(){
+  //assigne les passwords
+  var firstPW = document.getElementById("password1").value ;
+  var confirmPW = document.getElementById("password2").value ;
+
+  if(firstPW!=confirmPW){
+    document.getElementById("alertPW").innerHTML="Mots de passe non identiques ";
+    document.getElementById("bouton").disabled=true;
+  }
+  else{
+    document.getElementById("alertPW").innerHTML="";
+    document.getElementById("bouton").disabled=false;
+  }
+}
