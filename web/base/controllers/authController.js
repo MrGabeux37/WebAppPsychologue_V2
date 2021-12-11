@@ -32,6 +32,20 @@ const createToken = (item) => {
   });
 }
 
+module.exports.login_get = async (req, res) => {
+  try{
+    var decoded = decodeCookie(req.cookies.jwt);
+    console.log(decoded.scope);
+    //check authentication
+    if(decoded.scope=='clientOui'||decoded.scope=='clientNon'){res.redirect('/profil_client');}
+    else if(decoded.scope=='psychologue'){res.redirect('/profil_psychologue');}
+    else{res.redirect('/login');}
+  }
+  catch(error){
+    console.log('Erreur est: '+error);
+  }
+}
+
 module.exports.register_post = async (req, res) => {
   try{
     //initialisation des variables
@@ -162,5 +176,46 @@ module.exports.login_post = async (req, res) => {
     //check to create a error handler function for different errors
     //const errors = handleErrors(err);
     console.log(err);
+  }
+}
+
+module.exports.passUpdate_post = async (req, res) => {
+  try{
+    //get payload
+    var payload = req.body;
+    var password = getHashedPassword(payload.password1);
+    //decode jwt cookie
+    var decoded = decodeCookie(req.cookies.jwt);
+    //finds user with id in the cookie
+    var user = await Contact.findOne({
+      where:{ID_Contact:decoded.id}
+    });
+    //if contact is null
+    if(!user){
+
+      //finds psychologue with ID in JWT cookie
+      user = await Psychologue.findOne({
+        where:{id_psychologue:decoded.id}
+      });
+      //if psychologue is null
+      if(!user){
+        //maybe check for different route for a different message (Oops error happened)
+        res.redirect('/errorAccess');
+      }
+      //if psychologue is true
+      else{
+        user.mot_de_passe=password;
+        user.save();
+        res.redirect('/goodPassword');
+      }
+    }
+    //if contact is true
+    else{
+      user.Mot_Passe=password;
+      user.save();
+      res.redirect('/goodPassword');
+    }
+  }catch(error){
+    console.log("erreur est: "+error);
   }
 }

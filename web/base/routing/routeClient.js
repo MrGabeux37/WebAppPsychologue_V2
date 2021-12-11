@@ -6,7 +6,7 @@ const Psychologue = require('../models/psychologue.js');
 const jwt = require('jsonwebtoken');
 const authController = require('../controllers/authController.js');
 
-
+//Get client profile
 router.get('/profil_client',async function(req, res){
   var decoded = authController.decodeCookie(req.cookies.jwt);
   console.log(decoded);
