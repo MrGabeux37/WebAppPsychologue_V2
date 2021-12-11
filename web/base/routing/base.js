@@ -65,7 +65,10 @@ Router.get('/logout', async function(req, res){
 
 //GET non access page
 Router.get('/errorAccess',async function(req, res){
-    res.render('../public/views/main/accessRefused', {layout: 'main'})
+    res.render('../public/views/main/404', {
+      layout: 'main',
+      message: "Vous n'avez pas accès à cette page"
+    })
 });
 
 

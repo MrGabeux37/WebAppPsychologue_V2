@@ -30,7 +30,10 @@ app.use('/',routes);
 //respond to page not found
 app.use(function(req, res, next){
   res.status(404);
-  res.render('../public/views/main/404',{layout:"main"})
+  res.render('../public/views/main/404',{
+    layout:"main",
+    message:"Page introuvable"
+  })
 
 });
 
