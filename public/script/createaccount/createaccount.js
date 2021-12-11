@@ -36,7 +36,7 @@ function ajoutChampContact1(num){
     const button1 = document.getElementById("email"+num);
     const div = document.getElementById("divEmail"+num);
     p.setAttribute("class","mt-1");
-    p.innerHTML="Vous pouvez seulement ajouter 3 adresse courriels"
+    p.innerHTML="Vous pouvez seulement ajouter 3 adresses courriel"
     div.insertBefore(p,button1);
     count1++;
   }
@@ -61,7 +61,7 @@ function ajoutChampContact2(num){
       p.setAttribute("class","mt-1");
       const button2 = document.getElementById("email"+num);
       const div = document.getElementById("divEmail"+num);
-      p.innerHTML="Vous pouvez seulement ajouter 3 adresse courriels"
+      p.innerHTML="Vous pouvez seulement ajouter 3 adresses courriel"
       div.insertBefore(p,button2);
       count2++;
     }

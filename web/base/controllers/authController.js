@@ -12,6 +12,16 @@ const getHashedPassword = (password) => {
   return hash;
 }
 
+//decode Cookie function
+function decodeCookie(token){
+  try{
+    return jwt.verify(token, 'Le Prince des Petits');
+  }catch(error){
+    return 0;
+  }
+};
+exports.decodeCookie = decodeCookie;
+
 //handleErrors
 
 
