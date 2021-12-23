@@ -186,13 +186,5 @@ router.post('/profil_update', async function(req, res){
   }
 });
 
-//get page redirection
-router.get('/profil_updated',async function(req,res){
-  res.render('../public/views/main/passwordChanged', {
-    layout: 'main',
-    message: "Votre profil a été enregistré avec succès!"
-  })
-});
-
 //export this router to use in index.js
 module.exports = router;
