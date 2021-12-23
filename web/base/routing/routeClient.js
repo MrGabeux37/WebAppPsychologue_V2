@@ -9,7 +9,7 @@ const authController = require('../controllers/authController.js');
 //Get client profile
 router.get('/profil_client',async function(req, res){
   var decoded = authController.decodeCookie(req.cookies.jwt);
-  if(decoded.scope=='clientOui' || decoded.scope=='clientNon'){
+  if(decoded.scope=='clientOui'){
 
     //get contact
     var contact = await Contact.findOne({
@@ -40,6 +40,37 @@ router.get('/profil_client',async function(req, res){
 
     });
   }
+  else if(decoded.scope=='clientNon'){
+
+    //get contact
+    var contact = await Contact.findOne({
+      where:{ID_Contact: decoded.id}
+    });
+
+    //get client of Contact
+    var client = await Client.findOne({
+      where:{id_client : contact.Client}
+    });
+
+    res.render('../public/views/client/profil',{
+      layout:'clientnon',
+      nomContact: contact.Nom,
+      prenomContact: contact.Prenom,
+      courrielContact: contact.Email,
+      numTelContact: contact.Num_Tel,
+      courriel_extra1: contact.Email_Extra1,
+      courriel_extra2: contact.Email_Extra2,
+      courriel_extra3: contact.Email_Extra3,
+      enfantNom: client.nom,
+      enfantPrenom: client.prenom,
+      condition: "disabled",
+      conditionExtra: "disabled",
+      post:"GET",
+      buttonPassword: true,
+      MessageButton:"Modifier les informations du profil"
+
+    });
+  }
   else{
     res.redirect('/errorAccess');
   }
@@ -48,7 +79,7 @@ router.get('/profil_client',async function(req, res){
 //enable les champs pour modifier le profil
 router.get('/profil_update',async function(req,res){
   var decoded = authController.decodeCookie(req.cookies.jwt);
-  if(decoded.scope=='clientOui' || decoded.scope=='clientNon'){
+  if(decoded.scope=='clientOui'){
 
     //get contact
     var contact = await Contact.findOne({
@@ -62,6 +93,37 @@ router.get('/profil_update',async function(req,res){
 
     res.render('../public/views/client/profil',{
       layout:'clientOui',
+      nomContact: contact.Nom,
+      prenomContact: contact.Prenom,
+      courrielContact: contact.Email,
+      numTelContact: contact.Num_Tel,
+      courriel_extra1: contact.Email_Extra1,
+      courriel_extra2: contact.Email_Extra2,
+      courriel_extra3: contact.Email_Extra3,
+      enfantNom: client.nom,
+      enfantPrenom: client.prenom,
+      condition: "required",
+      conditionExtra: "",
+      post:"POST",
+      buttonPassword: false,
+      MessageButton:"Enregistrer"
+
+    });
+  }
+  else if(decoded.scope=='clientNon'){
+
+    //get contact
+    var contact = await Contact.findOne({
+      where:{ID_Contact: decoded.id}
+    });
+
+    //get client of Contact
+    var client = await Client.findOne({
+      where:{id_client : contact.Client}
+    });
+
+    res.render('../public/views/client/profil',{
+      layout:'clientNon',
       nomContact: contact.Nom,
       prenomContact: contact.Prenom,
       courrielContact: contact.Email,
@@ -109,7 +171,7 @@ router.post('/profil_update', async function(req, res){
     (payload.courriel_extra2) ? contact.Email_Extra2=payload.courriel_extra2 : contact.Email_Extra2=null ;
 
     (payload.courriel_extra3) ? contact.Email_Extra3=payload.courriel_extra3 : contact.Email_Extra3=null;
-    
+
 
     client.nom=payload.nom_client;
     client.prenom=payload.prenom_client;
