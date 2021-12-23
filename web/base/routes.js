@@ -6,4 +6,4 @@ var routeClient = require('./routing/routeClient.js');
 var routeCalendrierPsycho = require('./routing/psychologue/calendrierPsycho.js');
 
 
-module.exports = [].concat(routeBase,routePsycho,routeClient,routeCreation,routeCalendrierPsycho);
+module.exports = [].concat(routeBase,routePsycho,routeClient,routeCalendrierPsycho);

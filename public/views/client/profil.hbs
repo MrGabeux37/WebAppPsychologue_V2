@@ -16,20 +16,20 @@
       </div>
 
       <div class="card-body">
-        <form class="needs-validation" novalidate action="/profil_update" method="post">
+        <form class="needs-validation" novalidate action="/profil_update" method="{{post}}">
 
           <h6 class="text-center mb-3">Contact</h6>
 
           <div class="row">
             <div class="col">
               <label for="nom_parent1">Nom:</label>
-              <input value="{{{nomContact}}}" type="text" class="form-control" name="nom_contact1" placeholder="Entrer le nom du contact" required>
+              <input value="{{{nomContact}}}" type="text" class="form-control" name="nom_contact1" placeholder="Entrer le nom du contact" {{condition}}>
               <div class="valid-feedback">Valide.</div>
               <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
             <div class="col">
               <label for="prenom_parent1">Prénom:</label>
-              <input value="{{{prenomContact}}}" type="text" class="form-control" name="prenom_contact1" placeholder="Entrer le prénom du contact" required>
+              <input value="{{{prenomContact}}}" type="text" class="form-control" name="prenom_contact1" placeholder="Entrer le prénom du contact" {{condition}}>
               <div class="valid-feedback">Valide.</div>
               <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
@@ -38,13 +38,13 @@
           <div class="row mt-2">
             <div class="col">
               <label for="courriel_parent1">Courriel:</label>
-              <input value="{{{courrielContact}}}" type="email" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact" required>
+              <input value="{{{courrielContact}}}" type="email" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact" {{condition}}>
               <div class="valid-feedback">Valide.</div>
               <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
             <div class="col">
               <label for="prenom_parent1">Téléphone:</label>
-              <input value="{{{numTelContact}}}" type="tel" class="form-control" name="num_telephone_contact1" placeholder="Entrer le numéro de téléphone du contact" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+              <input value="{{{numTelContact}}}" type="tel" class="form-control" name="num_telephone_contact1" placeholder="Entrer le numéro de téléphone du contact" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" {{condition}}>
               <div class="valid-feedback">Valide.</div>
               <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
@@ -53,9 +53,9 @@
           <div id=divEmail1 class="row mt-2">
             <div class="col">
               <label for="courriel_contact1">Courriel d'Extra: </label>
-              <input {{#if courriel_extra1}}value="{{{courriel_extra1}}}"{{/if}} type="email" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
-              <input {{#if courriel_extra2}}value="{{{courriel_extra2}}}"{{/if}} type="email" class="form-control mt-2" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
-              <input {{#if courriel_extra3}}value="{{{courriel_extra3}}}"{{/if}} type="email" class="form-control mt-2" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact">
+              <input {{#if courriel_extra1}}value="{{{courriel_extra1}}}"{{/if}} type="email" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact" {{conditionExtra}}>
+              <input {{#if courriel_extra2}}value="{{{courriel_extra2}}}"{{/if}} type="email" class="form-control mt-2" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact" {{conditionExtra}}>
+              <input {{#if courriel_extra3}}value="{{{courriel_extra3}}}"{{/if}} type="email" class="form-control mt-2" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact" {{conditionExtra}}>
             </div>
           </div>
 
@@ -66,13 +66,13 @@
           <div class="row">
             <div class="col">
               <label for="nom_enfant">Nom:</label>
-              <input value="{{{enfantNom}}}" type="text" class="form-control" name="nom_client" placeholder="Entrer le nom de famille" required>
+              <input value="{{{enfantNom}}}" type="text" class="form-control" name="nom_client" placeholder="Entrer le nom de famille" {{condition}}>
               <div class="valid-feedback">Valide.</div>
               <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
             <div class="col">
               <label for="prenom_enfant">Prénom:</label>
-              <input value="{{{enfantPrenom}}}" type="text" class="form-control" name="prenom_client" placeholder="Entrer le prénom" required>
+              <input value="{{{enfantPrenom}}}" type="text" class="form-control" name="prenom_client" placeholder="Entrer le prénom" {{condition}}>
               <div class="valid-feedback">Valide.</div>
               <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
@@ -80,15 +80,16 @@
 
           <div class="row mt-2">
             <div class="col text-center">
-              <button type="submit" class="btn btn-primary center-block mt-2">Modifier les informations du profil</button>
+              <button type="submit" class="btn btn-primary center-block mt-2">{{MessageButton}}</button>
             </div>
           </div>
-
+{{#if buttonPassword}}
           <div class="row mt-2">
             <div class="col text-center">
               <a type="button" class="btn btn-primary center-block mt-2" href="/changement_de_mot_de_passe">Modifier votre mot de passe</a>
             </div>
           </div>
+{{/if}}
 
         </form>
       </div>
