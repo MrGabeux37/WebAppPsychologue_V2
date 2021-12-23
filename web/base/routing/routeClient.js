@@ -88,6 +88,9 @@ router.get('/profil_update',async function(req,res){
 router.post('/profil_update', async function(req, res){
   var decoded = authController.decodeCookie(req.cookies.jwt);
   if(decoded.scope=='clientOui' || decoded.scope=='clientNon'){
+    //get payload
+    var payload = req.body;
+
     //get contact
     var contact = await Contact.findOne({
       where:{ID_Contact: decoded.id}
@@ -97,11 +100,37 @@ router.post('/profil_update', async function(req, res){
     var client = await Client.findOne({
       where:{id_client : contact.Client}
     });
+    contact.Nom=payload.nom_contact1;
+    contact.Prenom=payload.prenom_contact1;
+    contact.Num_Tel=payload.num_telephone_contact1;
+    contact.Email=payload.courriel_contact1;
+    (payload.courriel_extra1) ? contact.Email_Extra1=payload.courriel_extra1 : contact.Email_Extra1=null ;
+
+    (payload.courriel_extra2) ? contact.Email_Extra2=payload.courriel_extra2 : contact.Email_Extra2=null ;
+
+    (payload.courriel_extra3) ? contact.Email_Extra3=payload.courriel_extra3 : contact.Email_Extra3=null;
+    
+
+    client.nom=payload.nom_client;
+    client.prenom=payload.prenom_client;
+
+    client.save();
+    contact.save();
+    res.redirect('/profil_updated');
+
   }
   else{
     res.redirect('/errorAccess');
   }
-})
+});
+
+//get page redirection
+router.get('/profil_updated',async function(req,res){
+  res.render('../public/views/main/passwordChanged', {
+    layout: 'main',
+    message: "Votre profil a été enregistré avec succès!"
+  })
+});
 
 //export this router to use in index.js
 module.exports = router;
