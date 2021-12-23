@@ -9,7 +9,6 @@ const authController = require('../controllers/authController.js');
 //Get client profile
 router.get('/profil_client',async function(req, res){
   var decoded = authController.decodeCookie(req.cookies.jwt);
-  console.log(decoded);
   if(decoded.scope=='clientOui'){
 
     //get contact
@@ -58,6 +57,20 @@ router.get('/profil_client',async function(req, res){
       enfantNom: client.nom,
       enfantPrenom: client.prenom
     });
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+});
+
+router.get('/profil_update',async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  console.log(decoded);
+  if(decoded.scope=='clientOui'){
+
+  }
+  else if(decoded.scope=='clientNon'){
+
   }
   else{
     res.redirect('/errorAccess');

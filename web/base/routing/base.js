@@ -23,7 +23,6 @@ Router.get('/',authController.login_get);
 Router.get('/login',async function(req, res){
   //decode Cookie
   var decoded = authController.decodeCookie(req.cookies.jwt);
-  console.log(decoded);
   //check authentication
   if(decoded.scope=='clientOui'||decoded.scope=='clientNon'){res.redirect('/profil_client');}
   else if(decoded.scope=='psychologue'){res.redirect('/profil_psychologue');}
@@ -37,7 +36,6 @@ Router.post('/login', authController.login_post);
 Router.get('/register',async function(req, res){
   //decode Cookie
   var decoded = authController.decodeCookie(req.cookies.jwt);
-  console.log(decoded);
   //check authentication
   if(decoded.scope=='clientOui'||decoded.scope=='clientNon'){res.redirect('/profil_client');}
   else if(decoded.scope=='psychologue'){res.redirect('/profil_psychologue');}
