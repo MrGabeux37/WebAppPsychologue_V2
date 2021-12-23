@@ -68,6 +68,14 @@ Router.get('/goodPassword', async function(req, res){
   })
 });
 
+//get page redirection
+Router.get('/profil_updated',async function(req,res){
+  res.render('../public/views/main/passwordChanged', {
+    layout: 'main',
+    message: "Votre profil a été enregistré avec succès!"
+  })
+});
+
 //tri vers la bonne page profil
 Router.get('/retour_du_mot_de_passe', authController.login_get);
 
