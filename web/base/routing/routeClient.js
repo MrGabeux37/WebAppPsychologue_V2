@@ -203,6 +203,7 @@ router.get('/reservation', async function(req, res){
 
     //get all the reservations
     var rendezVous = await RendezVous.findAll({
+      order:[['date','DESC']],
       where:{id_client : contact.Client}
     });
 
@@ -225,6 +226,7 @@ router.get('/reservation', async function(req, res){
 
     //get all the reservations
     var rendezVous = await RendezVous.findAll({
+      order:[['date','DESC']],
       where:{id_client : contact.Client}
     });
 
