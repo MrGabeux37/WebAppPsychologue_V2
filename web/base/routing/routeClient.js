@@ -3,6 +3,7 @@ var router = express.Router();
 const Client = require('../models/client.js');
 const Contact = require('../models/contact.js');
 const Psychologue = require('../models/psychologue.js');
+const RendezVous = require('../models/rendezvous.js');
 const jwt = require('jsonwebtoken');
 const authController = require('../controllers/authController.js');
 
@@ -180,6 +181,57 @@ router.post('/profil_update', async function(req, res){
     contact.save();
     res.redirect('/profil_updated');
 
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+});
+
+router.get('/reservation', async function(req, res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  if(decoded.scope=='clientOui'){
+
+    //get contact
+    var contact = await Contact.findOne({
+      where:{ID_Contact: decoded.id}
+    });
+
+    //get client of Contact
+    var client = await Client.findOne({
+      where:{id_client : contact.Client}
+    });
+
+    //get all the reservations
+    var rendezVous = await RendezVous.findAll({
+      where:{id_client : contact.Client}
+    });
+
+    res.render('../public/views/client/reservation',{
+      layout:'clientOui',
+      resultat:rendezVous
+    });
+  }
+  else if(decoded.scope=='clientNon'){
+
+    //get contact
+    var contact = await Contact.findOne({
+      where:{ID_Contact: decoded.id}
+    });
+
+    //get client of Contact
+    var client = await Client.findOne({
+      where:{id_client : contact.Client}
+    });
+
+    //get all the reservations
+    var rendezVous = await RendezVous.findAll({
+      where:{id_client : contact.Client}
+    });
+
+    res.render('../public/views/client/reservation',{
+      layout:'clientNon',
+      resultat:rendezVous
+    });
   }
   else{
     res.redirect('/errorAccess');
