@@ -203,13 +203,14 @@ router.get('/reservation', async function(req, res){
 
     //get all the reservations
     var rendezVous = await RendezVous.findAll({
-      order:[['date','DESC']],
+      order:[['date','ASC']],
       where:{id_client : contact.Client}
     });
+    console.log(rendezVous);
 
     res.render('../public/views/client/reservation',{
       layout:'clientOui',
-      resultat:rendezVous
+      resultats:rendezVous
     });
   }
   else if(decoded.scope=='clientNon'){
