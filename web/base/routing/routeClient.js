@@ -4,6 +4,7 @@ const Client = require('../models/client.js');
 const Contact = require('../models/contact.js');
 const Psychologue = require('../models/psychologue.js');
 const RendezVous = require('../models/rendezvous.js');
+const PlageHoraire = require('../models/plagehoraire.js');
 const jwt = require('jsonwebtoken');
 const authController = require('../controllers/authController.js');
 
@@ -206,11 +207,29 @@ router.get('/reservation', async function(req, res){
       order:[['date','ASC']],
       where:{id_client : contact.Client}
     });
-    console.log(rendezVous);
+
+    //get all the correct plagehoraire
+    var plageHoraire=[];
+    for(var i=0;i<rendezVous.length;i++){
+      var temp = await PlageHoraire.findOne({
+        where:{id_plage_horaire:rendezVous[i].id_plage_horaire}
+      });
+      if(temp){
+        plageHoraire.push(temp)
+      }
+    }
+
+    //get psychologue
+    var psy = await Psychologue.findOne({
+      where:{id_psychologue : rendezVous[0].id_psychologue}
+    });
+    var nomPsychologue = psy.prenom + " " + psy.nom;
 
     res.render('../public/views/client/reservation',{
       layout:'clientOui',
-      resultats:rendezVous
+      resultats:rendezVous,
+      resultatPsy:nomPsychologue,
+      resultathoraire:plageHoraire
     });
   }
   else if(decoded.scope=='clientNon'){
