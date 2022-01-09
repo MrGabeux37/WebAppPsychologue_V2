@@ -218,6 +218,8 @@ router.get('/reservation', async function(req, res){
         where:{id_plage_horaire:rendezVous[i].id_plage_horaire}
       });
       if(temp){
+        temp.heure_fin=temp.heure_fin.substr(0,5);
+        temp.heure_debut=temp.heure_debut.substr(0,5);
         plageHoraire.push(temp)
       }
     }
@@ -260,6 +262,8 @@ router.get('/reservation', async function(req, res){
         where:{id_plage_horaire:rendezVous[i].id_plage_horaire}
       });
       if(temp){
+        temp.heure_fin=temp.heure_fin.substr(0,5);
+        temp.heure_debut=temp.heure_debut.substr(0,5);
         plageHoraire.push(temp)
       }
     }
@@ -316,6 +320,8 @@ router.get('/reservation/ancienne', async function(req, res){
         where:{id_plage_horaire:rendezVous[i].id_plage_horaire}
       });
       if(temp){
+        temp.heure_fin=temp.heure_fin.substr(0,5);
+        temp.heure_debut=temp.heure_debut.substr(0,5);
         plageHoraire.push(temp)
       }
     }
@@ -363,6 +369,8 @@ router.get('/reservation/ancienne', async function(req, res){
         where:{id_plage_horaire:rendezVous[i].id_plage_horaire}
       });
       if(temp){
+        temp.heure_fin=temp.heure_fin.substr(0,5);
+        temp.heure_debut=temp.heure_debut.substr(0,5);
         plageHoraire.push(temp)
       }
     }
@@ -419,6 +427,8 @@ router.get('/reservation/future', async function(req, res){
         where:{id_plage_horaire:rendezVous[i].id_plage_horaire}
       });
       if(temp){
+        temp.heure_fin=temp.heure_fin.substr(0,5);
+        temp.heure_debut=temp.heure_debut.substr(0,5);
         plageHoraire.push(temp)
       }
     }
@@ -466,6 +476,8 @@ router.get('/reservation/future', async function(req, res){
         where:{id_plage_horaire:rendezVous[i].id_plage_horaire}
       });
       if(temp){
+        temp.heure_fin=temp.heure_fin.substr(0,5);
+        temp.heure_debut=temp.heure_debut.substr(0,5);
         plageHoraire.push(temp)
       }
     }
@@ -482,6 +494,72 @@ router.get('/reservation/future', async function(req, res){
       resultatPsy:nomPsychologue,
       resultathoraire:plageHoraire
     });
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+});
+
+//route des disponibilite
+router.get('/calendrier', async function(req, res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  var today = new Date();
+  if(decoded.scope=='clientOui'){
+
+    //get contact
+    var contact = await Contact.findOne({
+      where:{ID_Contact: decoded.id}
+    });
+
+    //get client of Contact
+    var client = await Client.findOne({
+      where:{id_client : contact.Client}
+    });
+
+    //get all the reservations
+    var rendezVous = await RendezVous.findAll({
+      where:{
+              [Op.and]:[
+                {disponibilite:true},
+                {date:{[Op.gte]:today}}
+              ]
+      },
+      order:[['date','ASC']]
+    });
+
+    if(rendezVous[0]){
+      //get all the correct plagehoraire
+      var plageHoraire=[];
+      for(var i=0;i<rendezVous.length;i++){
+        var temp = await PlageHoraire.findOne({
+          where:{id_plage_horaire:rendezVous[i].id_plage_horaire}
+        });
+        if(temp){
+          temp.heure_fin=temp.heure_fin.substr(0,5);
+          temp.heure_debut=temp.heure_debut.substr(0,5);
+          plageHoraire.push(temp);
+        }
+      }
+
+      //get psychologue
+      var psy = await Psychologue.findOne({
+        where:{id_psychologue : rendezVous[0].id_psychologue}
+      });
+      var nomPsychologue = psy.prenom + " " + psy.nom;
+
+      res.render('../public/views/client/disponnibilite',{
+        layout:'clientOui',
+        resultats:rendezVous,
+        resultatPsy:nomPsychologue,
+        resultathoraire:plageHoraire
+      });
+
+    }
+
+    else{
+      res.render('../public/views/client/disponnibilite',{layout:'clientOui'});
+    }
+
   }
   else{
     res.redirect('/errorAccess');
