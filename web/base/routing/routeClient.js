@@ -547,7 +547,7 @@ router.get('/calendrier', async function(req, res){
       });
       var nomPsychologue = psy.prenom + " " + psy.nom;
 
-      res.render('../public/views/client/disponnibilite',{
+      res.render('../public/views/client/calendar',{
         layout:'clientOui',
         resultats:rendezVous,
         resultatPsy:nomPsychologue,
@@ -564,6 +564,13 @@ router.get('/calendrier', async function(req, res){
   else{
     res.redirect('/errorAccess');
   }
+});
+
+router.get('/calendrier/:idRendezVous', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  var params = req.params;
+  console.log(params);
+  res.redirect('/errorAccess');
 });
 
 //export this router to use in index.js

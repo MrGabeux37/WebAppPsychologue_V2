@@ -22,7 +22,7 @@ function decodeCookie(token){
 };
 exports.decodeCookie = decodeCookie;
 
-//handleErrors
+//handleErrors (wiil need to add something here)
 
 
 //create jwt

@@ -13,11 +13,44 @@
         <h4 class="text-center">Réservations disponibiles</h4>
       </div>
 
-      <div class="card-body text-center" id="calendrier">
+      <div class="card-body text-center" id="chaquereservation">
 
-        {{{resultat}}}
+      {{#if resultats}}
+        {{#each resultats as | resultat |}}
+          <div class="row ml-4">
+            <div class="col-4">
+              <p>ID Rendez-Vous: {{dataValues.id_RV}}<p>
+            </div>
+            <div class="col-7 ml-2">
+              <p>Psychologue: {{../resultatPsy}}</p>
+            </div>
+          </div>
+          <div class="row ml-4 mt">
+            <div class="col-4">
+              <p>Date: {{dataValues.date}}</p>
+            </div>
+            <div class="col-7 ml-2">
+              <p>Heure: {{#with (lookup ../resultathoraire @index)}}{{dataValues.heure_debut}} à {{dataValues.heure_fin}}{{/with}}</p>
+            </div>
+          </div>
+          <div class="row ml-4 mt">
+            <div class="col-4">
+              <p>Note: {{dataValues.note}}</p>
+            </div>
+          </div>
+          <div class="row mr-2 justify-content-center">
+              <a class="btn btn-primary" href="/calendrier/{{dataValues.id_RV}}">Réserver</a>
+          </div>
+
+          <hr class="mt-4">
+        {{/each}}
+      {{else}}
+        <p>Aucune disponibilité</p>
+      {{/if}}
+
 
       </div>
+
     </div>
   </div>
 </div>
