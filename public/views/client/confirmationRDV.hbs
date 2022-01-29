@@ -10,13 +10,13 @@
     <div class="card mt-5">
 
       <div class="card-header">
-        <h4 class="text-center">Confirmer la réservation choisie</h4>
+        <h4 class="text-center">{{message}}</h4>
       </div>
 
       <div class="card-body text-center" id="chaquereservation">
 
       {{#if resultats}}
-        <form action="/calendrier/confirmation/{{resultats.dataValues.id_RV}}" method="POST">
+        <form action='{{adresseURL}}{{resultats.dataValues.id_RV}}' method="POST">
           <div class="row ml-4">
             <div class="col-4">
               <p>ID Rendez-Vous: {{resultats.dataValues.id_RV}}<p>
@@ -40,7 +40,7 @@
           </div>
           <div class="row mr-4 justify-content-center">
             <button type="submit" class="btn btn-success">Confirmer</button>
-            <a class="btn btn-success ml-2" href="/calendrier">Retour</a>
+            <a class="btn btn-success ml-2" href='{{retourURL}}'>Retour</a>
           </div>
 
       </form>
