@@ -631,7 +631,23 @@ router.post('/calendrier/confirmation/:idRendezVous', async function(req,res){
     rendezvous.disponibilite=false;
     rendezvous.save();
 
-    res.redirect('/calendrier');
+    res.redirect('/RendezVousConfirme');
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+});
+
+//route confirmation de confirmation de rendez-vous
+router.get('/RendezVousConfirme', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  if(decoded.scope=='clientOui'){
+    res.render('../public/views/client/confirmed',{
+      layout:'clientOui',
+      message:'Le rendez-vous est confirmé!',
+      adresseURL:'/calendrier',
+      MsgBouton:'Retour aux disponibilités'
+    });
   }
   else{
     res.redirect('/errorAccess');
