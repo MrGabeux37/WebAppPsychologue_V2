@@ -566,11 +566,76 @@ router.get('/calendrier', async function(req, res){
   }
 });
 
-router.get('/calendrier/:idRendezVous', async function(req,res){
+//route confirmation d'acceptation du rendezvous
+router.get('/calendrier/confirmation/:idRendezVous', async function(req,res){
   var decoded = authController.decodeCookie(req.cookies.jwt);
   var params = req.params;
   console.log(params);
-  res.redirect('/errorAccess');
+  if(decoded.scope=='clientOui'){
+    //get Rendezvous choisi
+    var rendezvous = await RendezVous.findOne({
+      where:{id_RV : params.idRendezVous}
+    });
+
+    //get plagehoraire
+    var plagehoraire = await PlageHoraire.findOne({
+    where:{id_plage_horaire : rendezvous.id_plage_horaire}
+    });
+    var heure_debut = plagehoraire.heure_debut.substr(0,5);
+    var heure_fin = plagehoraire.heure_fin.substr(0,5);
+
+    console.log(plagehoraire);
+
+    //get psychologue
+    var psy = await Psychologue.findOne({
+      where:{id_psychologue : rendezvous.id_psychologue}
+    });
+    var nomPsychologue = psy.prenom + " " + psy.nom;
+
+    res.render('../public/views/client/confirmationRDV',{
+      layout:'clientOui',
+      resultats:rendezvous,
+      resultatPsy:nomPsychologue,
+      heure_debut:heure_debut,
+      heure_fin:heure_fin
+    });
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+});
+
+//route POST d'acceptation du rendez-Vous
+router.post('/calendrier/confirmation/:idRendezVous', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  var params = req.params;
+  console.log(params);
+  if(decoded.scope=='clientOui'){
+
+    //get contact
+    var contact = await Contact.findOne({
+      where:{ID_Contact: decoded.id}
+    });
+
+    //get client of Contact
+    var client = await Client.findOne({
+      where:{id_client : contact.Client}
+    });
+
+    //get Rendezvous choisi
+    var rendezvous = await RendezVous.findOne({
+      where:{id_RV : params.idRendezVous}
+    });
+
+    rendezvous.id_client=client.id_client;
+    rendezvous.disponibilite=false;
+    rendezvous.save();
+
+    res.redirect('/calendrier');
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
 });
 
 //export this router to use in index.js
