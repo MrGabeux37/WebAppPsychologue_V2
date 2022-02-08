@@ -1,14 +1,22 @@
 <div class="row">
-  <div class="col-sm-12 sol-md-10 col-lg-8 mx-auto">
+  <div class="col-sm-14 sol-md-11 col-lg-8 mx-auto">
     <div class="card mt-5">
 
       <div class="card-header">
-        <h4 class="text-center">Réservations disponibiles</h4>
+        <h4 class="text-center">Vos Réservations</h4>
       </div>
 
       <div class="card-body text-center" id="chaquereservation">
 
-      {{#if resultats}}
+        <div class="row">
+          <div class="col">
+            <a href="/reservation/ancienne" type="button" class="btn btn-success center-block mt-2">Anciennes Réservations</a>
+            <a href="/reservation/future" type="button" class="btn btn-success center-block mt-2">Réservations Futures</a>
+            <a href="/reservation" type="button" class="btn btn-success center-block mt-2">Toutes les Réservations</a>
+          </div>
+        </div>
+        <hr class="mt-4">
+
         {{#each resultats as | resultat |}}
           <div class="row ml-4">
             <div class="col-4">
@@ -31,15 +39,11 @@
               <p>Note: {{dataValues.note}}</p>
             </div>
           </div>
+          <a class="btn btn-success mr-4" href='/reservation/annulation/{{dataValues.id_RV}}'>Annuler</a>
           <hr class="mt-4">
         {{/each}}
-      {{else}}
-        <p>Aucune disponibilité</p>
-      {{/if}}
-
 
       </div>
-
     </div>
   </div>
 </div>

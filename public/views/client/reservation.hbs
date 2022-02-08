@@ -10,14 +10,37 @@
 
         <div class="row">
           <div class="col">
-            <a href="/reservation/ancienne" type="button" class="btn btn-primary center-block mt-2">Anciennes Réservations</a>
-            <a href="/reservation/future" type="button" class="btn btn-primary center-block mt-2">Réservations Futures</a>
-            <a href="/reservation" type="button" class="btn btn-primary center-block mt-2">Toutes les Réservations</a>
+            <a href="/reservation/ancienne" type="button" class="btn btn-success center-block mt-2">Anciennes Réservations</a>
+            <a href="/reservation/future" type="button" class="btn btn-success center-block mt-2">Réservations Futures</a>
+            <a href="/reservation" type="button" class="btn btn-success center-block mt-2">Toutes les Réservations</a>
           </div>
         </div>
         <hr class="mt-4">
 
-        {{{resultat}}}
+        {{#each resultats as | resultat |}}
+          <div class="row ml-4">
+            <div class="col-4">
+              <p>ID Rendez-Vous: {{dataValues.id_RV}}<p>
+            </div>
+            <div class="col-7 ml-2">
+              <p>Psychologue: {{../resultatPsy}}</p>
+            </div>
+          </div>
+          <div class="row ml-4 mt">
+            <div class="col-4">
+              <p>Date: {{dataValues.date}}</p>
+            </div>
+            <div class="col-7 ml-2">
+              <p>Heure: {{#with (lookup ../resultathoraire @index)}}{{dataValues.heure_debut}} à {{dataValues.heure_fin}}{{/with}}</p>
+            </div>
+          </div>
+          <div class="row ml-4 mt">
+            <div class="col-4">
+              <p>Note: {{dataValues.note}}</p>
+            </div>
+          </div>
+          <hr class="mt-4">
+        {{/each}}
 
       </div>
     </div>

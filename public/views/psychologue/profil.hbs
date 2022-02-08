@@ -7,37 +7,75 @@
       </div>
 
       <div class="card-body">
-        <form action="/profil_psychologue/update" method="post">
+        <form class="needs-validation" action="/profil_psychologue/update" method="{{post}}" novalidate>
 
           <div class="row">
             <div class="col">
               <label for="nom_psychologue">Nom:</label>
-              {{{nom}}}
+              <input value="{{nom}}" type="text" class="form-control" name="nom" placeholder="Entrer le nom de famille" {{condition}}>
+              <div class="valid-feedback">Valide.</div>
+              <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
             <div class="col">
               <label for="prenom_psychologue">Prénom:</label>
-              {{{prenom}}}
+              <input value="{{prenom}}" type="text" class="form-control" name="prenom" placeholder="Entrer le prénom" {{condition}}>
+              <div class="valid-feedback">Valide.</div>
+              <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
           </div>
 
           <div class="row mt-2">
             <div class="col">
               <label for="courriel_psychologue">Courriel:</label>
-              {{{courriel}}}
+              <input value="{{courriel}}" type="email" class="form-control" name="courriel" placeholder="Entrer l'adresse courriel du contact" {{condition}}>
+              <div class="valid-feedback">Valide.</div>
+              <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
             <div class="col">
               <label for="num_telephone_psychologue">Téléphone:</label>
-              {{{telephone}}}
+              <input value="{{telephone}}" type="tel" class="form-control" name="num_telephone" placeholder="Entrer le numéro de téléphone du contact" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" {{condition}}>
+              <div class="valid-feedback">Valide.</div>
+              <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
           </div>
 
           <div class="row mt-2">
             <div class="col text-center">
-              <button type="submit" class="btn btn-primary center-block mt-2">Modifier</button>
+              <button type="submit" class="btn btn-success center-block mt-2">{{MessageButton}}</button>
             </div>
           </div>
+{{#if buttonPassword}}
+          <div class="row mt-2">
+            <div class="col text-center">
+              <a type="button" class="btn btn-success center-block mt-2" href="/changement_de_mot_de_passe">Modifier votre mot de passe</a>
+            </div>
+          </div>
+{{/if}}
+
         </form>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>
