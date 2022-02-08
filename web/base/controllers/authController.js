@@ -11,6 +11,7 @@ const getHashedPassword = (password) => {
   const hash = sha256.update(password).digest('base64');
   return hash;
 }
+exports.getHashedPassword = getHashedPassword;
 
 //decode Cookie function
 function decodeCookie(token){
