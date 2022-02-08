@@ -3,78 +3,87 @@
     <div class="card mt-5">
 
       <div class="card-header">
-        <h4 class="text-center">Profil des Clients</h4>
+        <h4 class="text-center">Profil du Client</h4>
       </div>
 
       <div class="card-body" id="body">
 
-        <form action="{{reference}}" method="post">
+        <form action="/client/profil_update" method="post">
 
-          <h6 class="text-center mb-1"> Enfant </h6>
+          <h6 class="text-center mb-1"> Client </h6>
+          <hr class="mt-4">
 
           <div class="row">
             <div class="col">
-              <label for="nom_enfant">Nom:</label>
-              {{{enfantNom}}}
+              <label for="nom_enfant">Nom: {{client.dataValues.nom}}</label>
             </div>
             <div class="col">
-              <label for="prenom_enfant">Prénom:</label>
-              {{{enfantPrenom}}}
+              <label for="prenom_enfant">Prénom: {{client.dataValues.prenom}}</label>
             </div>
           </div>
 
           <div class="row mt-2">
             <div class="col">
-              <label for="date_de_naissance_enfant">Date de naissance: </label>
-              {{{dateEnfant}}}
-            </div>
-            <div class="col">
-              <label for="Permission_enfant">Permission:</label>
-              {{{permissionEnfant}}}
-            </div>
-          </div>
-
-          <div class="row mt-2">
-            <div class="col">
-              <label for="courriel_enfant">Courriel:</label>
-              {{{courrielEnfant}}}
+              <label for="Permission_enfant">Permission: {{#if client.dataValues.permission}}Oui{{else}}Non{{/if}}</label>
             </div>
           </div>
 
           <hr class="mt-4">
 
-          <h6 class="text-center mb-3">Parent</h6>
+          <h6 class="text-center mb-3">Contacts</h6>
 
-          <div class="row">
+          <hr class="mt-4">
+
+      {{#if contacts}}
+        {{#each contacts as | contact |}}
+
+          <div class="row mt">
             <div class="col">
-              <label for="nom_parent1">Nom:</label>
-              {{{parent1Nom}}}
+              <label for="nom_parent1">Nom: {{dataValues.Nom}}</label>
             </div>
+
             <div class="col">
-              <label for="prenom_parent1">Prénom:</label>
-              {{{parent1Prenom}}}
+              <label for="prenom_parent1">Prénom: {{dataValues.Prenom}}</label>
             </div>
           </div>
 
           <div class="row mt-2">
-            <div class="col-6">
-              <label for="date_de_naissance_parent1">Date de naissance: </label>
-              {{{dateParent1}}}
+            <div class="col">
+              <label for="courriel_contact">Courriel: {{dataValues.Email}}</label>
+            </div>
+
+            <div class="col">
+              <label for="prenom_contact">Téléphone: {{dataValues.Num_Tel}}</label>
             </div>
           </div>
 
           <div class="row mt-2">
             <div class="col">
-              <label for="courriel_parent1">Courriel:</label>
-              {{{courrielParent1}}}
-            </div>
-            <div class="col">
-              <label for="prenom_parent1">Téléphone:</label>
-              {{{numTelParent1}}}
+              <label for="courriel_extra1">Courriel extra 1: {{dataValues.Email_Extra1}}</label>
             </div>
           </div>
 
-          {{{htmlParent2}}}
+          <div class="row mt-2">
+            <div class="col">
+              <label for="courriel_extra2">Courriel extra 2: {{dataValues.Email_Extra2}}</label>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col">
+              <label for="courriel_extra3">Courriel extra 3: {{dataValues.Email_Extra3}}</label>
+            </div>
+          </div>
+
+          <hr class="mt-4">
+          {{/each}}
+        {{else}}
+        <div class="row text-center">
+          <div class="col">
+            <p>***Erreur Aucun Contact***</p>
+          </div>
+        </div>
+        {{/if}}
 
           <div class="row mt-2">
             <div class="col text-center">
@@ -85,7 +94,7 @@
 
         <hr class="mt-4">
 
-        {{{reservations}}}
+        <!--reservations-->
 
       </div>
     </div>
