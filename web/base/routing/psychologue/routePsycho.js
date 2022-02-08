@@ -89,7 +89,7 @@ router.get('/clients', async function(req,res){
   console.log(decoded);
   if(decoded.scope=='psychologue'){
 
-    res.render('../public/views/psychologue/clients', {
+    res.render('../public/views/psychologue/clients_recherche', {
       layout:'psychologue'
     });
   }
