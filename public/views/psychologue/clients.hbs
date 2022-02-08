@@ -19,6 +19,43 @@
 
         <hr class="mt-4">
 
+        {{#if resultats}}
+          {{#each resultats as | resultat |}}
+            <div class="row ml-4">
+              <div class="col-4">
+                <p>ID Rendez-Vous: {{dataValues.id_RV}}<p>
+              </div>
+              <div class="col-7 ml-2">
+                <p>Psychologue: {{../resultatPsy}}</p>
+              </div>
+            </div>
+            <div class="row ml-4 mt">
+              <div class="col-4">
+                <p>Date: {{dataValues.date}}</p>
+              </div>
+              <div class="col-7 ml-2">
+                <p>Heure: {{#with (lookup ../resultathoraire @index)}}{{dataValues.heure_debut}} à {{dataValues.heure_fin}}{{/with}}</p>
+              </div>
+            </div>
+            <div class="row ml-4 mt">
+              <div class="col-4">
+                <p>Note: {{dataValues.note}}</p>
+              </div>
+            </div>
+            <div class="row mr-2 justify-content-center">
+                <a class="btn btn-success" href="/calendrier/confirmation/{{dataValues.id_RV}}">Réserver</a>
+            </div>
+
+            <hr class="mt-4">
+          {{/each}}
+        {{else}}
+        <div class="row text-center">
+          <div class="col">
+            <p>***Aucun Client***</p>
+          </div>
+        </div>
+        {{/if}}
+
       </div>
     </div>
   </div>

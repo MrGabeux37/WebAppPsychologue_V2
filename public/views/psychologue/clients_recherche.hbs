@@ -8,10 +8,11 @@
 
       <div class="card-body" id="body">
 
-        <form class="form-inline" action="/clients_recherche" method="get">
+        <form class="form-inline" action="/clients" method="get">
           <div class="row">
             <div class="col">
-              <input class="form-control" style="width:225px" type="text" name="nom_enfant" placeholder="Nom ou prenom de l'enfant" value="{{name}}" required>
+              <input class="form-control" style="width:225px" type="text" name="prenom_client" placeholder="Prenom du client" value="{{prenom}}">
+              <input class="form-control" style="width:225px" type="text" name="nom_client" placeholder="Nom du client" value="{{nom}}">
               <button class="btn btn-success" type="submit">Chercher</button>
             </div>
           </div>
@@ -19,7 +20,34 @@
 
         <hr class="mt-4">
 
-        
+        {{#if resultats}}
+          {{#each resultats as | resultat |}}
+            <div class="row ml-4">
+              <div class="col">
+                <p>Prénom: {{dataValues.prenom}}</p>
+              </div>
+              <div class="col ml-2">
+                <p>Nom: {{dataValues.nom}}<p>
+              </div>
+            </div>
+            <div class="row ml-4 mt">
+              <div class="col justify-content-center">
+                <p>Permission: {{#if dataValues.permission}}Oui{{else}}Non{{/if}}</p>
+              </div>
+            </div>
+            <div class="row mr-2 justify-content-center">
+                <a class="btn btn-success" href="/clients/profil/{{dataValues.id_client}}">Information du Client</a>
+            </div>
+
+            <hr class="mt-4">
+          {{/each}}
+        {{else}}
+        <div class="row text-center">
+          <div class="col">
+            <p>***Aucun Client***</p>
+          </div>
+        </div>
+        {{/if}}
 
       </div>
     </div>
