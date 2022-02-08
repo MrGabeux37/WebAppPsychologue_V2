@@ -84,5 +84,19 @@ router.post('/profil_psychologue/update', async function(req,res){
   }
 });
 
+router.get('/clients', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  console.log(decoded);
+  if(decoded.scope=='psychologue'){
+
+    res.render('../public/views/psychologue/clients_recherche', {
+      layout:'psychologue'
+    });
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+})
+
 //export this router to use in index.js
 module.exports = router;
