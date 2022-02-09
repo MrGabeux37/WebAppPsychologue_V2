@@ -136,7 +136,39 @@ router.get('/clients/profil/:id_client', async function(req,res){
       layout:'psychologue',
       client: client,
       contacts: contacts,
-      condition: 'disabled'
+      condition: 'disabled',
+      condition2: 'disabled',
+      post:'GET'
+    });
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+})
+
+//affiche l'information d'un client choisie et active les input field
+router.get('/clients/profil_update/:id_client', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  if(decoded.scope=='psychologue'){
+    //get le parametre dans le URL
+    var params = req.params;
+    //trouve le client choisi
+    var client = await Client.findOne({
+      where:{id_client:params.id_client}
+    });
+    //trouve les contacts associes au clients
+    var contacts = await Contact.findAll({
+      where:{Client:params.id_client}
+    });
+
+
+    res.render('../public/views/psychologue/clients_profil', {
+      layout:'psychologue',
+      client: client,
+      contacts: contacts,
+      condition: 'required',
+      condition2: '',
+      post:'GET'
     });
   }
   else{
