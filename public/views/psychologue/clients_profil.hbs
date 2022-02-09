@@ -26,7 +26,8 @@
 
           <div class="row mt-2">
             <div class="col">
-              <label for="Permission_enfant">Permission: {{#if client.dataValues.permission}}Oui{{else}}Non{{/if}}</label>
+              <label for="permission" class="checkbox-inline">Permission: </label>
+              <input type="checkbox" {{#if client.dataValues.permission}} checked {{/if}} data-toggle="toggle" name="permission">
             </div>
           </div>
 
