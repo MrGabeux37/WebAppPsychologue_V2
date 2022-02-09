@@ -135,7 +135,8 @@ router.get('/clients/profil/:id_client', async function(req,res){
     res.render('../public/views/psychologue/clients_profil', {
       layout:'psychologue',
       client: client,
-      contacts: contacts
+      contacts: contacts,
+      condition: 'disabled'
     });
   }
   else{

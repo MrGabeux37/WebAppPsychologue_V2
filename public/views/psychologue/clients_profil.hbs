@@ -8,17 +8,19 @@
 
       <div class="card-body" id="body">
 
-        <form action="/client/profil_update" method="post">
+        <form action="/client/profil/profil_update" method="post">
 
           <h6 class="text-center mb-1"> Client </h6>
           <hr class="mt-4">
 
           <div class="row">
             <div class="col">
-              <label for="nom_enfant">Nom: {{client.dataValues.nom}}</label>
+              <label for="nom_client">Nom: </label>
+              <input value="{{client.dataValues.nom}}" type="text" class="form-control" name="nom_client" placeholder="Entrer le nom du client" {{{condition}}}>
             </div>
             <div class="col">
-              <label for="prenom_enfant">Prénom: {{client.dataValues.prenom}}</label>
+              <label for="prenom_client">Prénom: </label>
+              <input value="{{client.dataValues.prenom}}" type="text" class="form-control" name="prenom_client" placeholder="Entrer le nom du client" {{{condition}}}>
             </div>
           </div>
 
@@ -39,39 +41,46 @@
 
           <div class="row mt">
             <div class="col">
-              <label for="nom_parent1">Nom: {{dataValues.Nom}}</label>
+              <label for="nom_contact">Nom: </label>
+              <input value="{{dataValues.Nom}}" type="text" class="form-control" name="nom_contact" placeholder="Entrer le nom du contact" {{../condition}}>
             </div>
 
             <div class="col">
-              <label for="prenom_parent1">Prénom: {{dataValues.Prenom}}</label>
-            </div>
-          </div>
-
-          <div class="row mt-2">
-            <div class="col">
-              <label for="courriel_contact">Courriel: {{dataValues.Email}}</label>
-            </div>
-
-            <div class="col">
-              <label for="prenom_contact">Téléphone: {{dataValues.Num_Tel}}</label>
+              <label for="prenom_contact">Prénom: </label>
+              <input value="{{dataValues.Prenom}}" type="text" class="form-control" name="prenom_contact" placeholder="Entrer le prenom du contact" {{../condition}}>
             </div>
           </div>
 
           <div class="row mt-2">
             <div class="col">
-              <label for="courriel_extra1">Courriel extra 1: {{dataValues.Email_Extra1}}</label>
+              <label for="courriel_contact">Courriel: </label>
+              <input value="{{dataValues.Email}}" type="text" class="form-control" name="courriel_contact" placeholder="Entrer le courriel du contact" {{../condition}}>
+            </div>
+
+            <div class="col">
+              <label for="telephone_contact">Téléphone: </label>
+              <input value="{{dataValues.Num_Tel}}" type="text" class="form-control" name="telephone_contact" placeholder="Entrer le numéro de téléphone du contact" {{../condition}}>
             </div>
           </div>
 
           <div class="row mt-2">
             <div class="col">
-              <label for="courriel_extra2">Courriel extra 2: {{dataValues.Email_Extra2}}</label>
+              <label for="courriel_extra1">Courriel extra 1: </label>
+              <input value="{{dataValues.Email_Extra1}}" type="text" class="form-control" name="courriel_extra1" placeholder="Entrer le courriel du contact" {{../condition}}>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col">
+              <label for="courriel_extra2">Courriel extra 2: </label>
+              <input value="{{dataValues.Email_Extra2}}" type="text" class="form-control" name="courriel_extra2" placeholder="Entrer le courriel du contact" {{../condition}}>
             </div>
           </div>
 
           <div class="row mt-2">
             <div class="col">
               <label for="courriel_extra3">Courriel extra 3: {{dataValues.Email_Extra3}}</label>
+              <input value="{{dataValues.Email_Extra3}}" type="text" class="form-control" name="courriel_extra3" placeholder="Entrer le courriel du contact" {{../condition}}>
             </div>
           </div>
 
