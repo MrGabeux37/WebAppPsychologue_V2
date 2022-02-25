@@ -12,7 +12,7 @@ const Psychologue = sequelize.define('psychologue',{
   prenom:{type:Sequelize.STRING},
   courriel:{
     type:Sequelize.STRING,
-    alowNull:true,
+    allowNull:true,
     validate:{isEmail:true},
     unique: true
   },

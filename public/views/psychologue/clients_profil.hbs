@@ -8,7 +8,7 @@
 
       <div class="card-body" id="body">
 
-        <form action="/clients/profil_update/{{client.dataValues.id_client}}" method="{{post}}">
+        <form class="needs-validation" action="/clients/profil_update/{{client.dataValues.id_client}}" method="{{post}}" novalidate>
 
           <h6 class="text-center mb-1"> Client </h6>
           <hr class="mt-4">
@@ -27,7 +27,7 @@
           <div class="row mt-2">
             <div class="col">
               <label for="permission" class="checkbox-inline">Permission: </label>
-              <input type="checkbox" {{#if client.dataValues.permission}} checked {{/if}} data-toggle="toggle" name="permission">
+              <input type="checkbox" {{#if client.dataValues.permission}} checked {{/if}} data-toggle="toggle" name="permission" {{{condition3}}}>
             </div>
           </div>
 
@@ -80,7 +80,7 @@
 
           <div class="row mt-2">
             <div class="col">
-              <label for="courriel_extra3">Courriel extra 3: {{dataValues.Email_Extra3}}</label>
+              <label for="courriel_extra3">Courriel extra 3: </label>
               <input value="{{dataValues.Email_Extra3}}" type="text" class="form-control" name="courriel_extra3" placeholder="Entrer le courriel du contact" {{../condition2}}>
             </div>
           </div>
@@ -110,3 +110,25 @@
     </div>
   </div>
 </div>
+
+<script>
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>

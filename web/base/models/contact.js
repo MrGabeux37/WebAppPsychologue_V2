@@ -2,6 +2,11 @@ const Sequelize =require('sequelize');
 const sequelize = require('../models.js');
 const Client = require('../models/client.js');
 
+validateEmail = (email) => {
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+
 const Contact = sequelize.define('Contact',{
   ID_Contact:{
     type: Sequelize.INTEGER,
@@ -14,7 +19,7 @@ const Contact = sequelize.define('Contact',{
   Num_Tel:{type:Sequelize.STRING},
   Email:{
     type:Sequelize.STRING,
-    alowNull:false,
+    allowNull:false,
     validate:{isEmail:true},
     unique: true
   },
@@ -24,20 +29,47 @@ const Contact = sequelize.define('Contact',{
   },
   Email_Extra1:{
     type:Sequelize.STRING,
-    alowNull:true,
-    validate:{isEmail:true},
+    allowNull:true,
+    validate:{
+      isEmailOrEmpty(val, next) {
+        if (!val || val === "" || validateEmail(val)) {
+          return next()
+        }
+        else {
+          return next('email is invalid')
+        }
+      }
+    },
     unique: true
   },
   Email_Extra2:{
     type:Sequelize.STRING,
-    alowNull:true,
-    validate:{isEmail:true},
+    allowNull:true,
+    validate:{
+      isEmailOrEmpty(val, next) {
+        if (!val || val === "" || validateEmail(val)) {
+          return next()
+        }
+        else {
+          return next('email is invalid')
+        }
+      }
+    },
     unique: true
   },
   Email_Extra3:{
     type:Sequelize.STRING,
-    alowNull:true,
-    validate:{isEmail:true},
+    allowNull:true,
+    validate:{
+      isEmailOrEmpty(val, next) {
+        if (!val || val === "" || validateEmail(val)) {
+          return next()
+        }
+        else {
+          return next('email is invalid')
+        }
+      }
+    },
     unique: true
   },
   Client:{
