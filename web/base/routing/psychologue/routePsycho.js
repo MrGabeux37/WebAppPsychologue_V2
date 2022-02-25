@@ -138,7 +138,8 @@ router.get('/clients/profil/:id_client', async function(req,res){
       contacts: contacts,
       condition: 'disabled',
       condition2: 'disabled',
-      post:'GET'
+      post:'GET',
+      boutton: 'Modifier les info du compte'
     });
   }
   else{
@@ -168,7 +169,8 @@ router.get('/clients/profil_update/:id_client', async function(req,res){
       contacts: contacts,
       condition: 'required',
       condition2: '',
-      post:'GET'
+      post:'POST',
+      boutton: 'Enregistrer'
     });
   }
   else{
@@ -176,5 +178,27 @@ router.get('/clients/profil_update/:id_client', async function(req,res){
   }
 })
 
+//affiche l'information d'un client choisie et active les input field
+router.post('/clients/profil_update/:id_client', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  if(decoded.scope=='psychologue'){
+    //get le parametre dans le URL
+    var params = req.params;
+    //trouve le client choisi
+    var client = await Client.findOne({
+      where:{id_client:params.id_client}
+    });
+    //trouve les contacts associes au clients
+    var contacts = await Contact.findAll({
+      where:{Client:params.id_client}
+    });
+
+    var destination="/profil_client_updated/"+client.id_client;
+    res.redirect(destination);
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+})
 //export this router to use in index.js
 module.exports = router;

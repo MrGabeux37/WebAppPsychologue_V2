@@ -76,6 +76,17 @@ Router.get('/profil_updated',async function(req,res){
   })
 });
 
+//get page redirection apres modification du profil client
+Router.get('/profil_client_updated/:id_client', async function(req, res){
+  var params = req.params;
+  console.log(params);
+  res.render('../public/views/main/profil_client_updated', {
+    layout: 'main',
+    message: "Le profil du client a été enregistré avec succès!",
+    idclient:params.id_client
+  })
+})
+
 //tri vers la bonne page profil
 Router.get('/retour_du_mot_de_passe', authController.login_get);
 
