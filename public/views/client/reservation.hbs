@@ -16,7 +16,7 @@
           </div>
         </div>
         <hr class="mt-4">
-
+        {{#if resultats}}
         {{#each resultats as | resultat |}}
           <div class="row ml-4">
             <div class="col-4">
@@ -41,6 +41,10 @@
           </div>
           <hr class="mt-4">
         {{/each}}
+        {{else}}
+          <p>Aucune Réservation</p>
+        {{/if}}
+
 
       </div>
     </div>
