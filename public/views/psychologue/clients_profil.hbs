@@ -98,6 +98,7 @@
           <div class="row mt-2">
             <div class="col text-center">
               <button type="submit" class="btn btn-success center-block mt-2">{{boutton}}</button>
+              {{#if reserve}}<a type="button" href='/clients/profil/{{client.dataValues.id_client}}/reservation' class="btn btn-success center-block mt-2">Réservation</a>{{/if}}
             </div>
           </div>
         </form>

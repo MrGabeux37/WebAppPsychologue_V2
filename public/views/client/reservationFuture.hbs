@@ -16,32 +16,35 @@
           </div>
         </div>
         <hr class="mt-4">
-
-        {{#each resultats as | resultat |}}
-          <div class="row ml-4">
-            <div class="col-4">
-              <p>ID Rendez-Vous: {{dataValues.id_RV}}<p>
+        {{#if resultats}}
+          {{#each resultats as | resultat |}}
+            <div class="row ml-4">
+              <div class="col-4">
+                <p>ID Rendez-Vous: {{dataValues.id_RV}}<p>
+              </div>
+              <div class="col-7 ml-2">
+                <p>Psychologue: {{../resultatPsy}}</p>
+              </div>
             </div>
-            <div class="col-7 ml-2">
-              <p>Psychologue: {{../resultatPsy}}</p>
+            <div class="row ml-4 mt">
+              <div class="col-4">
+                <p>Date: {{dataValues.date}}</p>
+              </div>
+              <div class="col-7 ml-2">
+                <p>Heure: {{#with (lookup ../resultathoraire @index)}}{{dataValues.heure_debut}} à {{dataValues.heure_fin}}{{/with}}</p>
+              </div>
             </div>
-          </div>
-          <div class="row ml-4 mt">
-            <div class="col-4">
-              <p>Date: {{dataValues.date}}</p>
+            <div class="row ml-4 mt">
+              <div class="col-4">
+                <p>Note: {{dataValues.note}}</p>
+              </div>
             </div>
-            <div class="col-7 ml-2">
-              <p>Heure: {{#with (lookup ../resultathoraire @index)}}{{dataValues.heure_debut}} à {{dataValues.heure_fin}}{{/with}}</p>
-            </div>
-          </div>
-          <div class="row ml-4 mt">
-            <div class="col-4">
-              <p>Note: {{dataValues.note}}</p>
-            </div>
-          </div>
-          <a class="btn btn-success mr-4" href='/reservation/annulation/{{dataValues.id_RV}}'>Annuler</a>
-          <hr class="mt-4">
-        {{/each}}
+            <a class="btn btn-success mr-4" href='/reservation/annulation/{{dataValues.id_RV}}'>Annuler</a>
+            <hr class="mt-4">
+          {{/each}}
+        {{else}}
+          <p>Aucune Réservation</p>
+        {{/if}}
 
       </div>
     </div>

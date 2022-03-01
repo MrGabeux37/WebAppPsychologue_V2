@@ -132,8 +132,6 @@ router.get('/clients/profil/:id_client', async function(req,res){
       where:{Client:params.id_client}
     });
 
-
-
     res.render('../public/views/psychologue/clients_profil', {
       layout:'psychologue',
       client: client,
@@ -142,7 +140,8 @@ router.get('/clients/profil/:id_client', async function(req,res){
       condition2: 'disabled',
       condition3:'disabled',
       post:'GET',
-      boutton: 'Modifier les info du compte'
+      boutton: 'Modifier les info du compte',
+      reserve:'a'
     });
   }
   else{
@@ -164,7 +163,6 @@ router.get('/clients/profil_update/:id_client', async function(req,res){
     var contacts = await Contact.findAll({
       where:{Client:params.id_client}
     });
-
 
     res.render('../public/views/psychologue/clients_profil', {
       layout:'psychologue',
@@ -207,28 +205,45 @@ router.post('/clients/profil_update/:id_client', async function(req,res){
     if(payload.permission=='on'){client.permission=true;}
     else{client.permission=false;}
 
-    //update contact1 info
-    contacts[0].Nom=payload.nom_contact[0];
-    contacts[0].Prenom=payload.prenom_contact[0];
-    contacts[0].Num_Tel=payload.telephone_contact[0];
-    contacts[0].Email=payload.courriel_contact[0];
-    contacts[0].Email_Extra1=payload.courriel_extra1[0];
-    contacts[0].Email_Extra2=payload.courriel_extra2[0];
-    contacts[0].Email_Extra3=payload.courriel_extra3[0];
+    if(contacts.length>1){
+      //update contact1 info
+      contacts[0].Nom=payload.nom_contact[0];
+      contacts[0].Prenom=payload.prenom_contact[0];
+      contacts[0].Num_Tel=payload.telephone_contact[0];
+      contacts[0].Email=payload.courriel_contact[0];
+      contacts[0].Email_Extra1=payload.courriel_extra1[0];
+      contacts[0].Email_Extra2=payload.courriel_extra2[0];
+      contacts[0].Email_Extra3=payload.courriel_extra3[0];
 
-    //update contact2 info
-    contacts[1].Nom=payload.nom_contact[1];
-    contacts[1].Prenom=payload.prenom_contact[1];
-    contacts[1].Num_Tel=payload.telephone_contact[1];
-    contacts[1].Email=payload.courriel_contact[1];
-    contacts[1].Email_Extra1=payload.courriel_extra1[1];
-    contacts[1].Email_Extra2=payload.courriel_extra2[1];
-    contacts[1].Email_Extra3=payload.courriel_extra3[1];
+      //update contact2 info
+      contacts[1].Nom=payload.nom_contact[1];
+      contacts[1].Prenom=payload.prenom_contact[1];
+      contacts[1].Num_Tel=payload.telephone_contact[1];
+      contacts[1].Email=payload.courriel_contact[1];
+      contacts[1].Email_Extra1=payload.courriel_extra1[1];
+      contacts[1].Email_Extra2=payload.courriel_extra2[1];
+      contacts[1].Email_Extra3=payload.courriel_extra3[1];
 
-    //save the client and both contacts
+      //save both contacts
+      contacts[0].save();
+      contacts[1].save();
+    }
+
+    else{
+      //update contact info
+      contacts[0].Nom=payload.nom_contact;
+      contacts[0].Prenom=payload.prenom_contact;
+      contacts[0].Num_Tel=payload.telephone_contact;
+      contacts[0].Email=payload.courriel_contact;
+      contacts[0].Email_Extra1=payload.courriel_extra1;
+      contacts[0].Email_Extra2=payload.courriel_extra2;
+      contacts[0].Email_Extra3=payload.courriel_extra3;
+      //save the contact
+      contacts[0].save();
+    }
+
+    //save the client
     client.save();
-    contacts[0].save();
-    contacts[1].save();
 
     var destination="/profil_client_updated/"+client.id_client;
     res.redirect(destination);
@@ -237,5 +252,34 @@ router.post('/clients/profil_update/:id_client', async function(req,res){
     res.redirect('/errorAccess');
   }
 })
+
+//affiche les réservation du client
+router.get('/clients/profil/:id_client/reservation', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  if(decoded.scope=='psychologue'){
+    //get le parametre dans le URL
+    var params = req.params;
+    console.log('params: '+ params);
+    //get payload
+    var payload = req.body;
+    console.log('payload: '+ payload);
+    //trouve le client choisi
+    var client = await Client.findOne({
+      where:{id_client:params.id_client}
+    });
+    //trouve les contacts associes au clients
+    var contacts = await Contact.findAll({
+      where:{Client:params.id_client}
+    });
+
+    res.render('../public/views/psychologue/calendar', {
+      layout:'psychologue'
+    });
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+})
+
 //export this router to use in index.js
 module.exports = router;
