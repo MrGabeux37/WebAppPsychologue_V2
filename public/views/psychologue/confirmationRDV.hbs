@@ -1,0 +1,56 @@
+<head>
+
+  <link rel="stylesheet" href="../../css/calendrierClient.css">
+  <script type="text/javascript" src="../../script/calendrierClients.js"></script>
+
+</head>
+
+<div class="row">
+  <div class="col-sm-12 sol-md-10 col-lg-8 mx-auto">
+    <div class="card mt-5">
+
+      <div class="card-header">
+        <h4 class="text-center">{{message}}</h4>
+      </div>
+
+      <div class="card-body text-center" id="chaquereservation">
+
+      {{#if resultats}}
+        <form action='{{adresseURL}}{{resultats.dataValues.id_RV}}' method="POST">
+          <div class="row ml-4">
+            <div class="col-4">
+              <p>ID Rendez-Vous: {{resultats.dataValues.id_RV}}<p>
+            </div>
+            <div class="col-7 ml-2">
+              <p>Client: {{client.dataValues.prenom}} {{client.dataValues.nom}}</p>
+            </div>
+          </div>
+          <div class="row ml-4 mt">
+            <div class="col-4">
+              <p>Date: {{resultats.dataValues.date}}</p>
+            </div>
+            <div class="col-7 ml-2">
+              <p>Heure: {{heure_debut}} à {{heure_fin}}</p>
+            </div>
+          </div>
+          <div class="row ml-4 mt">
+            <div class="col-4">
+              <p>Note: {{resultats.dataValues.note}}</p>
+            </div>
+          </div>
+          <div class="row mr-4 justify-content-center">
+            <button type="submit" class="btn btn-success">Confirmer</button>
+            <a class="btn btn-success ml-2" href='{{retourURL}}'>Retour</a>
+          </div>
+
+      </form>
+      {{else}}
+        <p>Résultat introuvable</p>
+      {{/if}}
+
+
+      </div>
+
+    </div>
+  </div>
+</div>

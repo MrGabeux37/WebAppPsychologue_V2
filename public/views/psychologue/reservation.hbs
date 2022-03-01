@@ -10,9 +10,9 @@
 
         <div class="row">
           <div class="col">
-            <a href="/reservation/ancienne" type="button" class="btn btn-success center-block mt-2">Anciennes Réservations</a>
-            <a href="/reservation/future" type="button" class="btn btn-success center-block mt-2">Réservations Futures</a>
-            <a href="/reservation" type="button" class="btn btn-success center-block mt-2">Toutes les Réservations</a>
+            <a href="/clients/profil/{{client.dataValues.id_client}}/reservation/ancienne" type="button" class="btn btn-success center-block mt-2">Anciennes Réservations</a>
+            <a href="/clients/profil/{{client.dataValues.id_client}}/reservation/future" type="button" class="btn btn-success center-block mt-2">Réservations Futures</a>
+            <a href="/clients/profil/{{client.dataValues.id_client}}/reservation" type="button" class="btn btn-success center-block mt-2">Toutes les Réservations</a>
           </div>
         </div>
         <hr class="mt-4">
@@ -23,7 +23,7 @@
                 <p>ID Rendez-Vous: {{dataValues.id_RV}}<p>
               </div>
               <div class="col-7 ml-2">
-                <p>Psychologue: {{../resultatPsy}}</p>
+                <p>Client: {{../client.dataValues.prenom}} {{../client.dataValues.nom}}</p>
               </div>
             </div>
             <div class="row ml-4 mt">

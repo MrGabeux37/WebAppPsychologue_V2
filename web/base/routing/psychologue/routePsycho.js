@@ -272,14 +272,285 @@ router.get('/clients/profil/:id_client/reservation', async function(req,res){
       where:{Client:params.id_client}
     });
 
-    res.render('../public/views/psychologue/calendar', {
-      layout:'psychologue'
+    //get all the reservations
+    var rendezVous = await RendezVous.findAll({
+      order:[['date','ASC']],
+      where:{id_client : params.id_client}
+    });
+
+    if(rendezVous.length>0){
+      //get all the correct plagehoraire
+      var plageHoraire=[];
+      for(var i=0;i<rendezVous.length;i++){
+        var temp = await PlageHoraire.findOne({
+          where:{id_plage_horaire:rendezVous[i].id_plage_horaire}
+        });
+        if(temp){
+          temp.heure_fin=temp.heure_fin.substr(0,5);
+          temp.heure_debut=temp.heure_debut.substr(0,5);
+          plageHoraire.push(temp)
+        }
+      }
+
+      //get psychologue
+      var psy = await Psychologue.findOne({
+        where:{id_psychologue : rendezVous[0].id_psychologue}
+      });
+      var nomPsychologue = psy.prenom + " " + psy.nom;
+    }
+    else{
+      var nomPsychologue='';
+      var plageHoraire='';
+    }
+
+    res.render('../public/views/psychologue/reservation', {
+      layout:'psychologue',
+      client:client,
+      resultats:rendezVous,
+      resultatPsy:nomPsychologue,
+      resultathoraire:plageHoraire
     });
   }
   else{
     res.redirect('/errorAccess');
   }
 })
+
+//affiche les réservation du client
+router.get('/clients/profil/:id_client/reservation/ancienne', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  var today = new Date();
+  if(decoded.scope=='psychologue'){
+    //get le parametre dans le URL
+    var params = req.params;
+    console.log('params: '+ params);
+    //get payload
+    var payload = req.body;
+    console.log('payload: '+ payload);
+    //trouve le client choisi
+    var client = await Client.findOne({
+      where:{id_client:params.id_client}
+    });
+    //trouve les contacts associes au clients
+    var contacts = await Contact.findAll({
+      where:{Client:params.id_client}
+    });
+
+    //get all the reservations
+    var rendezVous = await RendezVous.findAll({
+      where:{
+              [Op.and]:[
+                {id_client:params.id_client},
+                {date:{[Op.lte]:today}}
+              ]
+      },
+      order:[['date','ASC']]
+    });
+
+    if(rendezVous.length>0){
+      //get all the correct plagehoraire
+      var plageHoraire=[];
+      for(var i=0;i<rendezVous.length;i++){
+        var temp = await PlageHoraire.findOne({
+          where:{id_plage_horaire:rendezVous[i].id_plage_horaire}
+        });
+        if(temp){
+          temp.heure_fin=temp.heure_fin.substr(0,5);
+          temp.heure_debut=temp.heure_debut.substr(0,5);
+          plageHoraire.push(temp)
+        }
+      }
+
+      //get psychologue
+      var psy = await Psychologue.findOne({
+        where:{id_psychologue : rendezVous[0].id_psychologue}
+      });
+      var nomPsychologue = psy.prenom + " " + psy.nom;
+    }
+    else{
+      var nomPsychologue='';
+      var plageHoraire='';
+    }
+
+    res.render('../public/views/psychologue/reservation', {
+      layout:'psychologue',
+      client:client,
+      resultats:rendezVous,
+      resultatPsy:nomPsychologue,
+      resultathoraire:plageHoraire
+    });
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+})
+
+//affiche les réservation du client
+router.get('/clients/profil/:id_client/reservation/future', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  var today = new Date();
+  if(decoded.scope=='psychologue'){
+    //get le parametre dans le URL
+    var params = req.params;
+    console.log('params: '+ params);
+    //get payload
+    var payload = req.body;
+    console.log('payload: '+ payload);
+    //trouve le client choisi
+    var client = await Client.findOne({
+      where:{id_client:params.id_client}
+    });
+    //trouve les contacts associes au clients
+    var contacts = await Contact.findAll({
+      where:{Client:params.id_client}
+    });
+
+    //get all the reservations
+    var rendezVous = await RendezVous.findAll({
+      where:{
+              [Op.and]:[
+                {id_client:params.id_client},
+                {date:{[Op.gte]:today}}
+              ]
+      },
+      order:[['date','ASC']]
+    });
+
+    if(rendezVous.length>0){
+      //get all the correct plagehoraire
+      var plageHoraire=[];
+      for(var i=0;i<rendezVous.length;i++){
+        var temp = await PlageHoraire.findOne({
+          where:{id_plage_horaire:rendezVous[i].id_plage_horaire}
+        });
+        if(temp){
+          temp.heure_fin=temp.heure_fin.substr(0,5);
+          temp.heure_debut=temp.heure_debut.substr(0,5);
+          plageHoraire.push(temp)
+        }
+      }
+
+      //get psychologue
+      var psy = await Psychologue.findOne({
+        where:{id_psychologue : rendezVous[0].id_psychologue}
+      });
+      var nomPsychologue = psy.prenom + " " + psy.nom;
+    }
+    else{
+      var nomPsychologue='';
+      var plageHoraire='';
+    }
+
+    res.render('../public/views/psychologue/reservationFuture', {
+      layout:'psychologue',
+      client:client,
+      resultats:rendezVous,
+      resultatPsy:nomPsychologue,
+      resultathoraire:plageHoraire
+    });
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+})
+
+//route confirmation d'annulation du rendezvous
+router.get('/clients/profil/:id_client/reservation/annulation/:id_RV', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  var params = req.params;
+  console.log(params);
+  if(decoded.scope=='psychologue'){
+    //trouve le client choisi
+    var client = await Client.findOne({
+      where:{id_client:params.id_client}
+    });
+
+    //get Rendezvous choisi
+    var rendezvous = await RendezVous.findOne({
+      where:{id_RV : params.id_RV}
+    });
+
+    console.log(rendezvous);
+
+    //get plagehoraire
+    var plagehoraire = await PlageHoraire.findOne({
+    where:{id_plage_horaire : rendezvous.id_plage_horaire}
+    });
+    var heure_debut = plagehoraire.heure_debut.substr(0,5);
+    var heure_fin = plagehoraire.heure_fin.substr(0,5);
+
+    console.log(plagehoraire);
+
+    //get psychologue
+    var psy = await Psychologue.findOne({
+      where:{id_psychologue : rendezvous.id_psychologue}
+    });
+    var nomPsychologue = psy.prenom + " " + psy.nom;
+    var adresseURL="/clients/profil/"+client.id_client+"/reservation/annulation/";
+    var retourURL="/clients/profil/"+client.id_client+"/reservation/future";
+
+    res.render('../public/views/psychologue/confirmationRDV',{
+      layout:'psychologue',
+      client:client,
+      resultats:rendezvous,
+      resultatPsy:nomPsychologue,
+      heure_debut:heure_debut,
+      heure_fin:heure_fin,
+      adresseURL:adresseURL,
+      retourURL:retourURL,
+      message:'Confirmer la réservation a annuler'
+    });
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+});
+
+//route POST d'annulation du rendez-Vous
+router.post('/clients/profil/:id_client/reservation/annulation/:idRendezVous', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  var params = req.params;
+  console.log(params);
+
+  if(decoded.scope=='psychologue'){
+    //get Rendezvous choisi
+    var rendezvous = await RendezVous.findOne({
+      where:{id_RV : params.idRendezVous}
+    });
+
+    rendezvous.id_client=null;
+    rendezvous.disponibilite=true;
+    rendezvous.save();
+
+    var retourURL='/clients/profil/'+params.id_client+'/reservation/annulation/RendezVousAnnule/'+params.idRendezVous;
+
+    res.redirect(retourURL);
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+});
+
+//route confirmation d'annulation de rendez-vous
+router.get('/clients/profil/:id_client/reservation/annulation/RendezVousAnnule/:idRendezVous', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  var params = req.params;
+  console.log(params);
+
+  var retourURL='/clients/profil/'+params.id_client+'/reservation/future';
+
+  if(decoded.scope=='psychologue'){
+    res.render('../public/views/client/confirmed',{
+      layout:'psychologue',
+      message:'Le rendez-vous est annulé!',
+      adresseURL:retourURL,
+      MsgBouton:'Retour aux réservations'
+    });
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+});
 
 //export this router to use in index.js
 module.exports = router;

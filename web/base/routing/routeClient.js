@@ -571,7 +571,7 @@ router.get('/reservation/annulation/:idRendezVous', async function(req,res){
       heure_fin:heure_fin,
       adresseURL:'/reservation/annulation/',
       retourURL:'/reservation/future',
-      message:'Confirmer la réservation choisie'
+      message:'Confirmer la réservation a annuler'
     });
   }
   else{
