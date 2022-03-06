@@ -10,7 +10,7 @@
 
         <form class="form-inline" action="/clients" method="get">
           <div class="row">
-            <div class="col">
+            <div class="input-group">
               <input class="form-control" style="width:225px" type="text" name="prenom_client" placeholder="Prenom du client" value="{{prenom}}">
               <input class="form-control" style="width:225px" type="text" name="nom_client" placeholder="Nom du client" value="{{nom}}">
               <button class="btn btn-success" type="submit">Chercher</button>
@@ -35,8 +35,10 @@
                 <p>Permission: {{#if dataValues.permission}}Oui{{else}}Non{{/if}}</p>
               </div>
             </div>
-            <div class="row mr-2 justify-content-center">
-                <a class="btn btn-success" href="/clients/profil/{{dataValues.id_client}}">Information du Client</a>
+            <div class="row mr-2">
+              <div class="col text-center">
+                <a type="button" class="btn btn-success center-block mt-2" href="/clients/profil/{{dataValues.id_client}}">Information du Client</a>
+              </div>
             </div>
 
             <hr class="mt-4">

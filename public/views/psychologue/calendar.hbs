@@ -1,7 +1,8 @@
 <head>
 
   <link rel="stylesheet" href="../../../css/calendrierPsycho.css">
-  <script type="text/javascript" src="../../../script/calendrierPsycho.js"></script>
+  <script type="text/javascript" src="../../../script/psychologue/calendrierPsycho.js"></script>
+  <script type="text/javascript" src="../../../script/psychologue/popup.js"></script>
 
 </head>
 
@@ -15,12 +16,38 @@
 
       <div class="card-body">
 
+        <div class="row mb-2">
+          <div class="col text-center">
+            <button type="button" class="btn btn-success center-block mt-2" data-toggle="modal" data-target="#exampleModal">Créer une Disponibilité</button>
+            <a href="" type="button" class="btn btn-success center-block mt-2">Liste des Réservations</a>
+          </div>
+        </div>
+
         <div id="month" class="month">
         </div>
 
         <div id="calendrierPsycho">
         </div>
 
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

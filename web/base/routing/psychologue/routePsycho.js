@@ -552,5 +552,17 @@ router.get('/clients/profil/:id_client/reservation/annulation/RendezVousAnnule/:
   }
 });
 
+router.get('/psychologue/reservations/', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+
+  if(decoded.scope=='psychologue'){
+    res.render('../public/views/psychologue/calendar',{
+      layout:'psychologue'
+    });
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+});
 //export this router to use in index.js
 module.exports = router;
