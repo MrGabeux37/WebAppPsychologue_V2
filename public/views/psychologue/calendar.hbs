@@ -18,7 +18,7 @@
 
         <div class="row mb-2">
           <div class="col text-center">
-            <button type="button" class="btn btn-success center-block mt-2" data-toggle="modal" data-target="#exampleModal">Créer une Disponibilité</button>
+            <button type="button" class="btn btn-success center-block mt-2" data-bs-toggle="modal" data-bs-target="#nouvelleDispo">Créer une Disponibilité</button>
             <a href="" type="button" class="btn btn-success center-block mt-2">Liste des Réservations</a>
           </div>
         </div>
@@ -34,21 +34,94 @@
   </div>
 </div>
 
+
 <!-- Modal -->
-<div class="modal" id="exampleModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+<div class="modal" id="nouvelleDispo" tabindex="-1">
+  <form class="needs-validation" novalidate action="/psychologue/reservations/nouvelleDispo" method="post">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Création d'une nouvelle disponibilité</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col">
+              <label for="date_rv">Date du rendezvous: </label>
+              <input type="date" class="form-control" name="date_rv" placeholder="aaaa-mm-jj" required>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col">
+                <label for="hrDebut">Heure de Début:</label>
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Selectionnez l'heure de début</option>
+                  {{#if HeureDebuts}}
+                    {{#each HeureDebuts as | HeureDebut}}
+                    <option value="HeureDebut">{{HeureDebut}}</option>
+                    {{/each}}
+                  {{/if}}
+                </select>
+            </div>
+            <div class="col">
+                <label for="hrFin">Heure de Fin:</label>
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Selectionnez l'heure de fin</option>
+                  {{#if HeureFins}}
+                    {{#each HeureFins as | HeureFin}}
+                    <option value="HeureFin">{{HeureFin}}</option>
+                    {{/each}}
+                  {{/if}}
+                </select>
+            </div>
+          </div>
+
+          <div class="form-group mt-2">
+            <label for="id_enfant">Nom du Client: </label>
+            <select class="form-select" aria-label="Default select example">
+              <option selected>Selectionnez le Client (Facultatif)</option>
+              {{#if Clients}}
+                {{#each Clients as | Client}}
+                <option value="Client.dataValues.id_client">{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}</option>
+                {{/each}}
+              {{/if}}
+            </select>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Sauvegarder</button>
+        </div>
+
       </div>
     </div>
-  </div>
+  </form>
 </div>
+
+
+<script>
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>
