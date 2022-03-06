@@ -28,7 +28,7 @@ function ajoutChampContact1(num){
     input.setAttribute("type","email");
     input.setAttribute("name","Contact1_courriel_extra"+temp);
     input.setAttribute("placeholder","Entrer l'adresse courriel du contact");
-    input.setAttribute("pattern","[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
+    input.setAttribute("pattern","[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$");
     div.insertBefore(input,button1);
     count1++;
   }
@@ -54,7 +54,7 @@ function ajoutChampContact2(num){
       input.setAttribute("type","email");
       input.setAttribute("name","Contact2_courriel_extra"+temp);
       input.setAttribute("placeholder","Entrer l'adresse courriel du contact");
-      input.setAttribute("pattern","[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
+      input.setAttribute("pattern","[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$");
       div.insertBefore(input,button2);
       count2++;
     }

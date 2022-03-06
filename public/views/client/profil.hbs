@@ -38,7 +38,7 @@
           <div class="row mt-2">
             <div class="col">
               <label for="courriel_parent1">Courriel:</label>
-              <input value="{{courrielContact}}" type="email" input.setAttribute("pattern","[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"); class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact" {{condition}}>
+              <input value="{{courrielContact}}" type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact" {{condition}}>
               <div class="valid-feedback">Valide.</div>
               <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             </div>
@@ -53,9 +53,9 @@
           <div id=divEmail1 class="row mt-2">
             <div class="col">
               <label for="courriel_contact1">Courriel d'Extra: </label>
-              <input {{#if courriel_extra1}}value="{{{courriel_extra1}}}"{{/if}} type="email" input.setAttribute("pattern","[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"); class="form-control" name="courriel_extra1" placeholder="Entrer l'adresse courriel du contact" {{conditionExtra}}>
-              <input {{#if courriel_extra2}}value="{{{courriel_extra2}}}"{{/if}} type="email" input.setAttribute("pattern","[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"); class="form-control mt-2" name="courriel_extra2" placeholder="Entrer l'adresse courriel du contact" {{conditionExtra}}>
-              <input {{#if courriel_extra3}}value="{{{courriel_extra3}}}"{{/if}} type="email" input.setAttribute("pattern","[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"); class="form-control mt-2" name="courriel_extra3" placeholder="Entrer l'adresse courriel du contact" {{conditionExtra}}>
+              <input {{#if courriel_extra1}}value="{{{courriel_extra1}}}"{{/if}} type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" class="form-control" name="courriel_extra1" placeholder="Entrer l'adresse courriel du contact" {{conditionExtra}}>
+              <input {{#if courriel_extra2}}value="{{{courriel_extra2}}}"{{/if}} type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" class="form-control mt-2" name="courriel_extra2" placeholder="Entrer l'adresse courriel du contact" {{conditionExtra}}>
+              <input {{#if courriel_extra3}}value="{{{courriel_extra3}}}"{{/if}} type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" class="form-control mt-2" name="courriel_extra3" placeholder="Entrer l'adresse courriel du contact" {{conditionExtra}}>
             </div>
           </div>
 
