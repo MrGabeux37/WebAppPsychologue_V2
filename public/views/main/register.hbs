@@ -70,7 +70,7 @@
 
           <div id=divEmail1 class="form-group">
             <label for="courriel_contact1">Courriel: </label>
-            <input type="email" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact" required>
+            <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" name="courriel_contact1" placeholder="Entrer l'adresse courriel du contact" required>
             <div class="valid-feedback">Valide.</div>
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             <button type="button" id="email1" onclick="ajoutChampContact1(1)" class="btn btn-outline-success btn-sm mt-1">+</button>
@@ -105,7 +105,7 @@
 
           <div id=divEmail2 class="form-group">
             <label for="courriel_contact2">Courriel: </label>
-            <input type="email" class="form-control" id="courriel_contact2" name="courriel_contact2" placeholder="Entrer l'adresse courriel du contact" required>
+            <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" id="courriel_contact2" name="courriel_contact2" placeholder="Entrer l'adresse courriel du contact" required>
             <div class="valid-feedback">Valide.</div>
             <div class="invalid-feedback">S'il vous plait remplir le champ ci-dessus.</div>
             <button type="button" id="email2" onclick="ajoutChampContact2(2)" class="btn btn-outline-success btn-sm mt-1">+</button>
