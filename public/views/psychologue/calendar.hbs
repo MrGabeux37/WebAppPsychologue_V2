@@ -61,7 +61,7 @@
                 <select class="form-select" aria-label="Default select example">
                   <option selected>Selectionnez l'heure de début</option>
                   {{#if HeureDebuts}}
-                    {{#each HeureDebuts as | HeureDebut}}
+                    {{#each HeureDebuts as | HeureDebut |}}
                     <option value="HeureDebut">{{HeureDebut}}</option>
                     {{/each}}
                   {{/if}}
@@ -72,7 +72,7 @@
                 <select class="form-select" aria-label="Default select example">
                   <option selected>Selectionnez l'heure de fin</option>
                   {{#if HeureFins}}
-                    {{#each HeureFins as | HeureFin}}
+                    {{#each HeureFins as | HeureFin |}}
                     <option value="HeureFin">{{HeureFin}}</option>
                     {{/each}}
                   {{/if}}
@@ -85,7 +85,7 @@
             <select class="form-select" aria-label="Default select example">
               <option selected>Selectionnez le Client (Facultatif)</option>
               {{#if Clients}}
-                {{#each Clients as | Client}}
+                {{#each Clients as | Client |}}
                 <option value="Client.dataValues.id_client">{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}</option>
                 {{/each}}
               {{/if}}

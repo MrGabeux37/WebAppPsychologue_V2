@@ -103,6 +103,7 @@ router.get('/clients', async function(req,res){
         prenom:{[Op.substring]:(query.prenom_client==undefined ? '' : query.prenom_client)}
       }
     });
+
     console.log(clients);
     res.render('../public/views/psychologue/clients_recherche', {
       layout:'psychologue',
@@ -552,12 +553,79 @@ router.get('/clients/profil/:id_client/reservation/annulation/RendezVousAnnule/:
   }
 });
 
+//Route qui montre le calendrier avec les reservations
 router.get('/psychologue/reservations/', async function(req,res){
   var decoded = authController.decodeCookie(req.cookies.jwt);
 
+  //get client with or without query info
+  var clients = await Client.findAll({
+    where:{permission:true}
+  });
+
+  //générer les heures
+  var heureFins=[];
+  var heureDebuts=[];
+  var heureFin=0;
+  var minuteFin=0;
+  var heureDebut=0;
+  var minuteDebut=0;
+
+  heureFins.push("00:00");
+  heureDebuts.push("00:00");
+
+  for(var i=0;i<96;i++){
+    var temp1="";
+    var temp2="";
+    minuteDebut=minuteDebut+15;
+    minuteFin=minuteFin+15;
+    if(minuteDebut==60){
+      heureDebut=heureDebut+1;
+      heureFin=heureFin+1;
+      minuteDebut=0;
+      minuteFin=0;
+
+      if(heureDebut<10){
+        temp1="0"+heureDebut+":0"+minuteDebut;
+        temp2="0"+heureFin+":0"+minuteFin;
+      }
+      else{
+        temp1=heureDebut+":0"+minuteDebut;
+        temp2=heureFin+":0"+minuteFin;
+      }
+    }
+    else{
+      if(heureDebut<10){
+        if(minuteDebut==0){
+          temp1="0"+heureDebut+":0"+minuteDebut;
+          temp2="0"+heureFin+":0"+minuteFin;
+        }
+        else{
+          temp1="0"+heureDebut+":"+minuteDebut;
+          temp2="0"+heureFin+":"+minuteFin;
+        }
+      }
+      else{
+        if(minuteDebut==0){
+          temp1=heureDebut+":0"+minuteDebut;
+          temp2=heureFin+":0"+minuteFin;
+        }
+        else{
+        temp1=heureDebut+":"+minuteDebut;
+        temp2=heureFin+":"+minuteFin;
+        }
+      }
+    }
+    heureFins.push(temp2);
+    heureDebuts.push(temp1);
+  }
+
+
   if(decoded.scope=='psychologue'){
     res.render('../public/views/psychologue/calendar',{
-      layout:'psychologue'
+      layout:'psychologue',
+      Clients:clients,
+      HeureFins:heureFins,
+      HeureDebuts:heureDebuts
     });
   }
   else{
