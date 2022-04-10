@@ -58,22 +58,22 @@
           <div class="row mt-2">
             <div class="col">
                 <label for="hrDebut">Heure de Début:</label>
-                <select class="form-select" aria-label="Default select example">
-                  <option selected>Selectionnez l'heure de début</option>
+                <select class="form-select" id='hrDebut' name='hrDebut' aria-label="Default select example" required>
+                  <option value="" selected disabled>Selectionnez l'heure de début</option>
                   {{#if HeureDebuts}}
                     {{#each HeureDebuts as | HeureDebut |}}
-                    <option value="HeureDebut">{{HeureDebut}}</option>
+                    <option value="{{HeureDebut}}">{{HeureDebut}}</option>
                     {{/each}}
                   {{/if}}
                 </select>
             </div>
             <div class="col">
                 <label for="hrFin">Heure de Fin:</label>
-                <select class="form-select" aria-label="Default select example">
-                  <option selected>Selectionnez l'heure de fin</option>
+                <select class="form-select" id='hrFin' name='hrFin' aria-label="Default select example" required>
+                  <option value="" selected disabled>Selectionnez l'heure de fin</option>
                   {{#if HeureFins}}
                     {{#each HeureFins as | HeureFin |}}
-                    <option value="HeureFin">{{HeureFin}}</option>
+                    <option value="{{HeureFin}}">{{HeureFin}}</option>
                     {{/each}}
                   {{/if}}
                 </select>
@@ -82,11 +82,11 @@
 
           <div class="form-group mt-2">
             <label for="id_enfant">Nom du Client: </label>
-            <select class="form-select" aria-label="Default select example">
+            <select class="form-select" name='id_enfant' aria-label="Default select example">
               <option selected>Selectionnez le Client (Facultatif)</option>
               {{#if Clients}}
                 {{#each Clients as | Client |}}
-                <option value="Client.dataValues.id_client">{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}</option>
+                <option value="{{Client.dataValues.id_client}}">{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}</option>
                 {{/each}}
               {{/if}}
             </select>

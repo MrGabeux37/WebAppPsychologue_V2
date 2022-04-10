@@ -633,4 +633,19 @@ router.get('/psychologue/reservations/', async function(req,res){
   }
 });
 //export this router to use in index.js
+
+router.post('/psychologue/reservations/nouvelleDispo', async function(req,res){
+    var decoded = authController.decodeCookie(req.cookies.jwt);
+
+    var payload = req.body;
+    console.log(payload);
+
+    if(decoded.scope=='psychologue'){
+      res.redirect('/psychologue/reservations/nouvelleDispo/confirmation');
+    }
+    else{
+      res.redirect('/errorAccess');
+    }
+});
+
 module.exports = router;
