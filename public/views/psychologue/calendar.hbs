@@ -79,10 +79,11 @@
                 </select>
             </div>
           </div>
+          {{#if message}}<p style="color:red;">{{message}}</p>{{/if}}
 
           <div class="form-group mt-2">
             <label for="id_enfant">Nom du Client: </label>
-            <select class="form-select" name='id_enfant' aria-label="Default select example">
+            <select class="form-select" name='id_client' aria-label="Default select example">
               <option selected>Selectionnez le Client (Facultatif)</option>
               {{#if Clients}}
                 {{#each Clients as | Client |}}
@@ -103,6 +104,13 @@
   </form>
 </div>
 
+{{#if scriptModal}}
+  <script>
+      $(document).ready(function(){
+          $("#nouvelleDispo").modal('show');
+      });
+  </script>
+{{/if}}
 
 <script>
 (function () {

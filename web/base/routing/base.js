@@ -98,6 +98,44 @@ Router.get('/errorAccess',async function(req, res){
     })
 });
 
+//get page redirection apres creation de nouvelle dispo
+Router.get('/psychologue/reservations/nouvelleDispo/confirmation/:date_rv/:plageHoraire', async function(req, res){
+  var params = req.params;
+  console.log(params);
+
+  //get PlageHoraire en parametre
+  var plageHoraire = await PlageHoraire.findOne({
+    where:{id_plage_horaire:params.plageHoraire}
+  });
+
+  res.render('../public/views/psychologue/dispoCreated', {
+    layout: 'main',
+    message: "La nouvelle disponibilité est créée pour le " + params.date_rv + " entre " + plageHoraire.heure_debut + " et " + plageHoraire.heure_fin +"."
+  })
+})
+
+//get page redirection apres creation d'un nouveau rendezvous
+Router.get('/psychologue/reservations/nouvelleDispo/confirmation/:date_rv/:plageHoraire/:id_client', async function(req, res){
+  var params = req.params;
+  console.log(params);
+  //find client to add info on page
+  var client = await Client.findOne({
+    where:{id_client:params.id_client}
+  });
+
+  //get PlageHoraire en parametre
+  var plageHoraire = await PlageHoraire.findOne({
+    where:{id_plage_horaire:params.plageHoraire}
+  });
+
+  res.render('../public/views/psychologue/dispoCreated', {
+    layout: 'main',
+    message: "Le rendez-vous est créé pour le client " + client.id_client + ": " + client.prenom + " " + client.nom + " le " + params.date_rv + " entre " + plageHoraire.heure_debut + " et " + plageHoraire.heure_fin +"."
+  })
+})
+
+
+
 
 //export this Router to use in index.js
 module.exports = Router;

@@ -640,8 +640,119 @@ router.post('/psychologue/reservations/nouvelleDispo', async function(req,res){
     var payload = req.body;
     console.log(payload);
 
+
+    //get PlageHoraire choisie
+    var plageHoraire = await PlageHoraire.findOne({
+      where:{
+        [Op.and]:[
+          {heure_debut:payload.hrDebut},
+          {heure_fin:payload.hrFin}
+        ]}
+    });
+
     if(decoded.scope=='psychologue'){
-      res.redirect('/psychologue/reservations/nouvelleDispo/confirmation');
+      if(plageHoraire){
+
+        //if a client is selected
+        if(payload.id_client!="Selectionnez le Client (Facultatif)"){
+          var rendezVous = await RendezVous.create({
+            date:payload.date_rv,
+            disponibilite:false,
+            id_client:payload.id_client,
+            id_plage_horaire:plageHoraire.id_plage_horaire
+          });
+
+          res.redirect('/psychologue/reservations/nouvelleDispo/confirmation/'+payload.date_rv+'/'+plageHoraire.id_plage_horaire+'/'+payload.id_client);
+        }
+
+        //if no client is selected
+        else{
+          var rendezVous = await RendezVous.create({
+            date:payload.date_rv,
+            id_plage_horaire:plageHoraire.id_plage_horaire
+          });
+          res.redirect('/psychologue/reservations/nouvelleDispo/confirmation/'+payload.date_rv+'/'+plageHoraire.id_plage_horaire);
+        }
+      }
+      //reload the page with a message in red in the modal that will be showing by default
+      else{
+        //get client with or without query info
+        var clients = await Client.findAll({
+          where:{permission:true}
+        });
+
+        //générer les heures
+        var heureFins=[];
+        var heureDebuts=[];
+        var heureFin=6;
+        var minuteFin=0;
+        var heureDebut=6;
+        var minuteDebut=0;
+
+        heureFins.push("06:00");
+        heureDebuts.push("06:00");
+
+        for(var i=0;i<56;i++){
+          var temp1="";
+          var temp2="";
+          minuteDebut=minuteDebut+15;
+          minuteFin=minuteFin+15;
+          if(minuteDebut==60){
+            heureDebut=heureDebut+1;
+            heureFin=heureFin+1;
+            minuteDebut=0;
+            minuteFin=0;
+
+            if(heureDebut<10){
+              temp1="0"+heureDebut+":0"+minuteDebut;
+              temp2="0"+heureFin+":0"+minuteFin;
+            }
+            else{
+              temp1=heureDebut+":0"+minuteDebut;
+              temp2=heureFin+":0"+minuteFin;
+            }
+          }
+          else{
+            if(heureDebut<10){
+              if(minuteDebut==0){
+                temp1="0"+heureDebut+":0"+minuteDebut;
+                temp2="0"+heureFin+":0"+minuteFin;
+              }
+              else{
+                temp1="0"+heureDebut+":"+minuteDebut;
+                temp2="0"+heureFin+":"+minuteFin;
+              }
+            }
+            else{
+              if(minuteDebut==0){
+                temp1=heureDebut+":0"+minuteDebut;
+                temp2=heureFin+":0"+minuteFin;
+              }
+              else{
+              temp1=heureDebut+":"+minuteDebut;
+              temp2=heureFin+":"+minuteFin;
+              }
+            }
+          }
+          heureFins.push(temp2);
+          heureDebuts.push(temp1);
+        }
+
+
+        if(decoded.scope=='psychologue'){
+          res.render('../public/views/psychologue/calendar',{
+            layout:'psychologue',
+            Clients:clients,
+            HeureFins:heureFins,
+            HeureDebuts:heureDebuts,
+            message:"Heure de début plus tard que l'heure de fin du rendez-vous",
+            scriptModal:"yes"
+          });
+        }
+        else{
+          res.redirect('/errorAccess');
+        }
+      }
     }
     else{
       res.redirect('/errorAccess');

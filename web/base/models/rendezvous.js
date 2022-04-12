@@ -22,6 +22,7 @@ const RendezVous = sequelize.define('rendezvous',{
   },
   id_psychologue:{
     type:Sequelize.INTEGER,
+    defaultValue:8,
     references:{
       model:Psychologue,
       key:'id_psychologue'
