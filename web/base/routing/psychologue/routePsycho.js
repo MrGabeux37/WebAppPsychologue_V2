@@ -565,15 +565,15 @@ router.get('/psychologue/reservations/', async function(req,res){
   //générer les heures
   var heureFins=[];
   var heureDebuts=[];
-  var heureFin=0;
+  var heureFin=6;
   var minuteFin=0;
-  var heureDebut=0;
+  var heureDebut=6;
   var minuteDebut=0;
 
-  heureFins.push("00:00");
-  heureDebuts.push("00:00");
+  heureFins.push("06:00");
+  heureDebuts.push("06:00");
 
-  for(var i=0;i<96;i++){
+  for(var i=0;i<56;i++){
     var temp1="";
     var temp2="";
     minuteDebut=minuteDebut+15;
