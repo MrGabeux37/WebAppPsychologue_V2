@@ -43,7 +43,11 @@ const RendezVous = sequelize.define('rendezvous',{
       model:PlageHoraire,
       key:'id_plage_horaire'
     }
-  }
+  },
+  payer:{
+    type:Sequelize.BOOLEAN,
+    defaultValue: false
+  },
 },{
   tableName:'rendezvous',
   timestamps: false,

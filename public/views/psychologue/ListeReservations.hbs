@@ -10,9 +10,9 @@
 
         <div class="row">
           <div class="col">
-            <a href="/clients/profil/{{client.dataValues.id_client}}/reservation/ancienne" type="button" class="btn btn-success center-block mt-2">Anciennes Réservations</a>
-            <a href="/clients/profil/{{client.dataValues.id_client}}/reservation/future" type="button" class="btn btn-success center-block mt-2">Réservations Futures</a>
-            <a href="/clients/profil/{{client.dataValues.id_client}}/reservation" type="button" class="btn btn-success center-block mt-2">Toutes les Réservations</a>
+            <a href="/psychologue/reservations/listeReservations/ancienne" type="button" class="btn btn-success center-block mt-2">Anciennes Réservations</a>
+            <a href="/psychologue/reservations/listeReservations/future" type="button" class="btn btn-success center-block mt-2">Réservations Futures</a>
+            <a href="/psychologue/reservations/listeReservations/reservation" type="button" class="btn btn-success center-block mt-2">Toutes les Réservations</a>
           </div>
         </div>
         <hr class="mt-4">
@@ -42,12 +42,12 @@
                 <p>Paiement reçu: {{#if dataValues.payer}}Oui{{else}}Non{{/if}}</p>
               </div>
             </div>
-            <a class="btn btn-success mr-4" href='/clients/profil/{{../client.dataValues.id_client}}/reservation/annulation/{{dataValues.id_RV}}'>Annuler</a>
             <hr class="mt-4">
           {{/each}}
         {{else}}
           <p>Aucune Réservation</p>
         {{/if}}
+
 
       </div>
     </div>

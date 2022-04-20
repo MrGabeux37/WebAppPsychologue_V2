@@ -38,6 +38,9 @@
               <div class="col-4">
                 <p>Note: {{dataValues.note}}</p>
               </div>
+              <div class="col-7 ml-2">
+                <p>Paiement reçu: {{#if dataValues.payer}}Oui{{else}}Non{{/if}}</p>
+              </div>
             </div>
             <hr class="mt-4">
           {{/each}}
