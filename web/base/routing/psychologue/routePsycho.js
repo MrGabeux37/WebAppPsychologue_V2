@@ -760,7 +760,7 @@ router.post('/psychologue/reservations/nouvelleDispo', async function(req,res){
     }
 });
 
-//Route qui montre les reservation sous forme de liste
+//Route qui montre toutes les reservations sous forme de liste
 router.get('/psychologue/reservations/listeReservations', async function(req,res){
   var decoded = authController.decodeCookie(req.cookies.jwt);
 
@@ -768,10 +768,8 @@ router.get('/psychologue/reservations/listeReservations', async function(req,res
 
     //get all the reservations
     var rendezVous = await RendezVous.findAll({
-      order:[['date','ASC']],
-      where:{id_client : null}
+      order:[['date','ASC']]
     });
-    console.log(rendezVous);
 
     if(rendezVous.length>0){
       //get all the correct plagehoraire
@@ -784,6 +782,21 @@ router.get('/psychologue/reservations/listeReservations', async function(req,res
           temp.heure_fin=temp.heure_fin.substr(0,5);
           temp.heure_debut=temp.heure_debut.substr(0,5);
           plageHoraire.push(temp)
+        }
+      }
+
+      //get all the correct clients
+      var client=[];
+      for(var y=0;y<rendezVous.length;y++){
+        if(rendezVous[y].id_client==null){
+          client.push({prenom:null,nom:null});
+        }
+        else{
+          var tempClient = await Client.findOne({
+            where:{id_client:rendezVous[y].id_client}
+          });
+          var temp = {prenom:tempClient.prenom, nom:tempClient.nom};
+          client.push(temp);
         }
       }
 
@@ -800,6 +813,141 @@ router.get('/psychologue/reservations/listeReservations', async function(req,res
 
     res.render('../public/views/psychologue/ListeReservations', {
       layout:'psychologue',
+      client:client,
+      resultats:rendezVous,
+      resultatPsy:nomPsychologue,
+      resultathoraire:plageHoraire
+    });
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+});
+
+//Route qui montre les anciennes reservations sous forme de liste
+router.get('/psychologue/reservations/listeReservations/ancienne', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  var today = new Date();
+  if(decoded.scope=='psychologue'){
+
+    //get all the reservations
+    var rendezVous = await RendezVous.findAll({
+      order:[['date','ASC']],
+      where:{date:{[Op.lte]:today}}
+    });
+
+
+    if(rendezVous.length>0){
+      //get all the correct plagehoraire
+      var plageHoraire=[];
+      for(var i=0;i<rendezVous.length;i++){
+        var temp = await PlageHoraire.findOne({
+          where:{id_plage_horaire:rendezVous[i].id_plage_horaire}
+        });
+        if(temp){
+          temp.heure_fin=temp.heure_fin.substr(0,5);
+          temp.heure_debut=temp.heure_debut.substr(0,5);
+          plageHoraire.push(temp)
+        }
+      }
+
+      //get all the correct clients
+      var client=[];
+      for(var y=0;y<rendezVous.length;y++){
+        if(rendezVous[y].id_client==null){
+          client.push({prenom:null,nom:null});
+        }
+        else{
+          var tempClient = await Client.findOne({
+            where:{id_client:rendezVous[y].id_client}
+          });
+          var temp = {prenom:tempClient.prenom, nom:tempClient.nom};
+          client.push(temp);
+        }
+      }
+      console.log(client);
+
+      //get psychologue
+      var psy = await Psychologue.findOne({
+        where:{id_psychologue : rendezVous[0].id_psychologue}
+      });
+      var nomPsychologue = psy.prenom + " " + psy.nom;
+    }
+    else{
+      var nomPsychologue='';
+      var plageHoraire='';
+    }
+
+    res.render('../public/views/psychologue/ListeReservations', {
+      layout:'psychologue',
+      client:client,
+      resultats:rendezVous,
+      resultatPsy:nomPsychologue,
+      resultathoraire:plageHoraire
+    });
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+});
+
+//Route qui montre les futures reservations sous forme de liste
+router.get('/psychologue/reservations/listeReservations/future', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  var today = new Date();
+  if(decoded.scope=='psychologue'){
+
+    //get all the reservations
+    var rendezVous = await RendezVous.findAll({
+      order:[['date','ASC']],
+      where:{date:{[Op.gte]:today}}
+    });
+
+
+    if(rendezVous.length>0){
+      //get all the correct plagehoraire
+      var plageHoraire=[];
+      for(var i=0;i<rendezVous.length;i++){
+        var temp = await PlageHoraire.findOne({
+          where:{id_plage_horaire:rendezVous[i].id_plage_horaire}
+        });
+        if(temp){
+          temp.heure_fin=temp.heure_fin.substr(0,5);
+          temp.heure_debut=temp.heure_debut.substr(0,5);
+          plageHoraire.push(temp)
+        }
+      }
+
+      //get all the correct clients
+      var client=[];
+      for(var y=0;y<rendezVous.length;y++){
+        if(rendezVous[y].id_client==null){
+          client.push({prenom:null,nom:null});
+        }
+        else{
+          var tempClient = await Client.findOne({
+            where:{id_client:rendezVous[y].id_client}
+          });
+          var temp = {prenom:tempClient.prenom, nom:tempClient.nom};
+          client.push(temp);
+        }
+      }
+      console.log(client);
+
+      //get psychologue
+      var psy = await Psychologue.findOne({
+        where:{id_psychologue : rendezVous[0].id_psychologue}
+      });
+      var nomPsychologue = psy.prenom + " " + psy.nom;
+    }
+    else{
+      var nomPsychologue='';
+      var plageHoraire='';
+    }
+
+    res.render('../public/views/psychologue/ListeReservations', {
+      layout:'psychologue',
+      client:client,
       resultats:rendezVous,
       resultatPsy:nomPsychologue,
       resultathoraire:plageHoraire

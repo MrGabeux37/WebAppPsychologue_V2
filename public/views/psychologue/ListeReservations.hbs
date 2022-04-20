@@ -3,7 +3,7 @@
     <div class="card mt-5">
 
       <div class="card-header">
-        <h4 class="text-center">Vos Réservations</h4>
+        <h4 class="text-center">Liste des Réservations</h4>
       </div>
 
       <div class="card-body text-center" id="chaquereservation">
@@ -12,7 +12,7 @@
           <div class="col">
             <a href="/psychologue/reservations/listeReservations/ancienne" type="button" class="btn btn-success center-block mt-2">Anciennes Réservations</a>
             <a href="/psychologue/reservations/listeReservations/future" type="button" class="btn btn-success center-block mt-2">Réservations Futures</a>
-            <a href="/psychologue/reservations/listeReservations/reservation" type="button" class="btn btn-success center-block mt-2">Toutes les Réservations</a>
+            <a href="/psychologue/reservations/listeReservations" type="button" class="btn btn-success center-block mt-2">Toutes les Réservations</a>
           </div>
         </div>
         <hr class="mt-4">
@@ -23,7 +23,7 @@
                 <p>ID Rendez-Vous: {{dataValues.id_RV}}<p>
               </div>
               <div class="col-7 ml-2">
-                <p>Client: {{../client.dataValues.prenom}} {{../client.dataValues.nom}}</p>
+                <p>Client: {{#with (lookup ../client @index)}}{{prenom}} {{nom}}{{/with}}</p>
               </div>
             </div>
             <div class="row ml-4 mt">
