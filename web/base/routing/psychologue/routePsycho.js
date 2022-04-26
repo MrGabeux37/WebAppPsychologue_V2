@@ -893,7 +893,6 @@ router.get('/psychologue/reservations/listeReservations/future', async function(
           plageHoraire.push(temp)
         }
       }
-
       //get all the correct clients
       var client=[];
       for(var y=0;y<rendezVous.length;y++){
@@ -914,6 +913,7 @@ router.get('/psychologue/reservations/listeReservations/future', async function(
         where:{id_psychologue : rendezVous[0].id_psychologue}
       });
       var nomPsychologue = psy.prenom + " " + psy.nom;
+      console.log(plageHoraire);
     }
     else{
       var nomPsychologue='';
