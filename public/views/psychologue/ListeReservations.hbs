@@ -42,12 +42,16 @@
                 <p>Paiement reçu: {{#if dataValues.payer}}Oui{{else}}Non{{/if}}</p>
               </div>
             </div>
+            <div class="row ml-4 mt">
+              <div class="col text-center">
+                <a type="button" class="btn btn-success center-block mt-2" href='/psychologue/reservations/listeReservations/{{dataValues.id_RV}}'>Annuler</a>
+              </div>
+            </div>
             <hr class="mt-4">
           {{/each}}
         {{else}}
           <p>Aucune Réservation</p>
         {{/if}}
-
 
       </div>
     </div>
