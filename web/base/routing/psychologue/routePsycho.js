@@ -14,7 +14,6 @@ const url = require('url');
 //get profil du psychologue
 router.get('/profil_psychologue',async function(req, res){
   var decoded = authController.decodeCookie(req.cookies.jwt);
-  console.log(decoded);
   if(decoded.scope=='psychologue'){
     //get contact
     var user = await Psychologue.findOne({
@@ -41,7 +40,6 @@ router.get('/profil_psychologue',async function(req, res){
 //get editable profil du psychologue
 router.get('/profil_psychologue/update', async function(req,res){
   var decoded = authController.decodeCookie(req.cookies.jwt);
-  console.log(decoded);
   if(decoded.scope=='psychologue'){
     //get contact
     var user = await Psychologue.findOne({
@@ -94,7 +92,6 @@ router.get('/clients', async function(req,res){
   if(decoded.scope=='psychologue'){
     //get url query
     const query = url.parse(req.url, true).query;
-    console.log(query);
 
     //get client with or without query info
     var clients = await Client.findAll({
@@ -104,7 +101,6 @@ router.get('/clients', async function(req,res){
       }
     });
 
-    console.log(clients);
     res.render('../public/views/psychologue/clients_recherche', {
       layout:'psychologue',
       nom : query.nom_client,
@@ -123,7 +119,6 @@ router.get('/clients/profil/:id_client', async function(req,res){
   if(decoded.scope=='psychologue'){
     //get le parametre dans le URL
     var params = req.params;
-    console.log(params);
     //trouve le client choisi
     var client = await Client.findOne({
       where:{id_client:params.id_client}
@@ -190,7 +185,6 @@ router.post('/clients/profil_update/:id_client', async function(req,res){
     var params = req.params;
     //get payload
     var payload = req.body;
-    console.log(payload);
     //trouve le client choisi
     var client = await Client.findOne({
       where:{id_client:params.id_client}
@@ -260,10 +254,8 @@ router.get('/clients/profil/:id_client/reservation', async function(req,res){
   if(decoded.scope=='psychologue'){
     //get le parametre dans le URL
     var params = req.params;
-    console.log('params: '+ params);
     //get payload
     var payload = req.body;
-    console.log('payload: '+ payload);
     //trouve le client choisi
     var client = await Client.findOne({
       where:{id_client:params.id_client}
@@ -278,7 +270,6 @@ router.get('/clients/profil/:id_client/reservation', async function(req,res){
       order:[['date','ASC']],
       where:{id_client : params.id_client}
     });
-    console.log(rendezVous);
 
     if(rendezVous.length>0){
       //get all the correct plagehoraire
@@ -325,10 +316,8 @@ router.get('/clients/profil/:id_client/reservation/ancienne', async function(req
   if(decoded.scope=='psychologue'){
     //get le parametre dans le URL
     var params = req.params;
-    console.log('params: '+ params);
     //get payload
     var payload = req.body;
-    console.log('payload: '+ payload);
     //trouve le client choisi
     var client = await Client.findOne({
       where:{id_client:params.id_client}
@@ -394,10 +383,8 @@ router.get('/clients/profil/:id_client/reservation/future', async function(req,r
   if(decoded.scope=='psychologue'){
     //get le parametre dans le URL
     var params = req.params;
-    console.log('params: '+ params);
     //get payload
     var payload = req.body;
-    console.log('payload: '+ payload);
     //trouve le client choisi
     var client = await Client.findOne({
       where:{id_client:params.id_client}
@@ -460,7 +447,6 @@ router.get('/clients/profil/:id_client/reservation/future', async function(req,r
 router.get('/clients/profil/:id_client/reservation/annulation/:id_RV', async function(req,res){
   var decoded = authController.decodeCookie(req.cookies.jwt);
   var params = req.params;
-  console.log(params);
   if(decoded.scope=='psychologue'){
     //trouve le client choisi
     var client = await Client.findOne({
@@ -472,16 +458,12 @@ router.get('/clients/profil/:id_client/reservation/annulation/:id_RV', async fun
       where:{id_RV : params.id_RV}
     });
 
-    console.log(rendezvous);
-
     //get plagehoraire
     var plagehoraire = await PlageHoraire.findOne({
     where:{id_plage_horaire : rendezvous.id_plage_horaire}
     });
     var heure_debut = plagehoraire.heure_debut.substr(0,5);
     var heure_fin = plagehoraire.heure_fin.substr(0,5);
-
-    console.log(plagehoraire);
 
     //get psychologue
     var psy = await Psychologue.findOne({
@@ -512,7 +494,6 @@ router.get('/clients/profil/:id_client/reservation/annulation/:id_RV', async fun
 router.post('/clients/profil/:id_client/reservation/annulation/:idRendezVous', async function(req,res){
   var decoded = authController.decodeCookie(req.cookies.jwt);
   var params = req.params;
-  console.log(params);
 
   if(decoded.scope=='psychologue'){
     //get Rendezvous choisi
@@ -537,7 +518,6 @@ router.post('/clients/profil/:id_client/reservation/annulation/:idRendezVous', a
 router.get('/clients/profil/:id_client/reservation/annulation/RendezVousAnnule/:idRendezVous', async function(req,res){
   var decoded = authController.decodeCookie(req.cookies.jwt);
   var params = req.params;
-  console.log(params);
 
   var retourURL='/clients/profil/'+params.id_client+'/reservation/future';
 
@@ -637,10 +617,7 @@ router.get('/psychologue/reservations/', async function(req,res){
 //Route qui créé les rendez-vous vacant ou non
 router.post('/psychologue/reservations/nouvelleDispo', async function(req,res){
     var decoded = authController.decodeCookie(req.cookies.jwt);
-
     var payload = req.body;
-    console.log(payload);
-
 
     //get PlageHoraire choisie
     var plageHoraire = await PlageHoraire.findOne({
@@ -865,7 +842,6 @@ router.get('/psychologue/reservations/listeReservations/ancienne', async functio
           client.push(temp);
         }
       }
-      console.log(client);
 
       //get psychologue
       var psy = await Psychologue.findOne({
@@ -932,7 +908,6 @@ router.get('/psychologue/reservations/listeReservations/future', async function(
           client.push(temp);
         }
       }
-      console.log(client);
 
       //get psychologue
       var psy = await Psychologue.findOne({
