@@ -220,3 +220,44 @@ module.exports.passUpdate_post = async (req, res) => {
     console.log("erreur est: "+error);
   }
 }
+
+/* Emergency password change Controller
+module.exports.passUpdate_post_Test = async (req, res) => {
+  try{
+    //get payload
+    var payload = req.body;
+    var password = getHashedPassword(payload.password1);
+    //finds user with id in the cookie
+    var user = await Contact.findOne({
+      where:{Email:payload.email}
+    });
+    //if contact is null
+    if(!user){
+
+      //finds psychologue with ID in JWT cookie
+      user = await Psychologue.findOne({
+        where:{courriel:payload.email}
+      });
+      //if psychologue is null
+      if(!user){
+        //maybe check for different route for a different message (Oops error happened)
+        res.redirect('/errorAccess');
+      }
+      //if psychologue is true
+      else{
+        user.mot_de_passe=password;
+        user.save();
+        res.redirect('/goodPassword');
+      }
+    }
+    //if contact is true
+    else{
+      user.Mot_Passe=password;
+      user.save();
+      res.redirect('/goodPassword');
+    }
+  }catch(error){
+    console.log("erreur est: "+error);
+  }
+}
+*/

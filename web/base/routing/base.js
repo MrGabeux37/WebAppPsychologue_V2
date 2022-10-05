@@ -16,6 +16,15 @@ Router.get('/test',async function(req, res){
   //res.render('../public/views/psychologue/reservations', {layout: 'psychologue'})
 });
 
+/* Emergency password change Route
+//GET modification du mot de passe
+Router.get('/changement_de_mot_de_passe_Test',async function(req, res){
+    res.render('../public/views/main/PasswordChangeTest', {layout: 'main'})
+});
+//POST modification du mot de passe
+Router.post('/changement_de_mot_de_passe_Test',authController.passUpdate_post_Test);
+*/
+
 //first route
 Router.get('/',authController.login_get);
 
