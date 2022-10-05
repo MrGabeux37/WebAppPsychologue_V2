@@ -10,7 +10,7 @@ const sequelize= new Sequelize('manon_psychologie', 'root', 'password',{ //passw
     min:0,
     idle:10000
   },
-  logging:true //verbose or not
+  logging:console.log //verbose or not
 })
 
 //
