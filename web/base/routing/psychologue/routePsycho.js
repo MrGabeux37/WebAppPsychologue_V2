@@ -10,6 +10,7 @@ const Op = Sequelize.Op;
 const jwt = require('jsonwebtoken');
 const authController = require('../../controllers/authController.js');
 const url = require('url');
+const plageHoraireController = require('../../controllers/plageHoraireController.js');
 
 //get profil du psychologue
 router.get('/profil_psychologue',async function(req, res){
@@ -543,70 +544,12 @@ router.get('/psychologue/reservations/', async function(req,res){
     where:{permission:true}
   });
 
-  //générer les heures
-  var heureFins=[];
-  var heureDebuts=[];
-  var heureFin=6;
-  var minuteFin=0;
-  var heureDebut=6;
-  var minuteDebut=0;
-
-  heureFins.push("06:00");
-  heureDebuts.push("06:00");
-
-  for(var i=0;i<56;i++){
-    var temp1="";
-    var temp2="";
-    minuteDebut=minuteDebut+15;
-    minuteFin=minuteFin+15;
-    if(minuteDebut==60){
-      heureDebut=heureDebut+1;
-      heureFin=heureFin+1;
-      minuteDebut=0;
-      minuteFin=0;
-
-      if(heureDebut<10){
-        temp1="0"+heureDebut+":0"+minuteDebut;
-        temp2="0"+heureFin+":0"+minuteFin;
-      }
-      else{
-        temp1=heureDebut+":0"+minuteDebut;
-        temp2=heureFin+":0"+minuteFin;
-      }
-    }
-    else{
-      if(heureDebut<10){
-        if(minuteDebut==0){
-          temp1="0"+heureDebut+":0"+minuteDebut;
-          temp2="0"+heureFin+":0"+minuteFin;
-        }
-        else{
-          temp1="0"+heureDebut+":"+minuteDebut;
-          temp2="0"+heureFin+":"+minuteFin;
-        }
-      }
-      else{
-        if(minuteDebut==0){
-          temp1=heureDebut+":0"+minuteDebut;
-          temp2=heureFin+":0"+minuteFin;
-        }
-        else{
-        temp1=heureDebut+":"+minuteDebut;
-        temp2=heureFin+":"+minuteFin;
-        }
-      }
-    }
-    heureFins.push(temp2);
-    heureDebuts.push(temp1);
-  }
-
-
   if(decoded.scope=='psychologue'){
     res.render('../public/views/psychologue/calendar',{
       layout:'psychologue',
       Clients:clients,
-      HeureFins:heureFins,
-      HeureDebuts:heureDebuts
+      HeureFins:plageHoraireController.heuresDeFin(),
+      HeureDebuts:plageHoraireController.heuresDeDebut(),
     });
   }
   else{
@@ -659,70 +602,12 @@ router.post('/psychologue/reservations/nouvelleDispo', async function(req,res){
           where:{permission:true}
         });
 
-        //générer les heures
-        var heureFins=[];
-        var heureDebuts=[];
-        var heureFin=6;
-        var minuteFin=0;
-        var heureDebut=6;
-        var minuteDebut=0;
-
-        heureFins.push("06:00");
-        heureDebuts.push("06:00");
-
-        for(var i=0;i<56;i++){
-          var temp1="";
-          var temp2="";
-          minuteDebut=minuteDebut+15;
-          minuteFin=minuteFin+15;
-          if(minuteDebut==60){
-            heureDebut=heureDebut+1;
-            heureFin=heureFin+1;
-            minuteDebut=0;
-            minuteFin=0;
-
-            if(heureDebut<10){
-              temp1="0"+heureDebut+":0"+minuteDebut;
-              temp2="0"+heureFin+":0"+minuteFin;
-            }
-            else{
-              temp1=heureDebut+":0"+minuteDebut;
-              temp2=heureFin+":0"+minuteFin;
-            }
-          }
-          else{
-            if(heureDebut<10){
-              if(minuteDebut==0){
-                temp1="0"+heureDebut+":0"+minuteDebut;
-                temp2="0"+heureFin+":0"+minuteFin;
-              }
-              else{
-                temp1="0"+heureDebut+":"+minuteDebut;
-                temp2="0"+heureFin+":"+minuteFin;
-              }
-            }
-            else{
-              if(minuteDebut==0){
-                temp1=heureDebut+":0"+minuteDebut;
-                temp2=heureFin+":0"+minuteFin;
-              }
-              else{
-              temp1=heureDebut+":"+minuteDebut;
-              temp2=heureFin+":"+minuteFin;
-              }
-            }
-          }
-          heureFins.push(temp2);
-          heureDebuts.push(temp1);
-        }
-
-
         if(decoded.scope=='psychologue'){
           res.render('../public/views/psychologue/calendar',{
             layout:'psychologue',
             Clients:clients,
-            HeureFins:heureFins,
-            HeureDebuts:heureDebuts,
+            HeureFins:plageHoraireController.heuresDeFin(),
+            HeureDebuts:plageHoraireController.heuresDeDebut(),
             message:"L'heure de début doit être plus tard que l'heure de fin.",
             scriptModal:"yes"
           });
@@ -793,7 +678,9 @@ router.get('/psychologue/reservations/listeReservations', async function(req,res
       client:client,
       resultats:rendezVous,
       resultatPsy:nomPsychologue,
-      resultathoraire:plageHoraire
+      resultathoraire:plageHoraire,
+      HeureFins:plageHoraireController.heuresDeFin(),
+      HeureDebuts:plageHoraireController.heuresDeDebut()
     });
   }
   else{
@@ -859,7 +746,9 @@ router.get('/psychologue/reservations/listeReservations/ancienne', async functio
       client:client,
       resultats:rendezVous,
       resultatPsy:nomPsychologue,
-      resultathoraire:plageHoraire
+      resultathoraire:plageHoraire,
+      HeureFins:plageHoraireController.heuresDeFin(),
+      HeureDebuts:plageHoraireController.heuresDeDebut()
     });
   }
   else{
@@ -903,7 +792,7 @@ router.get('/psychologue/reservations/listeReservations/future', async function(
           var tempClient = await Client.findOne({
             where:{id_client:rendezVous[y].id_client}
           });
-          var temp = {prenom:tempClient.prenom, nom:tempClient.nom};
+          var temp = {prenom:tempClient.prenom, nom:tempClient.nom, id_client:tempClient.id_client};
           client.push(temp);
         }
       }
@@ -913,7 +802,7 @@ router.get('/psychologue/reservations/listeReservations/future', async function(
         where:{id_psychologue : rendezVous[0].id_psychologue}
       });
       var nomPsychologue = psy.prenom + " " + psy.nom;
-      console.log(plageHoraire);
+      //console.log(plageHoraire);
     }
     else{
       var nomPsychologue='';
@@ -925,7 +814,10 @@ router.get('/psychologue/reservations/listeReservations/future', async function(
       client:client,
       resultats:rendezVous,
       resultatPsy:nomPsychologue,
-      resultathoraire:plageHoraire
+      resultathoraire:plageHoraire,
+      HeureFins:plageHoraireController.heuresDeFin(),
+      HeureDebuts:plageHoraireController.heuresDeDebut(),
+      Future:'Hello'
     });
   }
   else{

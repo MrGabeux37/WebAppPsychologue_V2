@@ -82,7 +82,11 @@
 
             <div class="row m-2">
               <div class="col text-center">
-                <button type="button" class="btn btn-success center-block mt-2" data-bs-toggle="modifieDispo" data-bs-target="#modifieDispo">Modifier</button>
+                <button type="button" class="btn btn-success center-block mt-2" data-bs-toggle="modal" data-bs-target="#modifieDispo">Modifier</button>
+                {{#with ../Future}}
+                    <a class="btn btn-success mt-2" href='/clients/profil/{{#with (lookup ../client @index)}}{{id_client}}{{/with}}/reservation/annulation/{{dataValues.id_RV}}'>Annuler</a>
+                  {{else}}
+                {{/with}}
               </div>
             </div>
             <hr class="mt-4">

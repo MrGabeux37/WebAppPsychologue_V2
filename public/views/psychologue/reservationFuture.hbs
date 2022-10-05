@@ -42,7 +42,13 @@
                 <p>Paiement reçu: {{#if dataValues.payer}}Oui{{else}}Non{{/if}}</p>
               </div>
             </div>
-            <a class="btn btn-success mr-4" href='/clients/profil/{{../client.dataValues.id_client}}/reservation/annulation/{{dataValues.id_RV}}'>Annuler</a>
+            <div class="row m-2">
+              <div class="col text-center">
+                <button type="button" class="btn btn-success center-block mt-2" data-bs-toggle="modal" data-bs-target="#modifieDispo">Modifier</button>
+                <a class="btn btn-success mt-2" href='/clients/profil/{{../client.dataValues.id_client}}/reservation/annulation/{{dataValues.id_RV}}'>Annuler</a>
+              </div>
+            </div>
+
             <hr class="mt-4">
           {{/each}}
         {{else}}
@@ -52,4 +58,74 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modifieDispo" tabindex="-1">
+  <form class="needs-validation" novalidate action="/psychologue/reservations/listeReservations/modifier" method="post">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Modification d'une disponibilité</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col">
+              <label for="date_rv">Date du rendezvous: </label>
+              <input type="date" class="form-control" id=name="date_rv" name="date_rv" placeholder="aaaa-mm-jj" required>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col">
+                <label for="hrDebut">Heure de Début:</label>
+                <select class="form-select" id='hrDebut' name='hrDebut' aria-label="Default select example" required>
+                  <option value="" selected disabled>Selectionnez l'heure de début</option>
+                  {{#if HeureDebuts}}
+                    {{#each HeureDebuts as | HeureDebut |}}
+                    <option value="{{HeureDebut}}">{{HeureDebut}}</option>
+                    {{/each}}
+                  {{/if}}
+                </select>
+            </div>
+            <div class="col">
+                <label for="hrFin">Heure de Fin:</label>
+                <select class="form-select" id='hrFin' name='hrFin' aria-label="Default select example" required>
+                  <option value="" selected disabled>Selectionnez l'heure de fin</option>
+                  {{#if HeureFins}}
+                    {{#each HeureFins as | HeureFin |}}
+                    <option value="{{HeureFin}}">{{HeureFin}}</option>
+                    {{/each}}
+                  {{/if}}
+                </select>
+            </div>
+          </div>
+          {{#if message}}<p style="color:red;">{{message}}</p>{{/if}}
+
+          <div class="form-group mt-2">
+            <label for="id_enfant">Nom du Client: </label>
+            <select class="form-select" name='id_client' aria-label="Default select example">
+              <option selected>Selectionnez le Client (Facultatif)</option>
+              {{#if Clients}}
+                {{#each Clients as | Client |}}
+                <option value="{{Client.dataValues.id_client}}">{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}</option>
+                {{/each}}
+              {{/if}}
+            </select>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Sauvegarder</button>
+        </div>
+
+      </div>
+    </div>
+  </form>
 </div>
