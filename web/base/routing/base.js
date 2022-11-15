@@ -119,6 +119,8 @@ Router.get('/psychologue/reservations/nouvelleDispo/confirmation/:date_rv/:plage
 
   res.render('../public/views/psychologue/dispoCreated', {
     layout: 'main',
+    LienRetour:"/psychologue/reservations/",
+    MessageButton:'du Calendrier',
     message: "La nouvelle disponibilité est créée pour le " + params.date_rv + " entre " + plageHoraire.heure_debut + " et " + plageHoraire.heure_fin +"."
   })
 })
@@ -139,7 +141,49 @@ Router.get('/psychologue/reservations/nouvelleDispo/confirmation/:date_rv/:plage
 
   res.render('../public/views/psychologue/dispoCreated', {
     layout: 'main',
+    LienRetour:"/psychologue/reservations/",
+    MessageButton:'du Calendrier',
     message: "Le rendez-vous est créé pour le client " + client.id_client + ": " + client.prenom + " " + client.nom + " le " + params.date_rv + " entre " + plageHoraire.heure_debut + " et " + plageHoraire.heure_fin +"."
+  })
+})
+
+//get page redirection apres modification de dispo (sans client)
+Router.get('/psychologue/reservations/listeReservations/modifier/confirmation/:date_rv/:plageHoraire', async function(req, res){
+  var params = req.params;
+  console.log(params);
+
+  //get PlageHoraire en parametre
+  var plageHoraire = await PlageHoraire.findOne({
+    where:{id_plage_horaire:params.plageHoraire}
+  });
+
+  res.render('../public/views/psychologue/dispoCreated', {
+    layout: 'main',
+    LienRetour:"/psychologue/reservations/listeReservations",
+    MessageButton:'des Réservations',
+    message: "Le rendez-vous a été modifié. <br>Voici la nouvelle information: <br>Client: Auncun Client <br>Date: " + params.date_rv + " <br>Heure Début: " + plageHoraire.heure_debut + " <br>Heure Fin: " + plageHoraire.heure_fin +"."
+  })
+})
+
+//get page redirection apres modification d'un rendezvous
+Router.get('/psychologue/reservations/listeReservations/modifier/confirmation/:date_rv/:plageHoraire/:id_client', async function(req, res){
+  var params = req.params;
+  console.log(params);
+  //find client to add info on page
+  var client = await Client.findOne({
+    where:{id_client:params.id_client}
+  });
+
+  //get PlageHoraire en parametre
+  var plageHoraire = await PlageHoraire.findOne({
+    where:{id_plage_horaire:params.plageHoraire}
+  });
+
+  res.render('../public/views/psychologue/dispoCreated', {
+    layout: 'main',
+    LienRetour:"/psychologue/reservations/listeReservations",
+    MessageButton:'des Réservations',
+    message: "Le rendez-vous a été modifié. Voici la nouvelle information: <br>Client: " + client.id_client + ": " + client.prenom + " " + client.nom + " <br>Date: " + params.date_rv + " <br>Heure Début: " + plageHoraire.heure_debut + " <br>Heure Fin: " + plageHoraire.heure_fin +"."
   })
 })
 
