@@ -830,7 +830,8 @@ router.get('/psychologue/reservations/listeReservations/future', async function(
       resultatPsy:nomPsychologue,
       resultathoraire:plageHoraire,
       HeureFins:plageHoraireController.heuresDeFin(),
-      HeureDebuts:plageHoraireController.heuresDeDebut()
+      HeureDebuts:plageHoraireController.heuresDeDebut(),
+      Future:true
     });
   }
   else{
@@ -858,6 +859,9 @@ router.post('/psychologue/reservations/listeReservations/modifier', async functi
 
         //if a client is selected
         if(payload.id_client!="Selectionnez le Client (Facultatif)"){
+          //var rendezVous = await RendezVous.findOne({
+            //where:{id_RV:id_rendezvous}
+          //})
           var rendezVous = await RendezVous.create({
             date:payload.date_rv,
             disponibilite:false,

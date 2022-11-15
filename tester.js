@@ -1,11 +1,13 @@
-router.get('/psychologue/reservations/listeReservations', async function(req,res){
+//Route qui montre les futures reservations sous forme de liste
+router.get('/psychologue/reservations/listeReservations/future', async function(req,res){
   var decoded = authController.decodeCookie(req.cookies.jwt);
-
+  var today = new Date();
   if(decoded.scope=='psychologue'){
 
     //get all the reservations
     var rendezVous = await RendezVous.findAll({
-      order:[['date','ASC']]
+      order:[['date','ASC']],
+      where:{date:{[Op.gte]:today}}
     });
     //get all the clients for Modal
     var clients = await Client.findAll({
@@ -25,7 +27,6 @@ router.get('/psychologue/reservations/listeReservations', async function(req,res
           plageHoraire.push(temp)
         }
       }
-
       //get all the correct clients
       var client=[];
       for(var y=0;y<rendezVous.length;y++){
@@ -36,7 +37,7 @@ router.get('/psychologue/reservations/listeReservations', async function(req,res
           var tempClient = await Client.findOne({
             where:{id_client:rendezVous[y].id_client}
           });
-          var temp = {prenom:tempClient.prenom, nom:tempClient.nom};
+          var temp = {prenom:tempClient.prenom, nom:tempClient.nom, id_client:tempClient.id_client};
           client.push(temp);
         }
       }
@@ -60,7 +61,8 @@ router.get('/psychologue/reservations/listeReservations', async function(req,res
       resultatPsy:nomPsychologue,
       resultathoraire:plageHoraire,
       HeureFins:plageHoraireController.heuresDeFin(),
-      HeureDebuts:plageHoraireController.heuresDeDebut()
+      HeureDebuts:plageHoraireController.heuresDeDebut(),
+      Future:true
     });
   }
   else{
