@@ -632,6 +632,10 @@ router.get('/psychologue/reservations/listeReservations', async function(req,res
     var rendezVous = await RendezVous.findAll({
       order:[['date','ASC']]
     });
+    //get all the clients for Modal
+    var clients = await Client.findAll({
+      where:{permission:true}
+    });
 
     if(rendezVous.length>0){
       //get all the correct plagehoraire
@@ -676,6 +680,7 @@ router.get('/psychologue/reservations/listeReservations', async function(req,res
     res.render('../public/views/psychologue/ListeReservations', {
       layout:'psychologue',
       client:client,
+      Clients:clients,
       resultats:rendezVous,
       resultatPsy:nomPsychologue,
       resultathoraire:plageHoraire,
@@ -699,6 +704,10 @@ router.get('/psychologue/reservations/listeReservations/ancienne', async functio
       order:[['date','ASC']],
       where:{date:{[Op.lte]:today}}
     });
+    //get all the clients for Modal
+    var clients = await Client.findAll({
+      where:{permission:true}
+    });
 
 
     if(rendezVous.length>0){
@@ -744,6 +753,7 @@ router.get('/psychologue/reservations/listeReservations/ancienne', async functio
     res.render('../public/views/psychologue/ListeReservations', {
       layout:'psychologue',
       client:client,
+      Clients:clients,
       resultats:rendezVous,
       resultatPsy:nomPsychologue,
       resultathoraire:plageHoraire,
@@ -767,7 +777,10 @@ router.get('/psychologue/reservations/listeReservations/future', async function(
       order:[['date','ASC']],
       where:{date:{[Op.gte]:today}}
     });
-
+    //get all the clients for Modal
+    var clients = await Client.findAll({
+      where:{permission:true}
+    });
 
     if(rendezVous.length>0){
       //get all the correct plagehoraire
@@ -812,6 +825,7 @@ router.get('/psychologue/reservations/listeReservations/future', async function(
     res.render('../public/views/psychologue/ListeReservations', {
       layout:'psychologue',
       client:client,
+      Clients:clients,
       resultats:rendezVous,
       resultatPsy:nomPsychologue,
       resultathoraire:plageHoraire,
