@@ -29,7 +29,7 @@
                 <label for="id_rdv">ID: </label>
               </div>
               <div class="col ml-auto">
-                <input name="id_rdv" class="form-control" value="{{dataValues.id_RV}}" disabled>
+                <input id="id_rdv" name="id_rdv" class="form-control" value="{{dataValues.id_RV}}" disabled>
               </div>
               <div class="col ml-auto">
                 <label for="client">Client: </label>
@@ -43,7 +43,7 @@
                 <label for="date float-start">Date: </label>
               </div>
               <div class="col ml-auto">
-                <input name="date" class="form-control" value="{{dataValues.date}}" disabled>
+                <input id="date" name="date" class="form-control" value="{{dataValues.date}}" disabled>
               </div>
               <div class="col ml-auto">
                 <label for="paiement">Paiement reçu:</label>
@@ -82,7 +82,7 @@
 
             <div class="row m-2">
               <div class="col text-center">
-                <button type="button" class="btn btn-success center-block mt-2" data-bs-toggle="modal" data-bs-target="#modifieDispo">Modifier</button>
+                <button id="modifieButton" type="button" class="btn btn-success center-block mt-2" data-bs-toggle="modal" data-bs-target="#modifieDispo">Modifier</button>
                 {{#if ../Future}}
                     <a class="btn btn-success mt-2" href='/clients/profil/{{#with (lookup ../client @index)}}{{id_client}}{{/with}}/reservation/annulation/{{dataValues.id_RV}}'>Annuler</a>
                 {{/if}}
@@ -97,7 +97,6 @@
     </div>
   </div>
 </div>
-
 
 <!-- Modal -->
 <div class="modal fade" id="modifieDispo" tabindex="-1">
@@ -114,15 +113,21 @@
 
           <div class="row">
             <div class="col">
-              <label for="date_rv">Date du rendezvous: </label>
-              <input type="date" class="form-control" id=name="date_rv" name="date_rv" placeholder="aaaa-mm-jj" required>
+              <input id="m_id_rdv" name="m_id_rdv" class="form-control" disabled>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="m_date_rv">Date du rendezvous: </label>
+              <input type="date" class="form-control" id="m_date_rv" name="m_date_rv" placeholder="aaaa-mm-jj" required>
             </div>
           </div>
 
           <div class="row mt-2">
             <div class="col">
-                <label for="hrDebut">Heure de Début:</label>
-                <select class="form-select" id='hrDebut' name='hrDebut' aria-label="Default select example" required>
+                <label for="m_hrDebut">Heure de Début:</label>
+                <select class="form-select" id='m_hrDebut' name='m_hrDebut' aria-label="Default select example" required>
                   <option value="" selected disabled>Selectionnez l'heure de début</option>
                   {{#if HeureDebuts}}
                     {{#each HeureDebuts as | HeureDebut |}}
@@ -132,8 +137,8 @@
                 </select>
             </div>
             <div class="col">
-                <label for="hrFin">Heure de Fin:</label>
-                <select class="form-select" id='hrFin' name='hrFin' aria-label="Default select example" required>
+                <label for="m_hrFin">Heure de Fin:</label>
+                <select class="form-select" id='m_hrFin' name='m_hrFin' aria-label="Default select example" required>
                   <option value="" selected disabled>Selectionnez l'heure de fin</option>
                   {{#if HeureFins}}
                     {{#each HeureFins as | HeureFin |}}
@@ -146,8 +151,8 @@
           {{#if message}}<p style="color:red;">{{message}}</p>{{/if}}
 
           <div class="form-group mt-2">
-            <label for="id_enfant">Nom du Client: </label>
-            <select class="form-select" name='id_client' aria-label="Default select example">
+            <label for="m_id_client">Nom du Client: </label>
+            <select class="form-select" name='m_id_client' aria-label="Default select example">
               <option selected>Selectionnez le Client (Facultatif)</option>
               {{#if Clients}}
                 {{#each Clients as | Client |}}
@@ -176,6 +181,18 @@
   </script>
 {{/if}}
 
+<script>
+$(document).ready (function() {
+   $('#modifieButton').click(function() {
+      //get info
+      var rdv_ID = $('#id_rdv').val();
+      var Jdate = $('#date').val();
+      //give info
+      $('#m_id_rdv').val($('#id_rdv').val());
+      $('#m_date').val($('#date').val());
+   });
+});
+</script>
 
 <script>
 (function () {
