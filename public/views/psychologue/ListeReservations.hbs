@@ -43,7 +43,8 @@
                 <label for="date float-start">Date: </label>
               </div>
               <div class="col ml-auto">
-                <input id="date" name="date" class="form-control" value="{{dataValues.date}}" disabled>
+                <input type="date" name="date" class="form-control" id="m_date_rv" name="date_rv" value="{{dataValues.date}}" disabled>
+                <!--<input id="date" name="date" class="form-control" value="{{dataValues.date}}" disabled>-->
               </div>
               <div class="col ml-auto">
                 <label for="paiement">Paiement reçu:</label>
@@ -82,7 +83,7 @@
 
             <div class="row m-2">
               <div class="col text-center">
-                <button id="modifieButton" type="button" class="btn btn-success center-block mt-2" data-bs-toggle="modal" data-bs-target="#modifieDispo">Modifier</button>
+                <button id="modifieButton" type="button" class="btn btn-success center-block mt-2" data-bs-toggle="modal" data-bs-target="#modifieDispo{{@index}}">Modifier</button>
                 {{#if ../Future}}
                     <a class="btn btn-success mt-2" href='/clients/profil/{{#with (lookup ../client @index)}}{{id_client}}{{/with}}/reservation/annulation/{{dataValues.id_RV}}'>Annuler</a>
                 {{/if}}
@@ -99,79 +100,84 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modifieDispo" tabindex="-1">
-  <form class="needs-validation" novalidate action="/psychologue/reservations/listeReservations/modifier" method="post">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
+{{#if resultats}}
+  {{#each resultats as | resultat |}}
+    <div class="modal fade" id="modifieDispo{{@index}}" tabindex="-1">
+      <form class="needs-validation" novalidate action="/psychologue/reservations/listeReservations/modifier" method="post">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
 
-        <div class="modal-header">
-          <h5 class="modal-title">Modification d'une disponibilité</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body">
-
-          <div class="row">
-            <div class="col">
-              <input id="m_id_rdv" name="m_id_rdv" class="form-control" disabled>
+            <div class="modal-header">
+              <h5 class="modal-title">Modification d'une disponibilité</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-          </div>
 
-          <div class="row">
-            <div class="col">
-              <label for="m_date_rv">Date du rendezvous: </label>
-              <input type="date" class="form-control" id="m_date_rv" name="m_date_rv" placeholder="aaaa-mm-jj" required>
-            </div>
-          </div>
+            <div class="modal-body">
 
-          <div class="row mt-2">
-            <div class="col">
-                <label for="m_hrDebut">Heure de Début:</label>
-                <select class="form-select" id='m_hrDebut' name='m_hrDebut' aria-label="Default select example" required>
-                  <option value="" selected disabled>Selectionnez l'heure de début</option>
-                  {{#if HeureDebuts}}
-                    {{#each HeureDebuts as | HeureDebut |}}
-                    <option value="{{HeureDebut}}">{{HeureDebut}}</option>
+              <div class="row">
+                <div class="col">
+                  <input id="m_id_rdv" name="m_id_rdv" value="{{dataValues.id_RV}}" class="form-control" disabled>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label for="m_date_rv">Date du rendezvous: </label>
+                  <input type="date" class="form-control" id="m_date_rv" value="{{dataValues.date}}" name="m_date_rv" required> <!-- placeholder="aaaa-mm-jj"-->
+                </div>
+              </div>
+
+              <div class="row mt-2">
+                <div class="col">
+                    <label for="m_hrDebut">Heure de Début:</label>
+                    <select class="form-select" id='m_hrDebut' name='m_hrDebut' aria-label="Default select example" required>
+                      <option value="" selected disabled>Selectionnez l'heure de début</option>
+                      {{#if ../HeureDebuts}}
+                        {{#each HeureDebuts as | HeureDebut |}}
+                        <option value="{{HeureDebut}}">{{HeureDebut}}</option>
+                        {{/each}}
+                      {{/if}}
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="m_hrFin">Heure de Fin:</label>
+                    <select class="form-select" id='m_hrFin' name='m_hrFin' aria-label="Default select example" required>
+                      <option value="" selected disabled>Selectionnez l'heure de fin</option>
+                      {{#if ../HeureFins}}
+                        {{#each HeureFins as | HeureFin |}}
+                        <option value="{{HeureFin}}">{{HeureFin}}</option>
+                        {{/each}}
+                      {{/if}}
+                    </select>
+                </div>
+              </div>
+              {{#if message}}<p style="color:red;">{{message}}</p>{{/if}}
+
+              <div class="form-group mt-2">
+                <label for="m_id_client">Nom du Client: </label>
+                <select class="form-select" name='m_id_client' aria-label="Default select example">
+                  <option selected>Selectionnez le Client (Facultatif)</option>
+                  {{#if ../Clients}}
+                    {{#each Clients as | Client |}}
+                    <option value="{{Client.dataValues.id_client}}">{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}</option>
                     {{/each}}
                   {{/if}}
                 </select>
+              </div>
+
             </div>
-            <div class="col">
-                <label for="m_hrFin">Heure de Fin:</label>
-                <select class="form-select" id='m_hrFin' name='m_hrFin' aria-label="Default select example" required>
-                  <option value="" selected disabled>Selectionnez l'heure de fin</option>
-                  {{#if HeureFins}}
-                    {{#each HeureFins as | HeureFin |}}
-                    <option value="{{HeureFin}}">{{HeureFin}}</option>
-                    {{/each}}
-                  {{/if}}
-                </select>
+
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Sauvegarder</button>
             </div>
+
           </div>
-          {{#if message}}<p style="color:red;">{{message}}</p>{{/if}}
-
-          <div class="form-group mt-2">
-            <label for="m_id_client">Nom du Client: </label>
-            <select class="form-select" name='m_id_client' aria-label="Default select example">
-              <option selected>Selectionnez le Client (Facultatif)</option>
-              {{#if Clients}}
-                {{#each Clients as | Client |}}
-                <option value="{{Client.dataValues.id_client}}">{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}</option>
-                {{/each}}
-              {{/if}}
-            </select>
-          </div>
-
         </div>
-
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-success">Sauvegarder</button>
-        </div>
-
-      </div>
+      </form>
     </div>
-  </form>
-</div>
+  {{/each}}
+{{/if}}
+
 
 {{#if scriptModal}}
   <script>
@@ -182,16 +188,14 @@
 {{/if}}
 
 <script>
-$(document).ready (function() {
-   $('#modifieButton').click(function() {
-      //get info
-      var rdv_ID = $('#id_rdv').val();
-      var Jdate = $('#date').val();
-      //give info
-      $('#m_id_rdv').val($('#id_rdv').val());
-      $('#m_date').val($('#date').val());
-   });
-});
+  $(document).ready (function() {
+     $('#modifieButton').click(function() {
+        //get info
+
+        //give info
+
+     });
+  });
 </script>
 
 <script>
