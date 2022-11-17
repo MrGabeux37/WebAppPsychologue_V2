@@ -843,13 +843,14 @@ router.get('/psychologue/reservations/listeReservations/future', async function(
 router.post('/psychologue/reservations/listeReservations/modifier', async function(req,res){
     var decoded = authController.decodeCookie(req.cookies.jwt);
     var payload = req.body;
+    console.log(payload);
 
     //get PlageHoraire choisie
     var plageHoraire = await PlageHoraire.findOne({
       where:{
         [Op.and]:[
-          {heure_debut:payload.hrDebut},
-          {heure_fin:payload.hrFin}
+          {heure_debut:payload.m_hrDebut},
+          {heure_fin:payload.m_hrFin}
         ]}
     });
     console.log(plageHoraire)
@@ -858,27 +859,27 @@ router.post('/psychologue/reservations/listeReservations/modifier', async functi
       if(plageHoraire){
 
         //if a client is selected
-        if(payload.id_client!="Selectionnez le Client (Facultatif)"){
+        if(payload.m_id_client!="Selectionnez le Client (Facultatif)"){
           //var rendezVous = await RendezVous.findOne({
             //where:{id_RV:id_rendezvous}
           //})
           var rendezVous = await RendezVous.create({
-            date:payload.date_rv,
+            date:payload.m_date_rv,
             disponibilite:false,
-            id_client:payload.id_client,
+            id_client:payload.m_id_client,
             id_plage_horaire:plageHoraire.id_plage_horaire
           });
 
-          res.redirect('/psychologue/reservations/listeReservations/modifier/confirmation/'+payload.date_rv+'/'+plageHoraire.id_plage_horaire+'/'+payload.id_client);
+          res.redirect('/psychologue/reservations/listeReservations/modifier/confirmation/'+payload.m_date_rv+'/'+plageHoraire.id_plage_horaire+'/'+payload.m_id_client);
         }
 
         //if no client is selected
         else{
           var rendezVous = await RendezVous.create({
-            date:payload.date_rv,
+            date:payload.m_date_rv,
             id_plage_horaire:plageHoraire.id_plage_horaire
           });
-          res.redirect('/psychologue/reservations/listeReservations/modifier/confirmation/'+payload.date_rv+'/'+plageHoraire.id_plage_horaire);
+          res.redirect('/psychologue/reservations/listeReservations/modifier/confirmation/'+payload.m_date_rv+'/'+plageHoraire.id_plage_horaire);
         }
       }
       //reload the page with a message in red in the modal that will be showing by default

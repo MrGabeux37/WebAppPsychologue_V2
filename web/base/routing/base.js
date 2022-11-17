@@ -183,7 +183,7 @@ Router.get('/psychologue/reservations/listeReservations/modifier/confirmation/:d
     layout: 'main',
     LienRetour:"/psychologue/reservations/listeReservations",
     MessageButton:'des Réservations',
-    message: "Le rendez-vous a été modifié. Voici la nouvelle information: <br>Client: " + client.id_client + ": " + client.prenom + " " + client.nom + " <br>Date: " + params.date_rv + " <br>Heure Début: " + plageHoraire.heure_debut + " <br>Heure Fin: " + plageHoraire.heure_fin +"."
+    message: "Le rendez-vous a été modifié. <br>Voici la nouvelle information: <br><br>Client: " + client.id_client + " | " + client.prenom + " " + client.nom + " <br>Date: " + params.date_rv + " <br>Heure Début: " + plageHoraire.heure_debut + " <br>Heure Fin: " + plageHoraire.heure_fin +"."
   })
 })
 

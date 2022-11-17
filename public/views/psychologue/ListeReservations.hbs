@@ -85,7 +85,7 @@
               <div class="col text-center">
                 <button id="modifieButton" type="button" class="btn btn-success center-block mt-2" data-bs-toggle="modal" data-bs-target="#modifieDispo{{@index}}">Modifier</button>
                 {{#if ../Future}}
-                    <a class="btn btn-success mt-2" href='/clients/profil/{{#with (lookup ../client @index)}}{{id_client}}{{/with}}/reservation/annulation/{{dataValues.id_RV}}'>Annuler</a>
+                    <a class="btn btn-success mt-2" href='/clients/profil/reservation/annulation/{{dataValues.id_RV}}'>Annuler</a>
                 {{/if}}
               </div>
             </div>
@@ -132,22 +132,18 @@
                     <label for="m_hrDebut">Heure de Début:</label>
                     <select class="form-select" id='m_hrDebut' name='m_hrDebut' aria-label="Default select example" required>
                       <option value="" selected disabled>Selectionnez l'heure de début</option>
-                      {{#if ../HeureDebuts}}
-                        {{#each HeureDebuts as | HeureDebut |}}
-                        <option value="{{HeureDebut}}">{{HeureDebut}}</option>
+                        {{#each ../HeureDebuts as | HeureDebut |}}
+                          <option value="{{HeureDebut}}">{{HeureDebut}}</option>
                         {{/each}}
-                      {{/if}}
                     </select>
                 </div>
                 <div class="col">
                     <label for="m_hrFin">Heure de Fin:</label>
                     <select class="form-select" id='m_hrFin' name='m_hrFin' aria-label="Default select example" required>
                       <option value="" selected disabled>Selectionnez l'heure de fin</option>
-                      {{#if ../HeureFins}}
-                        {{#each HeureFins as | HeureFin |}}
-                        <option value="{{HeureFin}}">{{HeureFin}}</option>
+                        {{#each ../HeureFins as | HeureFin |}}
+                          <option value="{{HeureFin}}">{{HeureFin}}</option>
                         {{/each}}
-                      {{/if}}
                     </select>
                 </div>
               </div>
@@ -156,12 +152,10 @@
               <div class="form-group mt-2">
                 <label for="m_id_client">Nom du Client: </label>
                 <select class="form-select" name='m_id_client' aria-label="Default select example">
-                  <option selected>Selectionnez le Client (Facultatif)</option>
-                  {{#if ../Clients}}
-                    {{#each Clients as | Client |}}
-                    <option value="{{Client.dataValues.id_client}}">{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}</option>
+                  <option>Selectionnez le Client (Facultatif)</option>
+                    {{#each ../Clients as | Client |}}
+                      <option value="{{Client.dataValues.id_client}}">{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}{{#ifEqual Client.dataValues.id_client ../resultat.id_client}}selected{{/ifEqual}}</option>
                     {{/each}}
-                  {{/if}}
                 </select>
               </div>
 
@@ -193,9 +187,19 @@
         //get info
 
         //give info
-
      });
   });
+</script>
+
+<script>
+  Handlebars.registerHelper('ifEqual', function(v1, v2, options) {
+    if(v1 === v2) {
+      return options.fn(this);
+    }
+    else{
+      return options.inverse(this);
+    }
+  })
 </script>
 
 <script>

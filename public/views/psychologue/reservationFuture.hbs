@@ -110,7 +110,7 @@
           <div class="form-group mt-2">
             <label for="id_enfant">Nom du Client: </label>
             <select class="form-select" name='id_client' aria-label="Default select example">
-              <option selected>Selectionnez le Client (Facultatif)</option>
+              <option>Selectionnez le Client (Facultatif)</option>
               {{#if Clients}}
                 {{#each Clients as | Client |}}
                 <option value="{{Client.dataValues.id_client}}">{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}</option>
