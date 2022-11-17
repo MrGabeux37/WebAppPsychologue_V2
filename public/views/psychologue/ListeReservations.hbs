@@ -133,7 +133,7 @@
                     <select class="form-select" id='m_hrDebut' name='m_hrDebut' aria-label="Default select example" required>
                       <option value="" selected disabled>Selectionnez l'heure de début</option>
                         {{#each ../HeureDebuts as | HeureDebut |}}
-                          <option value="{{HeureDebut}}">{{HeureDebut}}</option>
+                          <option value="{{HeureDebut}}" {{#ifEqual HeureDebut (lookup resultathoraire @../index)}} selected {{/ifEqual}}>{{HeureDebut}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -142,7 +142,7 @@
                     <select class="form-select" id='m_hrFin' name='m_hrFin' aria-label="Default select example" required>
                       <option value="" selected disabled>Selectionnez l'heure de fin</option>
                         {{#each ../HeureFins as | HeureFin |}}
-                          <option value="{{HeureFin}}">{{HeureFin}}</option>
+                          <option value="{{HeureFin}}" {{#ifEqual HeureFin '08:00'}} selected {{/ifEqual}} >{{HeureFin}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -152,9 +152,9 @@
               <div class="form-group mt-2">
                 <label for="m_id_client">Nom du Client: </label>
                 <select class="form-select" name='m_id_client' aria-label="Default select example">
-                  <option>Selectionnez le Client (Facultatif)</option>
+                  <option selected>Selectionnez le Client (Facultatif)</option>
                     {{#each ../Clients as | Client |}}
-                      <option value="{{Client.dataValues.id_client}}">{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}{{#ifEqual Client.dataValues.id_client ../resultat.id_client}}selected{{/ifEqual}}</option>
+                      <option value="{{Client.dataValues.id_client}}" {{#ifEqual Client.dataValues.id_client resultat.dataValues.id_client}} selected {{/ifEqual}} >{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}</option>
                     {{/each}}
                 </select>
               </div>
@@ -189,17 +189,6 @@
         //give info
      });
   });
-</script>
-
-<script>
-  Handlebars.registerHelper('ifEqual', function(v1, v2, options) {
-    if(v1 === v2) {
-      return options.fn(this);
-    }
-    else{
-      return options.inverse(this);
-    }
-  })
 </script>
 
 <script>

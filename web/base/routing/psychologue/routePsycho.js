@@ -676,6 +676,8 @@ router.get('/psychologue/reservations/listeReservations', async function(req,res
       var nomPsychologue='';
       var plageHoraire='';
     }
+    console.log(plageHoraire);
+    console.log(rendezVous);
 
     res.render('../public/views/psychologue/ListeReservations', {
       layout:'psychologue',
@@ -935,6 +937,7 @@ router.post('/psychologue/reservations/listeReservations/modifier', async functi
             var nomPsychologue='';
             var plageHoraire='';
           }
+
 
           res.render('../public/views/psychologue/ListeReservations',{
             layout:'psychologue',
