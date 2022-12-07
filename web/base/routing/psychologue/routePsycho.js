@@ -997,5 +997,71 @@ router.post('/psychologue/reservations/listeReservations/modifier', async functi
     }
 });
 
+//route confirmation d'annulation du rendezvous
+router.get('/psychologue/reservations/listeReservations/annulation/:id_RV', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  var params = req.params;
+  if(decoded.scope=='psychologue'){
+    //get Rendezvous choisi
+    var rendezvous = await RendezVous.findOne({
+      where:{id_RV : params.id_RV}
+    });
+    //trouve le client choisi
+    var client = await Client.findOne({
+      where:{id_client:rendezvous.id_client}
+    });
+
+    //get plagehoraire
+    var plagehoraire = await PlageHoraire.findOne({
+    where:{id_plage_horaire : rendezvous.id_plage_horaire}
+    });
+    var heure_debut = plagehoraire.heure_debut.substr(0,5);
+    var heure_fin = plagehoraire.heure_fin.substr(0,5);
+
+    //get psychologue
+    var psy = await Psychologue.findOne({
+      where:{id_psychologue : rendezvous.id_psychologue}
+    });
+    var nomPsychologue = psy.prenom + " " + psy.nom;
+
+    var adresseURL="/psychologue/reservations/listeReservations/annulation/";
+
+    res.render('../public/views/psychologue/confirmationRDV',{
+      layout:'psychologue',
+      client:client,
+      resultats:rendezvous,
+      resultatPsy:nomPsychologue,
+      heure_debut:heure_debut,
+      heure_fin:heure_fin,
+      adresseURL:adresseURL,
+      message:'Confirmer la réservation a annuler'
+    });
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+});
+
+//route POST d'annulation du rendez-Vous
+router.post('/psychologue/reservations/listeReservations/annulation/:id_RV', async function(req,res){
+  var decoded = authController.decodeCookie(req.cookies.jwt);
+  var params = req.params;
+
+  if(decoded.scope=='psychologue'){
+    //get Rendezvous choisi
+    var rendezvous = await RendezVous.findOne({
+      where:{id_RV : params.id_RV}
+    });
+
+    rendezvous.destroy();
+
+    var retourURL='/psychologue/reservations/listeReservations/future';
+
+    res.redirect(retourURL);
+  }
+  else{
+    res.redirect('/errorAccess');
+  }
+});
 //export this router to use in index.js
 module.exports = router;
