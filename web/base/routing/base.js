@@ -188,7 +188,5 @@ Router.get('/psychologue/reservations/listeReservations/modifier/confirmation/:d
 })
 
 
-
-
 //export this Router to use in index.js
 module.exports = Router;

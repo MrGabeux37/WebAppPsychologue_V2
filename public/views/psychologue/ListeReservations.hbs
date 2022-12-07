@@ -116,7 +116,7 @@
 
               <div class="row">
                 <div class="col">
-                  <input id="m_id_rdv" name="m_id_rdv" value="{{dataValues.id_RV}}" class="form-control" disabled>
+                  <input id="m_id_rdv" name="m_id_rdv" value="{{dataValues.id_RV}}" class="form-control" readonly="readonly">
                 </div>
               </div>
 
@@ -125,15 +125,22 @@
                   <label for="m_date_rv">Date du rendezvous: </label>
                   <input type="date" class="form-control" id="m_date_rv" value="{{dataValues.date}}" name="m_date_rv" required> <!-- placeholder="aaaa-mm-jj"-->
                 </div>
+                <div class="col">
+                  <label for="m_paiement">Paiement reçu:</label>
+                  <select class="form-select" id='m_paiement' name='m_paiement' aria-label="Default select example" required>
+                    <option value=true {{#if dataValues.payer}} selected {{else}}{{/if}}>Oui</option>
+                    <option value=false {{#if dataValues.payer}}{{else}} selected {{/if}}>Non</option>
+                  </select>
+                </div>
               </div>
 
               <div class="row mt-2">
                 <div class="col">
                     <label for="m_hrDebut">Heure de Début:</label>
                     <select class="form-select" id='m_hrDebut' name='m_hrDebut' aria-label="Default select example" required>
-                      <option value="" selected disabled>Selectionnez l'heure de début</option>
+                      <option value="" selected disabled>Selectionnez l'heure de début:</option>
                         {{#each ../HeureDebuts as | HeureDebut |}}
-                          <option value="{{HeureDebut}}" {{#ifEqual HeureDebut (lookup resultathoraire @../index)}} selected {{/ifEqual}}>{{HeureDebut}}</option>
+                          <option value="{{HeureDebut}}" {{#with (lookup ../../resultathoraire @../index)}} {{#ifEqual HeureDebut dataValues.heure_debut}} selected {{/ifEqual}} {{/with}}>{{HeureDebut}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -142,7 +149,7 @@
                     <select class="form-select" id='m_hrFin' name='m_hrFin' aria-label="Default select example" required>
                       <option value="" selected disabled>Selectionnez l'heure de fin</option>
                         {{#each ../HeureFins as | HeureFin |}}
-                          <option value="{{HeureFin}}" {{#ifEqual HeureFin '08:00'}} selected {{/ifEqual}} >{{HeureFin}}</option>
+                          <option value="{{HeureFin}}" {{#with (lookup ../../resultathoraire @../index)}} {{#ifEqual HeureFin dataValues.heure_fin}} selected {{/ifEqual}} {{/with}}>{{HeureFin}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -157,6 +164,11 @@
                       <option value="{{Client.dataValues.id_client}}" {{#ifEqual Client.dataValues.id_client resultat.dataValues.id_client}} selected {{/ifEqual}} >{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}</option>
                     {{/each}}
                 </select>
+              </div>
+
+              <div class="form-group mt-2">
+                <label for="m_note">Note: </label>
+                <input name="m_note" class="form-control" value="{{dataValues.note}}">
               </div>
 
             </div>
