@@ -780,7 +780,8 @@ router.post('/psychologue/reservations/nouvelleDispo', async function(req,res){
             date:payload.date_rv,
             disponibilite:false,
             id_client:payload.id_client,
-            id_plage_horaire:plageHoraire.id_plage_horaire
+            id_plage_horaire:plageHoraire.id_plage_horaire,
+            note:payload.m_note
           });
 
           res.redirect('/psychologue/reservations/nouvelleDispo/confirmation/'+payload.date_rv+'/'+plageHoraire.id_plage_horaire+'/'+payload.id_client);

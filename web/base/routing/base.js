@@ -121,7 +121,7 @@ Router.get('/psychologue/reservations/nouvelleDispo/confirmation/:date_rv/:plage
     layout: 'main',
     LienRetour:"/psychologue/reservations/",
     MessageButton:'du Calendrier',
-    message: "La nouvelle disponibilité est créée pour le " + params.date_rv + " entre " + plageHoraire.heure_debut + " et " + plageHoraire.heure_fin +"."
+    message: "La nouvelle disponibilité a été créée!<br> Voici l'information de la nouvelle disponibilité: <br><br>Date: " + params.date_rv + " <br>Heures: " + plageHoraire.heure_debut + " à " + plageHoraire.heure_fin +"<br> Client: Aucun."
   })
 })
 
@@ -143,7 +143,7 @@ Router.get('/psychologue/reservations/nouvelleDispo/confirmation/:date_rv/:plage
     layout: 'main',
     LienRetour:"/psychologue/reservations/",
     MessageButton:'du Calendrier',
-    message: "Le rendez-vous est créé pour le client " + client.id_client + ": " + client.prenom + " " + client.nom + " le " + params.date_rv + " entre " + plageHoraire.heure_debut + " et " + plageHoraire.heure_fin +"."
+    message: "La nouvelle disponibilité a été créée!<br> Voici l'information de la nouvelle disponibilité:<br><br>Client: " + client.id_client + " - " + client.prenom + " " + client.nom + "<br>Date: " + params.date_rv + "<br>Heures: " + plageHoraire.heure_debut + " à " + plageHoraire.heure_fin +"."
   })
 })
 
