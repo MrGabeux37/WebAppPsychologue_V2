@@ -258,6 +258,12 @@ router.get('/clients/profil/:id_client/reservation', async function(req,res){
     //get payload
     var payload = req.body;
     //trouve le client choisi
+    var clientid = params.id_client;
+    //get all the clients for Modal
+    var clients = await Client.findAll({
+      where:{permission:true}
+    });
+    //trouve le client choisi
     var client = await Client.findOne({
       where:{id_client:params.id_client}
     });
@@ -286,6 +292,21 @@ router.get('/clients/profil/:id_client/reservation', async function(req,res){
         }
       }
 
+      //get all the correct clients
+      var client=[];
+      for(var y=0;y<rendezVous.length;y++){
+        if(rendezVous[y].id_client==null){
+          client.push({prenom:null,nom:null});
+        }
+        else{
+          var tempClient = await Client.findOne({
+            where:{id_client:rendezVous[y].id_client}
+          });
+          var temp = {prenom:tempClient.prenom, nom:tempClient.nom, id_client:tempClient.id_client};
+          client.push(temp);
+        }
+      }
+
       //get psychologue
       var psy = await Psychologue.findOne({
         where:{id_psychologue : rendezVous[0].id_psychologue}
@@ -297,12 +318,16 @@ router.get('/clients/profil/:id_client/reservation', async function(req,res){
       var plageHoraire='';
     }
 
-    res.render('../public/views/psychologue/reservation', {
+    res.render('../public/views/psychologue/reservationFuture', {
       layout:'psychologue',
+      Clients:clients,
+      clientid:clientid,
       client:client,
       resultats:rendezVous,
       resultatPsy:nomPsychologue,
-      resultathoraire:plageHoraire
+      resultathoraire:plageHoraire,
+      HeureFins:plageHoraireController.heuresDeFin(),
+      HeureDebuts:plageHoraireController.heuresDeDebut()
     });
   }
   else{
@@ -319,6 +344,12 @@ router.get('/clients/profil/:id_client/reservation/ancienne', async function(req
     var params = req.params;
     //get payload
     var payload = req.body;
+    //trouve le client choisi
+    var clientid = params.id_client;
+    //get all the clients for Modal
+    var clients = await Client.findAll({
+      where:{permission:true}
+    });
     //trouve le client choisi
     var client = await Client.findOne({
       where:{id_client:params.id_client}
@@ -353,6 +384,21 @@ router.get('/clients/profil/:id_client/reservation/ancienne', async function(req
         }
       }
 
+      //get all the correct clients
+      var client=[];
+      for(var y=0;y<rendezVous.length;y++){
+        if(rendezVous[y].id_client==null){
+          client.push({prenom:null,nom:null});
+        }
+        else{
+          var tempClient = await Client.findOne({
+            where:{id_client:rendezVous[y].id_client}
+          });
+          var temp = {prenom:tempClient.prenom, nom:tempClient.nom, id_client:tempClient.id_client};
+          client.push(temp);
+        }
+      }
+
       //get psychologue
       var psy = await Psychologue.findOne({
         where:{id_psychologue : rendezVous[0].id_psychologue}
@@ -364,12 +410,16 @@ router.get('/clients/profil/:id_client/reservation/ancienne', async function(req
       var plageHoraire='';
     }
 
-    res.render('../public/views/psychologue/reservation', {
+    res.render('../public/views/psychologue/reservationFuture', {
       layout:'psychologue',
+      Clients:clients,
+      clientid:clientid,
       client:client,
       resultats:rendezVous,
       resultatPsy:nomPsychologue,
-      resultathoraire:plageHoraire
+      resultathoraire:plageHoraire,
+      HeureFins:plageHoraireController.heuresDeFin(),
+      HeureDebuts:plageHoraireController.heuresDeDebut()
     });
   }
   else{
