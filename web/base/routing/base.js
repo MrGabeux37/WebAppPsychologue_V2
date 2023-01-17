@@ -187,6 +187,45 @@ Router.get('/psychologue/reservations/listeReservations/modifier/confirmation/:d
   })
 })
 
+//get page redirection apres modification de dispo a partir de client (sans client)
+Router.get('/clients/profil/:id_client/reservations/listeReservations/modifier/confirmation/:date_rv/:plageHoraire', async function(req, res){
+  var params = req.params;
+  console.log(params);
+
+  //get PlageHoraire en parametre
+  var plageHoraire = await PlageHoraire.findOne({
+    where:{id_plage_horaire:params.plageHoraire}
+  });
+
+  res.render('../public/views/psychologue/dispoCreated', {
+    layout: 'main',
+    LienRetour:"/clients/profil/"+params.id_client+"/reservation",
+    MessageButton:'des Réservations',
+    message: "Le rendez-vous a été modifié. <br>Voici la nouvelle information: <br>Client: Auncun Client <br>Date: " + params.date_rv + " <br>Heure Début: " + plageHoraire.heure_debut + " <br>Heure Fin: " + plageHoraire.heure_fin +"."
+  })
+})
+
+//get page redirection apres modification d'un rendezvous a partir de client
+Router.get('/clients/profil/:id_client/reservations/listeReservations/modifier/confirmation/:date_rv/:plageHoraire/:id_client_RV', async function(req, res){
+  var params = req.params;
+  console.log(params);
+  //find client to add info on page
+  var client = await Client.findOne({
+    where:{id_client:params.id_client_RV}
+  });
+
+  //get PlageHoraire en parametre
+  var plageHoraire = await PlageHoraire.findOne({
+    where:{id_plage_horaire:params.plageHoraire}
+  });
+
+  res.render('../public/views/psychologue/dispoCreated', {
+    layout: 'main',
+    LienRetour:"/clients/profil/"+params.id_client+"/reservation",
+    MessageButton:'des Réservations',
+    message: "Le rendez-vous a été modifié. <br>Voici la nouvelle information: <br><br>Client: " + client.id_client_RV + " | " + client.prenom + " " + client.nom + " <br>Date: " + params.date_rv + " <br>Heure Début: " + plageHoraire.heure_debut + " <br>Heure Fin: " + plageHoraire.heure_fin +"."
+  })
+})
 
 //export this Router to use in index.js
 module.exports = Router;

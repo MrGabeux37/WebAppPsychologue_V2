@@ -10,125 +10,173 @@
 
         <div class="row">
           <div class="col">
-            <a href="/clients/profil/{{client.dataValues.id_client}}/reservation/ancienne" type="button" class="btn btn-success center-block mt-2">Anciennes Réservations</a>
-            <a href="/clients/profil/{{client.dataValues.id_client}}/reservation/future" type="button" class="btn btn-success center-block mt-2">Réservations Futures</a>
-            <a href="/clients/profil/{{client.dataValues.id_client}}/reservation" type="button" class="btn btn-success center-block mt-2">Toutes les Réservations</a>
+            <a href="/clients/profil/{{clientid}}/reservation/ancienne" type="button" class="btn btn-success center-block mt-2">Anciennes Réservations</a>
+            <a href="/clients/profil/{{clientid}}/reservation/future" type="button" class="btn btn-success center-block mt-2">Réservations Futures</a>
+            <a href="/clients/profil/{{clientid}}/reservation" type="button" class="btn btn-success center-block mt-2">Toutes les Réservations</a>
           </div>
         </div>
         <hr class="mt-4">
         {{#if resultats}}
           {{#each resultats as | resultat |}}
-            <div class="row ml-4">
-              <div class="col-4">
-                <p>ID Rendez-Vous: {{dataValues.id_RV}}<p>
+            <div class="row m-2">
+              <div class="col ml-auto">
+                <label for="id_rdv">ID: </label>
               </div>
-              <div class="col-7 ml-2">
-                <p>Client: {{../client.dataValues.prenom}} {{../client.dataValues.nom}}</p>
+              <div class="col ml-auto">
+                <input id="id_rdv" name="id_rdv" class="form-control" value="{{dataValues.id_RV}}" disabled>
               </div>
-            </div>
-            <div class="row ml-4 mt">
-              <div class="col-4">
-                <p>Date: {{dataValues.date}}</p>
+              <div class="col ml-auto">
+                <label for="client">Client: </label>
               </div>
-              <div class="col-7 ml-2">
-                <p>Heure: {{#with (lookup ../resultathoraire @index)}}{{dataValues.heure_debut}} à {{dataValues.heure_fin}}{{/with}}</p>
-              </div>
-            </div>
-            <div class="row ml-4 mt">
-              <div class="col-4">
-                <p>Note: {{dataValues.note}}</p>
-              </div>
-              <div class="col-7 ml-2">
-                <p>Paiement reçu: {{#if dataValues.payer}}Oui{{else}}Non{{/if}}</p>
+              <div class="col ml-auto">
+                <input name="client" class="form-control" value="{{#with (lookup ../client @index)}}{{prenom}} {{nom}}{{/with}}" disabled>
               </div>
             </div>
             <div class="row m-2">
-              <div class="col text-center">
-                <button type="button" class="btn btn-success center-block mt-2" data-bs-toggle="modal" data-bs-target="#modifieDispo">Modifier</button>
-                <a class="btn btn-success mt-2" href='/clients/profil/{{../client.dataValues.id_client}}/reservation/annulation/{{dataValues.id_RV}}'>Annuler</a>
+              <div class="col ml-auto">
+                <label for="date float-start">Date: </label>
+              </div>
+              <div class="col ml-auto">
+                <input type="date" name="date" class="form-control" id="m_date_rv" name="date_rv" value="{{dataValues.date}}" disabled>
+              </div>
+              <div class="col ml-auto">
+                <label for="paiement">Paiement reçu:</label>
+              </div>
+              <div class="col ml-auto">
+                <input name="paiement" class="form-control" value="{{#if dataValues.payer}}Oui{{else}}Non{{/if}}" disabled>
+              </div>
+            </div>
+            <div class="row m-2">
+              {{#with (lookup ../resultathoraire @index)}}
+              <div class="col ml-auto">
+                <label for="heureDebut">Heure de début: </label>
+              </div>
+              <div class="col ml-auto">
+                <input name="heureDebut" class="form-control" value="{{dataValues.heure_debut}}" disabled>
+              </div>
+              <div class="col ml-auto">
+                <label for="heureFin">Heure de fin: </label>
+              </div>
+              <div class="col ml-auto">
+                <input name="heureFin" class="form-control" value="{{dataValues.heure_fin}}" disabled>
+              </div>
+            </div>
+            <div class="row" hidden>
+              <input name="id_plagehoraire" class="form-control" value="{{dataValues.id_plage_horaire}}" disabled>
+            </div>
+              {{/with}}
+            <div class="row m-2">
+              <div class="col-3">
+                <label for="note">Notes: <label>
+              </div>
+              <div class="col-9">
+                <input name="note" class="form-control" value="{{dataValues.note}}" disabled>
               </div>
             </div>
 
+            <div class="row m-2">
+              <div class="col text-center">
+                <button id="modifieButton" type="button" class="btn btn-success center-block mt-2" data-bs-toggle="modal" data-bs-target="#modifieDispo{{@index}}">Modifier</button>
+                {{#if ../Future}}
+                    <a class="btn btn-success mt-2" href='/psychologue/reservations/listeReservations/annulation/{{dataValues.id_RV}}'>Annuler</a>
+                {{/if}}
+              </div>
+            </div>
             <hr class="mt-4">
           {{/each}}
         {{else}}
           <p>Aucune Réservation</p>
         {{/if}}
-
       </div>
     </div>
   </div>
 </div>
 
-
 <!-- Modal -->
-<div class="modal fade" id="modifieDispo" tabindex="-1">
-  <form class="needs-validation" novalidate action="/psychologue/reservations/listeReservations/modifier" method="post">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
+{{#if resultats}}
+  {{#each resultats as | resultat |}}
+    <div class="modal fade" id="modifieDispo{{@index}}" tabindex="-1">
+      <form class="needs-validation" novalidate action="/clients/profil/{{dataValues.id_client}}/reservations/listeReservations/modifier" method="post">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
 
-        <div class="modal-header">
-          <h5 class="modal-title">Modification d'une disponibilité</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body">
-
-          <div class="row">
-            <div class="col">
-              <label for="date_rv">Date du rendezvous: </label>
-              <input type="date" class="form-control" id=name="date_rv" name="date_rv" placeholder="aaaa-mm-jj" required>
+            <div class="modal-header">
+              <h5 class="modal-title">Modification d'une disponibilité</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-          </div>
 
-          <div class="row mt-2">
-            <div class="col">
-                <label for="hrDebut">Heure de Début:</label>
-                <select class="form-select" id='hrDebut' name='hrDebut' aria-label="Default select example" required>
-                  <option value="" selected disabled>Selectionnez l'heure de début</option>
-                  {{#if HeureDebuts}}
-                    {{#each HeureDebuts as | HeureDebut |}}
-                    <option value="{{HeureDebut}}">{{HeureDebut}}</option>
+            <div class="modal-body">
+
+              <div class="row">
+                <div class="col">
+                  <input id="m_id_rdv" name="m_id_rdv" value="{{dataValues.id_RV}}" class="form-control" readonly="readonly">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label for="m_date_rv">Date du rendezvous: </label>
+                  <input type="date" class="form-control" id="m_date_rv" value="{{dataValues.date}}" name="m_date_rv" required> <!-- placeholder="aaaa-mm-jj"-->
+                </div>
+                <div class="col">
+                  <label for="m_paiement">Paiement reçu:</label>
+                  <select class="form-select" id='m_paiement' name='m_paiement' aria-label="Default select example" required>
+                    <option value=true {{#if dataValues.payer}} selected {{else}}{{/if}}>Oui</option>
+                    <option value=false {{#if dataValues.payer}}{{else}} selected {{/if}}>Non</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mt-2">
+                <div class="col">
+                    <label for="m_hrDebut">Heure de Début:</label>
+                    <select class="form-select" id='m_hrDebut' name='m_hrDebut' aria-label="Default select example" required>
+                      <option value="" selected disabled>Selectionnez l'heure de début:</option>
+                        {{#each ../HeureDebuts as | HeureDebut |}}
+                          <option value="{{HeureDebut}}" {{#with (lookup ../../resultathoraire @../index)}} {{#ifEqual HeureDebut dataValues.heure_debut}} selected {{/ifEqual}} {{/with}}>{{HeureDebut}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="m_hrFin">Heure de Fin:</label>
+                    <select class="form-select" id='m_hrFin' name='m_hrFin' aria-label="Default select example" required>
+                      <option value="" selected disabled>Selectionnez l'heure de fin</option>
+                        {{#each ../HeureFins as | HeureFin |}}
+                          <option value="{{HeureFin}}" {{#with (lookup ../../resultathoraire @../index)}} {{#ifEqual HeureFin dataValues.heure_fin}} selected {{/ifEqual}} {{/with}}>{{HeureFin}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+              </div>
+              {{#if message}}<p style="color:red;">{{message}}</p>{{/if}}
+
+              <div class="form-group mt-2">
+                <label for="m_id_client">Nom du Client: </label>
+                <select class="form-select" name='m_id_client' aria-label="Default select example">
+                  <option selected>Selectionnez le Client (Facultatif)</option>
+                    {{#each ../Clients as | Client |}}
+                      <option value="{{Client.dataValues.id_client}}" {{#ifEqual Client.dataValues.id_client resultat.dataValues.id_client}} selected {{/ifEqual}} >{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}</option>
                     {{/each}}
-                  {{/if}}
                 </select>
+              </div>
+
+              <div class="form-group mt-2">
+                <label for="m_note">Note: </label>
+                <input name="m_note" class="form-control" value="{{dataValues.note}}">
+              </div>
+
             </div>
-            <div class="col">
-                <label for="hrFin">Heure de Fin:</label>
-                <select class="form-select" id='hrFin' name='hrFin' aria-label="Default select example" required>
-                  <option value="" selected disabled>Selectionnez l'heure de fin</option>
-                  {{#if HeureFins}}
-                    {{#each HeureFins as | HeureFin |}}
-                    <option value="{{HeureFin}}">{{HeureFin}}</option>
-                    {{/each}}
-                  {{/if}}
-                </select>
+
+            <div class="modal-footer justify-content-center">
+              <button type="submit" class="btn btn-success">Sauvegarder</button>
             </div>
+
           </div>
-          {{#if message}}<p style="color:red;">{{message}}</p>{{/if}}
-
-          <div class="form-group mt-2">
-            <label for="id_enfant">Nom du Client: </label>
-            <select class="form-select" name='id_client' aria-label="Default select example">
-              <option>Selectionnez le Client (Facultatif)</option>
-              {{#if Clients}}
-                {{#each Clients as | Client |}}
-                <option value="{{Client.dataValues.id_client}}">{{Client.dataValues.id_client}}: {{Client.dataValues.prenom}} {{Client.dataValues.nom}}</option>
-                {{/each}}
-              {{/if}}
-            </select>
-          </div>
-
         </div>
-
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-success">Sauvegarder</button>
-        </div>
-
-      </div>
+      </form>
     </div>
-  </form>
-</div>
+  {{/each}}
+{{/if}}
+
 
 {{#if scriptModal}}
   <script>
@@ -137,6 +185,16 @@
       });
   </script>
 {{/if}}
+
+<script>
+  $(document).ready (function() {
+     $('#modifieButton').click(function() {
+        //get info
+
+        //give info
+     });
+  });
+</script>
 
 <script>
 (function () {
