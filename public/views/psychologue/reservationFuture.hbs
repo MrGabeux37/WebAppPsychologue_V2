@@ -78,7 +78,7 @@
               <div class="col text-center">
                 <button id="modifieButton" type="button" class="btn btn-success center-block mt-2" data-bs-toggle="modal" data-bs-target="#modifieDispo{{@index}}">Modifier</button>
                 {{#if ../Future}}
-                    <a class="btn btn-success mt-2" href='/psychologue/reservations/listeReservations/annulation/{{dataValues.id_RV}}'>Annuler</a>
+                    <a class="btn btn-success mt-2" href='/clients/profil/{{dataValues.id_client}}/reservation/annulation/RendezVousAnnule/{{dataValues.id_RV}}'>Annuler</a>
                 {{/if}}
               </div>
             </div>
