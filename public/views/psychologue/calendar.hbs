@@ -57,7 +57,7 @@
           <div class="row mt-2">
             <div class="col">
                 <label for="hrDebut">Heure de Début:</label>
-                <select class="form-select" id='hrDebut' name='hrDebut' aria-label="Default select example" required>
+                <select class="form-select" id='m_hrDebut' name='hrDebut' aria-label="Default select example" onchange="checkHeures()" required>
                   <option value="" selected disabled>Selectionnez l'heure de début</option>
                   {{#if HeureDebuts}}
                     {{#each HeureDebuts as | HeureDebut |}}
@@ -68,7 +68,7 @@
             </div>
             <div class="col">
                 <label for="hrFin">Heure de Fin:</label>
-                <select class="form-select" id='hrFin' name='hrFin' aria-label="Default select example" required>
+                <select class="form-select" id='m_hrFin' name='hrFin' aria-label="Default select example" onchange="checkHeures()" required>
                   <option value="" selected disabled>Selectionnez l'heure de fin</option>
                   {{#if HeureFins}}
                     {{#each HeureFins as | HeureFin |}}
@@ -78,7 +78,7 @@
                 </select>
             </div>
           </div>
-          {{#if message}}<p style="color:red;">{{message}}</p>{{/if}}
+          <p style="color:red; visibility:hidden;" id='messageErreur'>L'heure de début doit être plus tard que l'heure de fin.</p>
 
           <div class="form-group mt-2">
             <label for="id_enfant">Nom du Client: </label>

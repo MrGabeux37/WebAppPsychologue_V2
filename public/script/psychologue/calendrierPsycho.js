@@ -5,7 +5,6 @@ var monthSelectName = whatMonth(monthToday);
 var yearSelect = dateToday.getFullYear();
 var tempDate = new Date(yearSelect,monthSelect,1);
 var lastDay = new Date(yearSelect,(monthSelect+1),0);
-console.log(lastDay);
 
 const isWeekend = day => {
   return day%7===0 || day%7===6;
@@ -71,6 +70,8 @@ function avanceMois(){
   month.innerHTML = '';
   init();
 }
+
+
 
 function init(){
 

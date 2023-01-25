@@ -136,7 +136,7 @@
               <div class="row mt-2">
                 <div class="col">
                     <label for="m_hrDebut">Heure de Début:</label>
-                    <select class="form-select" id='m_hrDebut' name='m_hrDebut' aria-label="Default select example" required>
+                    <select class="form-select" id='m_hrDebut' name='m_hrDebut' aria-label="Default select example" onchange="checkHeures()" required>
                       <option value="" selected disabled>Selectionnez l'heure de début:</option>
                         {{#each ../HeureDebuts as | HeureDebut |}}
                           <option value="{{HeureDebut}}" {{#with (lookup ../../resultathoraire @../index)}} {{#ifEqual HeureDebut dataValues.heure_debut}} selected {{/ifEqual}} {{/with}}>{{HeureDebut}}</option>
@@ -145,7 +145,7 @@
                 </div>
                 <div class="col">
                     <label for="m_hrFin">Heure de Fin:</label>
-                    <select class="form-select" id='m_hrFin' name='m_hrFin' aria-label="Default select example" required>
+                    <select class="form-select" id='m_hrFin' name='m_hrFin' aria-label="Default select example" onchange="checkHeures()" required>
                       <option value="" selected disabled>Selectionnez l'heure de fin</option>
                         {{#each ../HeureFins as | HeureFin |}}
                           <option value="{{HeureFin}}" {{#with (lookup ../../resultathoraire @../index)}} {{#ifEqual HeureFin dataValues.heure_fin}} selected {{/ifEqual}} {{/with}}>{{HeureFin}}</option>
@@ -153,7 +153,7 @@
                     </select>
                 </div>
               </div>
-              {{#if message}}<p style="color:red;">{{message}}</p>{{/if}}
+              <p style="color:red; visibility:hidden;" id='messageErreur'>L'heure de début doit être plus tard que l'heure de fin.</p>
 
               <div class="form-group mt-2">
                 <label for="m_id_client">Nom du Client: </label>
